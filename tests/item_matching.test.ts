@@ -1,7 +1,7 @@
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { asUser, expectError, freshDatabase, one, rows } from './helpers/db.js';
-import { newCompany, newContact, newUser, type Fixture } from './helpers/factory.js';
+import { amountSql, newCompany, newContact, newUser, type Fixture } from './helpers/factory.js';
 import { newMember, refusalAs } from './helpers/integrity.js';
 
 // Decision 0071: several open lines of one counterparty on one account settle
@@ -541,7 +541,7 @@ describe('reconcile_with_difference()', () => {
 
     const booked = await rows<{ account_id: string; debit: string; credit: string; contact_id: string | null }>(
       db,
-      `select account_id, debit, credit, contact_id from entry_lines where entry_id = $1 order by sequence`,
+      `select account_id, ${amountSql('debit', 'company_id')} as debit, ${amountSql('credit', 'company_id')} as credit, contact_id from entry_lines where entry_id = $1 order by sequence`,
       [done.adjustment_entry_id],
     );
     const rounding = (
@@ -584,7 +584,7 @@ describe('reconcile_with_difference()', () => {
     expect(Number(done.difference)).toBe(-2);
     const onGain = await one<{ credit: string }>(
       db,
-      `select credit from entry_lines where entry_id = $1 and account_id = $2`,
+      `select ${amountSql('credit', 'company_id')} as credit from entry_lines where entry_id = $1 and account_id = $2`,
       [done.adjustment_entry_id, gain],
     );
     expect(onGain.credit).toBe('2.00');
@@ -654,7 +654,7 @@ describe('reconcile_with_difference()', () => {
       );
       try {
         expect(await expectError(db, `select * from reconcile_with_difference($1, 'rounding')`, [[a, b]])).toMatch(
-          /^difference_above_tolerance: the lines are 3\.00 apart/,
+          /^difference_above_tolerance: the lines are 3(\.0+)? apart/,
         );
         expect(await openOf(a)).toBe(10);
       } finally {

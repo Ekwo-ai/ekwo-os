@@ -27,7 +27,7 @@ import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import type { Pack } from '../packages/cli/src/index.js';
 import { asUser, freshDatabase, one, rows } from './helpers/db.js';
-import { newCompany, newContact, newDocument, newInstanceAdmin, newUser, taxId } from './helpers/factory.js';
+import { amountSql, newCompany, newContact, newDocument, newInstanceAdmin, newUser, taxId } from './helpers/factory.js';
 import { thirdPartyLine } from './helpers/golden-scenario.js';
 import { packWhere, roleOf } from './helpers/packs.js';
 
@@ -488,7 +488,7 @@ describe('the way an issued invoice is undone', () => {
     await asUser(db, accountant, () =>
       db.query(`select unreconcile(r.id) from reconciliations r where r.debit_line_id = $1 or r.credit_line_id = $1`, [invoiceLine]),
     );
-    expect(await one(db, `select payment_state, amount_paid::text from documents where id = $1`, [invoiceId])).toEqual({
+    expect(await one(db, `select payment_state, ${amountSql('amount_paid', 'company_id')} as amount_paid from documents where id = $1`, [invoiceId])).toEqual({
       payment_state: 'not_paid',
       amount_paid: '0.00',
     });

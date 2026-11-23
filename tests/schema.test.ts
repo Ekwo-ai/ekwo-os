@@ -2,7 +2,7 @@ import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { freshDatabase, migrationFiles, one, rows, seedFiles } from './helpers/db.js';
 import { ACCOUNT_TYPES, internalGroup } from '../packages/core/src/types.js';
-import { newCompany, newContact, newDocument } from './helpers/factory.js';
+import { amountSql, newCompany, newContact, newDocument } from './helpers/factory.js';
 
 let db: PGlite;
 
@@ -226,7 +226,7 @@ describe('country templates', () => {
 
     const lines = await rows<{ code: string; debit: string; credit: string; box: string | null }>(
       db,
-      `select a.code, l.debit, l.credit, l.declaration_box as box
+      `select a.code, ${amountSql('l.debit', 'l.company_id')} as debit, ${amountSql('l.credit', 'l.company_id')} as credit, l.declaration_box as box
          from entry_lines l
          join accounts a on a.id = l.account_id
          join entries e on e.id = l.entry_id

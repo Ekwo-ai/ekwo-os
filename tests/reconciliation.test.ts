@@ -1,7 +1,7 @@
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { expectError, freshDatabase, one, rows } from './helpers/db.js';
-import { newCompany, newContact, newDocument, type Fixture } from './helpers/factory.js';
+import { amountSql, newCompany, newContact, newDocument, type Fixture } from './helpers/factory.js';
 
 let db: PGlite;
 let fx: Fixture;
@@ -75,7 +75,7 @@ describe('reconcile', () => {
 
     let line = await one<{ matched_amount: string; matching_number: string }>(
       db,
-      `select matched_amount, matching_number from entry_lines where id = $1`,
+      `select ${amountSql('matched_amount', 'company_id')} as matched_amount, matching_number from entry_lines where id = $1`,
       [receivableLineId],
     );
     expect(line.matched_amount).toBe('400.00');
@@ -85,7 +85,7 @@ describe('reconcile', () => {
     // No amount given: the smaller of the two open amounts, here 810.
     await db.query(`select reconcile($1, $2, null)`, [receivableLineId, second]);
 
-    line = await one(db, `select matched_amount, matching_number from entry_lines where id = $1`, [
+    line = await one(db, `select ${amountSql('matched_amount', 'company_id')} as matched_amount, matching_number from entry_lines where id = $1`, [
       receivableLineId,
     ]);
     expect(line.matched_amount).toBe('1210.00');
@@ -148,7 +148,7 @@ describe('reconcile', () => {
 
     let doc = await one<{ amount_paid: string; amount_residual: string; payment_state: string }>(
       db,
-      `select amount_paid, amount_residual, payment_state from documents where id = $1`,
+      `select ${amountSql('amount_paid', 'company_id')} as amount_paid, ${amountSql('amount_residual', 'company_id')} as amount_residual, payment_state from documents where id = $1`,
       [documentId],
     );
     expect(doc.amount_paid).toBe('0.00');
@@ -159,7 +159,7 @@ describe('reconcile', () => {
 
     doc = await one(
       db,
-      `select amount_paid, amount_residual, payment_state from documents where id = $1`,
+      `select ${amountSql('amount_paid', 'company_id')} as amount_paid, ${amountSql('amount_residual', 'company_id')} as amount_residual, payment_state from documents where id = $1`,
       [documentId],
     );
     expect(doc.amount_paid).toBe('500.00');
@@ -171,7 +171,7 @@ describe('reconcile', () => {
 
     doc = await one(
       db,
-      `select amount_paid, amount_residual, payment_state from documents where id = $1`,
+      `select ${amountSql('amount_paid', 'company_id')} as amount_paid, ${amountSql('amount_residual', 'company_id')} as amount_residual, payment_state from documents where id = $1`,
       [documentId],
     );
     expect(doc.amount_paid).toBe('1210.00');
@@ -227,7 +227,7 @@ describe('reconcile', () => {
 
     const doc = await one<{ amount_paid: string; amount_residual: string; payment_state: string }>(
       db,
-      `select amount_paid, amount_residual, payment_state from documents where id = $1`,
+      `select ${amountSql('amount_paid', 'company_id')} as amount_paid, ${amountSql('amount_residual', 'company_id')} as amount_residual, payment_state from documents where id = $1`,
       [documentId],
     );
     expect(doc.amount_paid).toBe('1210.00');
@@ -256,7 +256,7 @@ describe('reconcile', () => {
 
     const doc = await one<{ amount_paid: string; payment_state: string }>(
       db,
-      `select amount_paid, payment_state from documents where id = $1`,
+      `select ${amountSql('amount_paid', 'company_id')} as amount_paid, payment_state from documents where id = $1`,
       [documentId],
     );
     expect(doc.amount_paid).toBe('0.00');
@@ -274,7 +274,7 @@ describe('reconcile', () => {
 
     const line = await one<{ matched_amount: string; matching_number: string | null }>(
       db,
-      `select matched_amount, matching_number from entry_lines where id = $1`,
+      `select ${amountSql('matched_amount', 'company_id')} as matched_amount, matching_number from entry_lines where id = $1`,
       [receivableLineId],
     );
     expect(line.matched_amount).toBe('0.00');

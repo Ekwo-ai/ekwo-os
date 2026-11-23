@@ -27,6 +27,7 @@ import {
   newUser,
   numberShape,
   type Fixture,
+  amountSql,
 } from './helpers/factory.js';
 
 let db: PGlite;
@@ -116,7 +117,8 @@ async function balancesAt(companyId: string, from: string, to: string): Promise<
 async function linesOf(entryId: string): Promise<{ code: string; debit: string; credit: string }[]> {
   return rows(
     db,
-    `select a.code, l.debit::text as debit, l.credit::text as credit
+    `select a.code, ${amountSql('l.debit', 'l.company_id')} as debit,
+            ${amountSql('l.credit', 'l.company_id')} as credit
        from entry_lines l join accounts a on a.id = l.account_id
       where l.entry_id = $1 order by a.code`,
     [entryId],

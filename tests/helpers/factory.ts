@@ -230,25 +230,35 @@ export interface LedgerLine {
 
 /** The ledger lines of the entry a document produced, in sequence order. */
 /**
+ * SQL that writes an amount as a person reads it in the company's currency:
+ * `to_char` with the mask of `amount_text_format()`, so `0.00` for a zero in
+ * euros, `0` in a currency without decimals, `0.000` in one with three.
+ *
+ * A money column is a bare `numeric` and prints the scale its value holds —
+ * `0` for a zero written as such, `1210.00` for an amount rounded to the cent.
+ * A test that asserts an amount asserts it through this, or as a value, and
+ * never on how the column happens to store it.
+ */
+export function amountSql(amount: string, companyId: string): string {
+  return `to_char(${amount}, amount_text_format(rounding_of(${companyId})))`;
+}
+
+/**
  * The lines of a document's entry, each amount written in the company's
- * currency by `amount_text_format()` — the text a person reads, with the
- * decimals of that currency. A money column is a bare `numeric` and prints
- * the scale its value holds (a zero side is `0`); the assertion is on the
- * amount, not on how the column happens to store it.
+ * currency by `amountSql()`.
  */
 export async function ledgerOf(db: PGlite, documentId: string): Promise<LedgerLine[]> {
   return rows<LedgerLine>(
     db,
     `select a.code,
-            to_char(l.debit, m.mask) as debit,
-            to_char(l.credit, m.mask) as credit,
+            ${amountSql('l.debit', 'l.company_id')} as debit,
+            ${amountSql('l.credit', 'l.company_id')} as credit,
             l.declaration_box as box,
-            to_char(l.box_amount, m.mask) as box_amount,
+            ${amountSql('l.box_amount', 'l.company_id')} as box_amount,
             l.tax_line
        from entry_lines l
        join accounts a on a.id = l.account_id
        join entries e on e.id = l.entry_id
-       cross join lateral (select amount_text_format(rounding_of(l.company_id)) as mask) m
       where e.document_id = $1
       order by l.sequence`,
     [documentId],
