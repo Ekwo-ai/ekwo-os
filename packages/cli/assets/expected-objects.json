@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.28.0",
-  "migration": "20261123203300",
+  "migration": "20261123203400",
   "socle": {
     "schema": "ekwo",
     "tables": [
@@ -594,15 +594,15 @@
         "columns": [
           {
             "name": "balance_end_computed",
-            "type": "numeric(16,2)"
+            "type": "numeric"
           },
           {
             "name": "balance_end_declared",
-            "type": "numeric(16,2)"
+            "type": "numeric"
           },
           {
             "name": "balance_start",
-            "type": "numeric(16,2)"
+            "type": "numeric"
           },
           {
             "name": "bank_account_id",
@@ -675,7 +675,7 @@
         "columns": [
           {
             "name": "amount",
-            "type": "numeric(16,2)"
+            "type": "numeric"
           },
           {
             "name": "bank_account_id",
@@ -1096,7 +1096,7 @@
           },
           {
             "name": "share_capital",
-            "type": "numeric(16,2)"
+            "type": "numeric"
           },
           {
             "name": "share_capital_currency",
@@ -1446,15 +1446,15 @@
           },
           {
             "name": "amount_max",
-            "type": "numeric(16,2)"
+            "type": "numeric"
           },
           {
             "name": "amount_min",
-            "type": "numeric(16,2)"
+            "type": "numeric"
           },
           {
             "name": "amount_typical",
-            "type": "numeric(16,2)"
+            "type": "numeric"
           },
           {
             "name": "company_id",
@@ -2141,7 +2141,7 @@
         "columns": [
           {
             "name": "amount",
-            "type": "numeric(18,2)"
+            "type": "numeric"
           },
           {
             "name": "company_id",
@@ -2190,7 +2190,7 @@
         "columns": [
           {
             "name": "amount",
-            "type": "numeric(16,2)"
+            "type": "numeric"
           },
           {
             "name": "analytic_value_id",
@@ -2227,11 +2227,11 @@
           },
           {
             "name": "amount_incl_tax",
-            "type": "numeric(16,2)"
+            "type": "numeric"
           },
           {
             "name": "amount_untaxed",
-            "type": "numeric(16,2)"
+            "type": "numeric"
           },
           {
             "name": "attributes",
@@ -2287,7 +2287,7 @@
           },
           {
             "name": "stated_tax_amount",
-            "type": "numeric(16,2)"
+            "type": "numeric"
           },
           {
             "name": "tax_id",
@@ -2438,23 +2438,23 @@
           },
           {
             "name": "amount_paid",
-            "type": "numeric(16,2)"
+            "type": "numeric"
           },
           {
             "name": "amount_residual",
-            "type": "numeric(16,2)"
+            "type": "numeric"
           },
           {
             "name": "amount_tax",
-            "type": "numeric(16,2)"
+            "type": "numeric"
           },
           {
             "name": "amount_total",
-            "type": "numeric(16,2)"
+            "type": "numeric"
           },
           {
             "name": "amount_untaxed",
-            "type": "numeric(16,2)"
+            "type": "numeric"
           },
           {
             "name": "buyer_reference",
@@ -2715,11 +2715,11 @@
           },
           {
             "name": "total_credit",
-            "type": "numeric(16,2)"
+            "type": "numeric"
           },
           {
             "name": "total_debit",
-            "type": "numeric(16,2)"
+            "type": "numeric"
           },
           {
             "name": "updated_at",
@@ -2732,7 +2732,7 @@
         "columns": [
           {
             "name": "amount",
-            "type": "numeric(16,2)"
+            "type": "numeric"
           },
           {
             "name": "analytic_value_id",
@@ -2769,15 +2769,15 @@
           },
           {
             "name": "amount_currency",
-            "type": "numeric(16,2)"
+            "type": "numeric"
           },
           {
             "name": "balance",
-            "type": "numeric(16,2)"
+            "type": "numeric"
           },
           {
             "name": "box_amount",
-            "type": "numeric(16,2)"
+            "type": "numeric"
           },
           {
             "name": "company_id",
@@ -2793,7 +2793,7 @@
           },
           {
             "name": "credit",
-            "type": "numeric(16,2)"
+            "type": "numeric"
           },
           {
             "name": "currency_code",
@@ -2805,7 +2805,7 @@
           },
           {
             "name": "debit",
-            "type": "numeric(16,2)"
+            "type": "numeric"
           },
           {
             "name": "declaration_box",
@@ -2829,7 +2829,7 @@
           },
           {
             "name": "matched_amount",
-            "type": "numeric(16,2)"
+            "type": "numeric"
           },
           {
             "name": "matching_number",
@@ -3358,7 +3358,7 @@
         "columns": [
           {
             "name": "amount",
-            "type": "numeric(16,2)"
+            "type": "numeric"
           },
           {
             "name": "bank_account_id",
@@ -3553,7 +3553,7 @@
           },
           {
             "name": "amount",
-            "type": "numeric(16,2)"
+            "type": "numeric"
           },
           {
             "name": "batch_id",
@@ -4528,7 +4528,7 @@
           },
           {
             "name": "deduction",
-            "type": "numeric(18,2)"
+            "type": "numeric"
           },
           {
             "name": "effective_rate",
@@ -4564,11 +4564,11 @@
           },
           {
             "name": "tax",
-            "type": "numeric(18,2)"
+            "type": "numeric"
           },
           {
             "name": "turnover",
-            "type": "numeric(18,2)"
+            "type": "numeric"
           },
           {
             "name": "window_months_counted",
@@ -4576,7 +4576,7 @@
           },
           {
             "name": "window_turnover",
-            "type": "numeric(18,2)"
+            "type": "numeric"
           }
         ]
       },
@@ -4589,7 +4589,7 @@
           },
           {
             "name": "deduction",
-            "type": "numeric(18,2)"
+            "type": "numeric"
           },
           {
             "name": "legal_reference",
@@ -4613,7 +4613,7 @@
           },
           {
             "name": "up_to",
-            "type": "numeric(18,2)"
+            "type": "numeric"
           },
           {
             "name": "valid_from",
@@ -4728,7 +4728,7 @@
           },
           {
             "name": "amount",
-            "type": "numeric(18,2)"
+            "type": "numeric"
           },
           {
             "name": "country",
@@ -4826,7 +4826,7 @@
           },
           {
             "name": "minimum_base",
-            "type": "numeric(18,2)"
+            "type": "numeric"
           },
           {
             "name": "percent",
@@ -13549,11 +13549,11 @@
           "columns": [
             {
               "name": "accumulated",
-              "type": "numeric(16,2)"
+              "type": "numeric"
             },
             {
               "name": "amount",
-              "type": "numeric(16,2)"
+              "type": "numeric"
             },
             {
               "name": "asset_id",
@@ -13577,7 +13577,7 @@
             },
             {
               "name": "net_book_value",
-              "type": "numeric(16,2)"
+              "type": "numeric"
             },
             {
               "name": "period_end",
@@ -13602,7 +13602,7 @@
           "columns": [
             {
               "name": "accumulated",
-              "type": "numeric(16,2)"
+              "type": "numeric"
             },
             {
               "name": "asset_id",
@@ -13618,7 +13618,7 @@
             },
             {
               "name": "cost",
-              "type": "numeric(16,2)"
+              "type": "numeric"
             },
             {
               "name": "counterpart_account_id",
@@ -13642,15 +13642,15 @@
             },
             {
               "name": "net_book_value",
-              "type": "numeric(16,2)"
+              "type": "numeric"
             },
             {
               "name": "proceeds",
-              "type": "numeric(16,2)"
+              "type": "numeric"
             },
             {
               "name": "result",
-              "type": "numeric(16,2)"
+              "type": "numeric"
             }
           ]
         },
@@ -13687,7 +13687,7 @@
             },
             {
               "name": "cost",
-              "type": "numeric(16,2)"
+              "type": "numeric"
             },
             {
               "name": "created_at",
@@ -13743,7 +13743,7 @@
             },
             {
               "name": "residual_value",
-              "type": "numeric(16,2)"
+              "type": "numeric"
             },
             {
               "name": "state",
@@ -14281,7 +14281,7 @@
             },
             {
               "name": "amount",
-              "type": "numeric(16,2)"
+              "type": "numeric"
             },
             {
               "name": "budget_id",
@@ -15070,7 +15070,7 @@
             },
             {
               "name": "total_value",
-              "type": "numeric(18,2)"
+              "type": "numeric"
             },
             {
               "name": "updated_at",
@@ -15955,7 +15955,7 @@
           "columns": [
             {
               "name": "amount",
-              "type": "numeric(18,2)"
+              "type": "numeric"
             },
             {
               "name": "closed_at",
