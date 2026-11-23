@@ -54,14 +54,22 @@ the comments, so the reader learns which columns are promises.
 
 ## Consequences
 
-- A whole ledger in a zero-decimal currency — a fixture pack with a fictional
-  country code — goes through entry, payment, matching, return, trial balance
-  and close with every figure a whole unit.
-- **Known gap:** monetary columns are still `numeric(16, 2)`, so a
-  three-decimal amount rounded correctly by the engine is rounded again by the
-  column. Widening changes the text of every amount returned and is its own
-  change; a test pins the present behaviour. Frozen declaration boxes already
-  have no scale (see [0037](0037-a-filed-declaration-is-frozen.md)).
+- A whole ledger in a zero-decimal currency and in a three-decimal one — two
+  fixture packs with fictional country codes — goes through entry, payment,
+  matching, return, trial balance and close with every figure to the unit of
+  its currency.
+- **Money columns are bare `numeric`** (owner's decision, 2026-09-14, applied
+  by `20261123203000_an_amount_holds_the_decimals_of_its_currency` and one
+  migration per module that owns amounts). Until then they were
+  `numeric(16, 2)`, and a three-decimal amount rounded correctly by the engine
+  was rounded again by the column. No `numeric(20, 6)` and no rounding trigger
+  replaced it: `round_amount()` is the only rule. A consequence for readers:
+  `numeric` prints the scale a value holds, so an amount a caller wrote as
+  `100` reads back `100` where the column used to pad it to `100.00`. Readers
+  take both; text for a person goes through `amount_text_format()`, and every
+  legal format writes the decimals its own specification asks for. Frozen
+  declaration boxes already had no scale (see
+  [0037](0037-a-filed-declaration-is-frozen.md)).
 - The format bricks round half up only; the first pack to declare another
   method will have to pass it to them, and the vector test is where that shows.
 

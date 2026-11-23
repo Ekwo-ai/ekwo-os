@@ -9,6 +9,28 @@ somewhere has already run it.
 
 ## [Unreleased]
 
+### Changed
+
+- **An amount holds the decimals of its currency.** Every money column of the
+  socle and of the modules (`budgets`, `contracts`, `crm`, `assets`) is a bare
+  `numeric` instead of `numeric(16, 2)` or `numeric(18, 2)`: a Kuwaiti or
+  Tunisian dinar keeps the thousandth `round_amount()` computed, where the
+  column used to cut it to a hundredth. `round_amount()` stays the one
+  rounding rule; no rounding trigger was added. Rates, percentages,
+  quantities and unit prices keep their types. The views, triggers and
+  generated columns that read the amounts are recreated with identical
+  definitions and grants; `entry_lines.balance`, `documents.amount_residual`,
+  `entries.is_balanced` and `bank_statements.is_consistent` move to the end
+  of their tables. **Text of an amount:** `numeric` prints the scale a value
+  holds, so an amount written as `100` now reads back `100` rather than
+  `100.00` — the clients read both, and every legal format (FEC, XBRL,
+  Factur-X, UBL, bank files) writes the decimals its specification requires
+  whatever the storage. `fixed_assets.run_depreciation()` writes its total
+  with the mask of the company's currency. Migrations `20261123203000`,
+  `assets/20261123203100`, `budgets/20261123203200`,
+  `contracts/20261123203300`, `crm/20261123203400`; additive, no data
+  rewritten, no change to the oldest schema a client reads.
+
 ### Added
 
 - **A pack of a country with no statement format of its own inherits the
