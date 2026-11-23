@@ -41,7 +41,7 @@ somewhere has already run it.
   `bank_identifier`, `bank_accounts.bank_scheme` / `bank_identifier`,
   `bank_transactions.counterpart_account_scheme` /
   `counterpart_account_identifier`, `documents.payee_account_scheme` /
-  `payee_account_identifier` (`20261123203300`, additive). The schemes are the
+  `payee_account_identifier` (`20261123203500`, additive). The schemes are the
   closed list `bank_identifier_schemes` — `iban` and `bic` are entries of it,
   beside the ABA routing number, the BSB, the IFSC, the sort code and the
   others the packs declare — and `bank_identifier_problem()` checks a value by

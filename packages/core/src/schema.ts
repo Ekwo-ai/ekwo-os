@@ -279,7 +279,7 @@ export const SCHEMA_FEATURES = {
    * bank of a contact, the bank of a company's account, the counterpart of a
    * statement line and the payee of a document (BT-84), each in a scheme of
    * `bank_identifier_schemes`, the IBAN and BIC columns mirrored with them
-   * (`20261123203300_an_account_is_a_scheme_and_a_value`). Below it, the
+   * (`20261123203500_an_account_is_a_scheme_and_a_value`). Below it, the
    * pairs are absent from a read and the IBAN and BIC columns are all there
    * is; writing a pair is refused by name.
    */

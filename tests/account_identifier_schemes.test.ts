@@ -1,7 +1,7 @@
 /**
  * Every account of the books is a scheme and a value.
  *
- * `20261123203300_an_account_is_a_scheme_and_a_value.sql` gives the five
+ * `20261123203500_an_account_is_a_scheme_and_a_value.sql` gives the five
  * columns that named an IBAN or a BIC alone — `bank_accounts.bic`,
  * `contacts.iban` and `.bic`, `bank_transactions.counterpart_iban`,
  * `documents.payee_iban` (BT-84) — a scheme and a value from the closed list

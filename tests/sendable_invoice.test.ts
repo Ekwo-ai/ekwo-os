@@ -61,6 +61,9 @@ const SNAPSHOT = [
   // Recreates document_header, document_line_items and document_tax_summary
   // as the migrations above leave them, so it comes after all of them.
   '20261123203000_an_amount_holds_the_decimals_of_its_currency.sql',
+  // Replaces document_header once more, with the payee's account as a scheme
+  // and a value: columns the views above do not have, so it follows them.
+  '20261123203500_an_account_is_a_scheme_and_a_value.sql',
 ];
 
 /** The treatments each condition of a legal mention covers — the vocabulary of `applies_when`, as the schema documents it. */

@@ -59,6 +59,9 @@ const READS_THE_COLUMN = [
   // Recreates the document views as the migrations above leave them, the
   // column included, so it comes after all of them.
   '20261123203000_an_amount_holds_the_decimals_of_its_currency.sql',
+  // Replaces document_header once more, with the payee's account as a scheme
+  // and a value: columns the views above do not have, so it follows them.
+  '20261123203500_an_account_is_a_scheme_and_a_value.sql',
 ];
 
 let db: PGlite;
