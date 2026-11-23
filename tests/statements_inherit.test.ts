@@ -7,12 +7,13 @@
  * Every expectation here is read from the framework pack itself: which lines
  * it carries and which kinds of statement it offers.
  */
-import { readFile } from 'node:fs/promises';
+import { cp, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { resolveInheritedStatements, type InheritableFramework } from '../packages/cli/src/pack/inherit.js';
-import { GENERIC_PACK } from '../packages/cli/src/pack/read.js';
-import { packsRoot } from './helpers/packs.js';
+import { GENERIC_PACK, readPack } from '../packages/cli/src/pack/read.js';
+import { allPacks, packsRoot } from './helpers/packs.js';
 
 type Json = Record<string, unknown>;
 
@@ -160,5 +161,83 @@ describe('a statements.json that inherits', () => {
   it('leaves a file that inherits nothing exactly as it was', () => {
     const own = { statements: [{ ...sheet, code: 'OWN' }] };
     expect(resolveInheritedStatements(own, framework)).toEqual({ raw: own, issues: [] });
+  });
+});
+
+/** The packs of this checkout whose `statements.json` inherits, with the file as written. */
+const inheritors = (
+  await Promise.all(
+    allPacks.map(async (pack) => {
+      const path = join(packsRoot, pack.slug, 'statements.json');
+      const raw = JSON.parse(await readFile(path, 'utf8').catch(() => '{}')) as Json;
+      return { pack, raw };
+    }),
+  )
+).filter(({ raw }) => typeof raw['inherit'] === 'string');
+
+describe('the packs that inherit', () => {
+  it('are there, or the tests below prove nothing', () => {
+    expect(inheritors.length).toBeGreaterThan(1);
+  });
+
+  for (const { pack, raw } of inheritors) {
+    const own = new Set(
+      (raw['statements'] as Json[]).filter((s) => !Array.isArray(s['lines'])).map((s) => String(s['code'])),
+    );
+
+    it(`${pack.slug}: every inherited line is proved by the pack's own golden`, async () => {
+      const golden = JSON.parse(await readFile(join(packsRoot, pack.slug, 'golden', 'statements.json'), 'utf8')) as {
+        statements: { code: string; lines: Record<string, string> }[];
+      };
+      for (const statement of pack.statements.filter((s) => own.has(s.code))) {
+        const expected = golden.statements.find((g) => g.code === statement.code);
+        expect(expected, `${statement.code} in golden/statements.json`).toBeDefined();
+        expect(Object.keys(expected!.lines).sort()).toEqual(statement.lines.map((l) => l.code).sort());
+      }
+    });
+
+    it(`${pack.slug}: carries the framework's lines and rules where it overrides nothing`, () => {
+      const overridden = new Set(
+        ((raw['overrides'] ?? []) as Json[]).map((o) => `${String(o['statement'])}:${String(o['line'] ?? '')}`),
+      );
+      for (const statement of pack.statements.filter((s) => own.has(s.code))) {
+        const source = frameworkStatements.find((f) => f['kind'] === statement.kind)!;
+        for (const line of source['lines'] as Json[]) {
+          const resolved = statement.lines.find((l) => l.code === line['code']);
+          expect(resolved, `${statement.code}.${String(line['code'])}`).toBeDefined();
+          if (overridden.has(`${statement.code}:${String(line['code'])}`)) continue;
+          expect(resolved!.name).toBe(line['name']);
+          expect(resolved!.rules.map((r) => r.account_type)).toEqual(
+            ((line['rules'] ?? []) as Json[]).map((r) => r['account_type']),
+          );
+        }
+      }
+    });
+  }
+
+  it('ekwo pack check refuses an override that names a line the inherited statement does not carry', async () => {
+    const { pack, raw } = inheritors[0]!;
+    const statement = (raw['statements'] as Json[]).find((s) => !Array.isArray(s['lines']))!;
+    const dir = await mkdtemp(join(tmpdir(), 'ekwo-inherit-'));
+    try {
+      for (const folder of ['schema', GENERIC_PACK, pack.slug]) {
+        await cp(join(packsRoot, folder), join(dir, folder), { recursive: true });
+      }
+      const edited = {
+        ...raw,
+        overrides: [
+          ...((raw['overrides'] ?? []) as Json[]),
+          { statement: statement['code'], line: 'NOT-A-LINE', name: 'Anything' },
+        ],
+      };
+      await writeFile(join(dir, pack.slug, 'statements.json'), JSON.stringify(edited), 'utf8');
+      const message = await readPack(pack.slug, dir).then(
+        () => '',
+        (e: Error) => e.message,
+      );
+      expect(message).toContain(`NOT-A-LINE is not a line of ${String(statement['code'])} as inherited from`);
+    } finally {
+      await rm(dir, { recursive: true, force: true });
+    }
   });
 });
