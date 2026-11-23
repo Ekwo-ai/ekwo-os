@@ -11,7 +11,7 @@ import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { explain, readTools, writeTools, type Backend } from '../../packages/mcp/src/index.js';
 import { freshDatabase, one } from '../helpers/db.js';
-import { newCompany, newContact, newDocument, type Fixture } from '../helpers/factory.js';
+import { amountValue, newCompany, newContact, newDocument, type Fixture } from '../helpers/factory.js';
 import { roleOf, somePack } from '../helpers/packs.js';
 import { backendFor, list, record } from './helpers.js';
 
@@ -83,7 +83,8 @@ describe('suggest_line_contacts and set_line_contact', () => {
     const answer = record(await readTools.suggestLineContacts(backend, { company_id: fx.companyId, line_ids: [line] }));
     expect(answer['count']).toBe(1);
     const [found] = list(answer['lines']);
-    expect(found).toMatchObject({ line_id: line, label: 'Invoice TOOLS-0001, imported', side: 'debit', amount: '40.00' });
+    expect(found).toMatchObject({ line_id: line, label: 'Invoice TOOLS-0001, imported', side: 'debit' });
+    expect(amountValue(found?.['amount'])).toBe('40');
     const [best] = list(found?.['candidates']);
     expect(best).toMatchObject({ contact_id: customer, name: 'Northwind Traders', method: 'document', alternatives: 1 });
 

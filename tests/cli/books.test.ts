@@ -17,7 +17,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { EXIT_REFUSED, EXIT_USAGE, run, validate, type OutputDocument } from '../../packages/cli/src/index.js';
 import { SCHEMA_FEATURES } from '../../packages/core/src/index.js';
 import { expectError, freshDatabase, one, repoRoot, rows } from '../helpers/db.js';
-import { newCompany, newUser } from '../helpers/factory.js';
+import { amountValue, newCompany, newUser } from '../helpers/factory.js';
 import { roleOf, somePack } from '../helpers/packs.js';
 import { ANON_KEY, FAKE_URL, fakeSupabase, type FakeSupabase } from './fake-supabase.js';
 
@@ -372,10 +372,12 @@ describe('the verbs', () => {
     const statement = answer.data as { opening_balance: string; closing_balance: string; lines: Row[]; count: number };
 
     expect(statement.opening_balance).toBe('0.00');
-    expect(statement.lines.map((l) => [l['debit'], l['credit'], l['matching_state']])).toEqual([
-      [owed.total, '0.00', 'matched'],
-      ['0.00', owed.total, 'matched'],
-      ['0.00', '10.00', 'open'],
+    expect(
+      statement.lines.map((l) => [amountValue(l['debit']), amountValue(l['credit']), l['matching_state']]),
+    ).toEqual([
+      [amountValue(owed.total), '0', 'matched'],
+      ['0', amountValue(owed.total), 'matched'],
+      ['0', '10', 'open'],
     ]);
     expect(statement.lines[0]?.['document_id']).toBe(documentId);
     // The ten paid on account are owed back to the customer.

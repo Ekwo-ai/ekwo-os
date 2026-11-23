@@ -246,6 +246,24 @@ export function amountSql(amount: string, companyId: string, currencyCode?: stri
 }
 
 /**
+ * An amount as a value: the decimal text without the zeros that say nothing,
+ * so `80`, `80.00` and `80.000` are one amount. For an amount a tool hands
+ * back as the database stored it, where the test asserts the figure and not
+ * the scale the caller happened to write it with.
+ */
+export function amountValue(text: unknown): string | null {
+  if (text === null || text === undefined) return null;
+  const raw = String(text).trim();
+  if (!/^-?\d+(\.\d+)?$/.test(raw)) return raw;
+  const negative = raw.startsWith('-');
+  const [whole = '0', fraction = ''] = (negative ? raw.slice(1) : raw).split('.');
+  const digits = whole.replace(/^0+(?=\d)/, '');
+  const decimals = fraction.replace(/0+$/, '');
+  const body = decimals === '' ? digits : `${digits}.${decimals}`;
+  return negative && body !== '0' ? `-${body}` : body;
+}
+
+/**
  * The lines of a document's entry, each amount written in the company's
  * currency by `amountSql()`.
  */

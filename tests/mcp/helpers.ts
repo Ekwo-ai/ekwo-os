@@ -1,3 +1,4 @@
+import { amountSql } from '../helpers/factory.js';
 /**
  * PGlite behind the MCP server's `SqlClient`.
  *
@@ -69,7 +70,7 @@ export async function ledgerOfEntry(
   entryId: string,
 ): Promise<{ code: string; debit: string; credit: string }[]> {
   const result = await db.query<{ code: string; debit: string; credit: string }>(
-    `select a.code, l.debit::text as debit, l.credit::text as credit
+    `select a.code, ${amountSql('l.debit', 'l.company_id')} as debit, ${amountSql('l.credit', 'l.company_id')} as credit
        from entry_lines l join accounts a on a.id = l.account_id
       where l.entry_id = $1
       order by l.sequence`,

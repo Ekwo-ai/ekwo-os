@@ -13,7 +13,7 @@ import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { explain, writeTools, type Backend } from '../../packages/mcp/src/index.js';
 import { freshDatabase, one } from '../helpers/db.js';
-import { newCompany, newContact, newDocument, type Fixture } from '../helpers/factory.js';
+import { amountValue, newCompany, newContact, newDocument, type Fixture } from '../helpers/factory.js';
 import { roleOf, somePack } from '../helpers/packs.js';
 import { backendFor, record } from './helpers.js';
 
@@ -147,13 +147,16 @@ describe('reverse_entry', () => {
 
     const answer = record(await writeTools.reverseEntry(backend, { entry_id: entryId }));
     const entry = record(answer['entry']);
-    expect(entry).toMatchObject({ state: 'posted', reversed_entry_id: entryId, total_debit: '80.00' });
+    expect(entry).toMatchObject({ state: 'posted', reversed_entry_id: entryId });
+    expect(amountValue(entry['total_debit'])).toBe('80');
     const lines = answer['entry_lines'] as Record<string, unknown>[];
-    expect(lines.map((line) => [record(line['account'])['code'], line['debit'], line['credit']])).toEqual([
-      [RECEIVABLE, '0.00', '80.00'],
-      [SALES, '80.00', '0.00'],
+    expect(
+      lines.map((line) => [record(line['account'])['code'], amountValue(line['debit']), amountValue(line['credit'])]),
+    ).toEqual([
+      [RECEIVABLE, '0', '80'],
+      [SALES, '80', '0'],
     ]);
-    expect(lines[0]?.['matched_amount']).toBe('80.00');
+    expect(amountValue(lines[0]?.['matched_amount'])).toBe('80');
   });
 
   it('refuses the entry of a document, and says to cancel the document', async () => {
