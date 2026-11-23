@@ -2182,7 +2182,7 @@
     "statements": {
       "type": "object",
       "title": "statements.json",
-      "description": "The financial statements of a pack. An empty list is a valid pack — a country without statements reports on the generic framework by account type, which is what the eighteen account types buy.",
+      "description": "The financial statements of a pack. An empty list is a valid pack — a country without statements reports on the generic framework by account type, which is what the eighteen account types buy. A country whose law prescribes no format of its own and that reports under a framework the repository carries (IFRS for SMEs: `packs/generic`) inherits that framework's statements instead of rewriting them: `inherit` names the framework, each statement of the pack that gives no `lines` takes the framework's statement of its kind, under the pack's own code, and `overrides` renames, adjusts or adds the lines where the country differs. `ekwo pack build` resolves the inheritance into the seed, so the database sees ordinary statements.",
       "required": [
         "statements"
       ],
@@ -2191,20 +2191,102 @@
         "$schema": {
           "type": "string"
         },
+        "inherit": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Code of the framework pack whose statements this pack inherits — the `code` of its pack.json, `IFRS-SME` for `packs/generic`. A statement of this file without `lines` is that framework's statement of the same kind, lines and account-type rules included. Statements that give their `lines` stay the pack's own, so a pack may inherit one statement and write another."
+        },
         "statements": {
           "type": "array",
           "items": {
             "$ref": "#/$defs/statement"
           }
+        },
+        "overrides": {
+          "type": "array",
+          "description": "Where an inheriting pack differs from its framework, line by line. Applied in order to the inherited lines, before any check: an override that names a statement which inherits nothing, a line the inherited statement does not carry, or adds a line it already carries is refused by `ekwo pack check`.",
+          "items": {
+            "$ref": "#/$defs/statement_override"
+          }
         }
       }
     },
+    "statement_override": {
+      "oneOf": [
+        {
+          "type": "object",
+          "title": "a line of the framework, changed",
+          "description": "Names an inherited line by its code and gives the fields it takes instead of the framework's: a name (GAPSME in Malta prints its own captions), rules (a chart whose accounts the account types do not split as the country presents them), the `plus` of a total that adds a line the pack added. Every field not given keeps the framework's value.",
+          "required": [
+            "statement",
+            "line"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "statement": {
+              "$ref": "#/$defs/code"
+            },
+            "line": {
+              "$ref": "#/$defs/code"
+            },
+            "parent": {
+              "$ref": "#/$defs/statement_line/properties/parent"
+            },
+            "name": {
+              "$ref": "#/$defs/statement_line/properties/name"
+            },
+            "sequence": {
+              "$ref": "#/$defs/statement_line/properties/sequence"
+            },
+            "sign": {
+              "$ref": "#/$defs/statement_line/properties/sign"
+            },
+            "plus": {
+              "$ref": "#/$defs/statement_line/properties/plus"
+            },
+            "minus": {
+              "$ref": "#/$defs/statement_line/properties/minus"
+            },
+            "xbrl": {
+              "$ref": "#/$defs/statement_line/properties/xbrl"
+            },
+            "legal_reference": {
+              "$ref": "#/$defs/statement_line/properties/legal_reference"
+            },
+            "source": {
+              "$ref": "#/$defs/statement_line/properties/source"
+            },
+            "rules": {
+              "$ref": "#/$defs/statement_line/properties/rules"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "title": "a line the framework does not carry, added",
+          "description": "A whole line, written as in a statement of the pack's own. Its code must be new to the inherited statement; a total that should add it says so with an override of its `plus`.",
+          "required": [
+            "statement",
+            "add"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "statement": {
+              "$ref": "#/$defs/code"
+            },
+            "add": {
+              "$ref": "#/$defs/statement_line"
+            }
+          }
+        }
+      ]
+    },
     "statement": {
       "type": "object",
+      "description": "One statement. `lines` is required, except in a file that declares `inherit`, where a statement without lines is the framework's statement of its kind.",
       "required": [
         "code",
-        "kind",
-        "lines"
+        "kind"
       ],
       "additionalProperties": false,
       "properties": {

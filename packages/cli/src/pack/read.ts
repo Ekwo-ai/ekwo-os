@@ -14,6 +14,7 @@ import { fileURLToPath } from 'node:url';
 import { ACCOUNT_TYPES, INVOICE_LABEL_KEYS, internalGroup, type AccountType } from '@ekwo-ai/core';
 import { validate, type Issue } from './schema.js';
 import { ruleCatches, ruleTakes } from './rules.js';
+import { resolveInheritedStatements, type InheritableFramework } from './inherit.js';
 import { analysisReferences, analysisSources, normaliseAnalysis, type PackAnalysis } from './analysis.js';
 import {
   applyCorporateTaxLabels,
@@ -1433,7 +1434,15 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
   if (existsSync(join(root, 'statements.json'))) {
     const raw = await readJson(join(root, 'statements.json'));
     issues.push(...validate(raw, defs['statements'] ?? {}, schema, 'statements.json'));
-    statements = normaliseStatements(raw as Record<string, unknown>, charts);
+    // A pack of a country with no format of its own inherits a framework's
+    // statements; what is checked and compiled from here on is the result.
+    const family = (raw as Record<string, unknown>)['inherit'];
+    const inherited = resolveInheritedStatements(
+      raw as Record<string, unknown>,
+      typeof family === 'string' ? await frameworkToInherit(family, dir) : null,
+    );
+    issues.push(...inherited.issues);
+    statements = normaliseStatements(inherited.raw, charts);
   }
 
   // What the accounts mean to an analysis of the books. Optional, like a
@@ -2336,6 +2345,28 @@ function assetReferences(fixedAssets: PackFixedAssets, manifest: Manifest): Issu
     }
   }
   return issues;
+}
+
+/**
+ * The framework pack a `statements.json` names in `inherit`, found by the
+ * `code` of its manifest among the packs of this checkout that are not a
+ * country, or null where none declares it. Its statements are returned as
+ * written: the inheriting pack resolves them, then checks the result as its
+ * own.
+ */
+async function frameworkToInherit(code: string, dir: string): Promise<InheritableFramework | null> {
+  const entries = await readdir(dir, { withFileTypes: true });
+  for (const entry of entries) {
+    if (!entry.isDirectory() || /^[a-z]{2}$/.test(entry.name)) continue;
+    const manifestPath = join(dir, entry.name, 'pack.json');
+    const statementsPath = join(dir, entry.name, 'statements.json');
+    if (!existsSync(manifestPath) || !existsSync(statementsPath)) continue;
+    const manifest = (await readJson(manifestPath)) as { $schema?: unknown; code?: unknown };
+    if (!String(manifest.$schema ?? '').endsWith('#/$defs/framework') || manifest.code !== code) continue;
+    const raw = (await readJson(statementsPath)) as { statements?: Record<string, unknown>[] };
+    return { code, statements: raw.statements ?? [] };
+  }
+  return null;
 }
 
 /**
@@ -3798,13 +3829,21 @@ function statementReferences(statements: PackStatement[], charts: PackChart[]): 
     const applicable = charts.filter(
       (c) => statement.chart_code === null || statement.chart_code === c.code,
     );
+    //
+    // A rule by code outranks a rule by account type, as it does in
+    // `statement_account_matches()`: an inherited statement takes accounts by
+    // type, and the line a pack adds over it takes some of them back by code.
+    // So the lines that compete for an account are those reaching it by code,
+    // and only where there is none, those reaching it by type.
     for (const chart of applicable) {
       for (const account of chart.accounts) {
-        const hits = statement.lines.filter((line) => line.rules.some((rule) => ruleCatches(rule, account.code)));
+        const byCode = statement.lines.filter((line) => line.rules.some((rule) => ruleCatches(rule, account.code)));
+        const catches = byCode.length > 0
+          ? (rule: PackStatementRule) => ruleCatches(rule, account.code)
+          : (rule: PackStatementRule) => rule.kind === 'account_type' && ruleTakes(rule, account);
+        const hits = statement.lines.filter((line) => line.rules.some(catches));
         if (hits.length < 2) continue;
-        const sides = hits.flatMap((line) =>
-          line.rules.filter((rule) => ruleCatches(rule, account.code)).map((rule) => rule.side),
-        );
+        const sides = hits.flatMap((line) => line.rules.filter(catches).map((rule) => rule.side));
         const exclusive = sides.length === 2 && sides.includes('debit') && sides.includes('credit');
         if (!exclusive) {
           issues.push({
@@ -3834,7 +3873,7 @@ function statementReferences(statements: PackStatement[], charts: PackChart[]): 
       if (account.type === 'off_balance') continue;
       if (parents.has(account.code)) continue;
       const found = covering.some((st) =>
-        st.lines.some((line) => line.rules.some((rule) => ruleCatches(rule, account.code))),
+        st.lines.some((line) => line.rules.some((rule) => ruleTakes(rule, account))),
       );
       if (!found) {
         issues.push({

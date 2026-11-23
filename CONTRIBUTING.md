@@ -157,6 +157,15 @@ node packages/cli/dist/bin.js pack check --all   # what the CI runs
 node packages/cli/dist/bin.js pack build be      # after changing packs/be
 ```
 
+**An IFRS country inherits its statements, it never rewrites them.** A
+country whose law prescribes no statement format of its own, and whose pack
+presents IFRS for SMEs, declares `"inherit": "IFRS-SME"` in `statements.json`
+and overrides only the lines it presents differently — the framework's
+statements in `packs/generic/` are written once, by account type, and a copy
+per country is a copy that drifts. A country with a legal format writes it in
+full. The format, and what `ekwo pack check` refuses, is in
+[`docs/packs.md`](docs/packs.md#a-country-with-no-format-of-its-own-inherits-the-frameworks).
+
 Every pack has an owner in [`.github/CODEOWNERS`](.github/CODEOWNERS), who is
 asked to look at a pull request that moves it. Ownership is not certification:
 it is who knows the law, not who has signed anything.

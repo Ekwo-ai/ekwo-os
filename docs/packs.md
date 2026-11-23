@@ -197,6 +197,78 @@ reaches no line of any of its statements**. A heading, an account with
 children, may reach none: it straddles the lines its children are split over
 and nothing is posted to it.
 
+### A country with no format of its own inherits the framework's
+
+Most countries that report under IFRS for SMEs prescribe no table of captions:
+the standard lists the minimum line items of a statement of financial position
+and of an income statement, and `packs/generic/statements.json` already writes
+them, by account type, for any chart. A pack of such a country **inherits**
+those two statements rather than writing them again:
+
+```json
+{
+  "inherit": "IFRS-SME",
+  "statements": [
+    { "code": "XX-IFRS-SME-SFP", "kind": "balance_sheet",
+      "legal_reference": "What the law of the country says, and that it prescribes no format" },
+    { "code": "XX-IFRS-SME-IS", "kind": "income_statement" }
+  ],
+  "overrides": [
+    { "statement": "XX-IFRS-SME-SFP", "line": "A-NC-FIX", "name": "Property, plant and equipment" },
+    { "statement": "XX-IFRS-SME-SFP",
+      "add": { "code": "A-NC-INT", "parent": "A-NC", "name": "Intangible assets", "sequence": 15,
+               "rules": [ { "kind": "code_range", "code_from": "18", "code_to": "18" } ] } },
+    { "statement": "XX-IFRS-SME-SFP", "line": "A-NC", "plus": ["A-NC-FIX", "A-NC-INT", "A-NC-OTH"] }
+  ]
+}
+```
+
+- `inherit` names the framework by the `code` of its `pack.json` — `IFRS-SME`
+  for `packs/generic/`. The family is read from the pack, never from a list
+  of countries.
+- A statement **without `lines`** is the framework's statement of the same
+  kind: its lines, its `account_type` rules, its totals. The pack keeps its own
+  statement code, so its charts, its translations (`i18n/`, by
+  `statement:line`) and its golden name it as before, and whatever it writes
+  on the statement — `name`, `legal_reference`, `source`, `framework`,
+  `result_in_progress` — replaces the framework's. A statement **with** `lines`
+  stays the pack's own: a pack may inherit its balance sheet and write a cash
+  flow statement of its own beside it.
+- `overrides` is applied in order. `line` names an inherited line and gives
+  the fields it takes instead — a `name` in the language of the pack or the
+  caption its law prints (GAPSME in Malta), `rules` where the account types of
+  the chart do not split the accounts the way the country presents them,
+  the `plus` of a total that adds a line the pack added. Every field not given
+  keeps the framework's value. `add` is a whole line the framework does not
+  carry, written as in a statement of the pack's own.
+- A rule by code outranks a rule by type, in `pack check` exactly as in
+  `financial_statement()`: an added line that takes accounts `1800` to `1899`
+  by range takes them away from the line that would have taken them by type,
+  and that is not two lines sharing an account.
+
+`ekwo pack build` resolves the inheritance when it reads the pack, so the seed
+holds ordinary statement rows and no migration knows that inheritance exists;
+`ekwo pack check` checks the resolved statements with every rule below, and
+refuses on top of them an override that names a line the inherited statement
+does not carry, an `add` of a line it already carries, an override of a
+statement that inherits nothing, an override that changes nothing or a line
+overridden twice, a statement without lines in a file that declares no
+`inherit`, and an `inherit` that no framework pack of the checkout declares.
+When `packs/generic/` changes, every pack that inherits from it changes with
+it: rebuild them all (`ekwo pack build --all`) and read the golden diffs.
+
+The proof stays per country: each inheriting pack keeps its own
+`golden/statements.json`, line by line, and its golden test replays its own
+year of books through the resolved statements.
+
+**An IFRS country inherits, it does not rewrite.** A pack whose country
+prescribes no statement format of its own and that presents IFRS for SMEs —
+whether the law requires it or the pack chooses it — inherits from
+`packs/generic/` and overrides only what differs. A country whose law
+prescribes a format (a schedule of captions, an official form, a taxonomy)
+writes its statements in full, as Belgium, France or Malta do: inheritance is
+an option, never a reason to drop a legal format.
+
 Every file is validated against [`packs/schema/pack.1.json`](../packs/schema/pack.1.json),
 a JSON Schema draft 2020-12 that describes all of them: the manifest is the
 root, the others are `$defs`. Two formats and no third: JSON for anything with
@@ -2486,6 +2558,15 @@ two lines other than as a debit side and a credit side. **An account of a chart
 that reaches no line of any statement covering that chart** — the check that
 makes a balance sheet balance.
 
+A `statements.json` that inherits has six more, read before the rest so that
+every check above runs on the resolved statements: an `inherit` no framework
+pack declares; a statement without `lines` in a file that inherits nothing, or
+of a kind the framework does not carry; an override of a statement that
+inherits nothing; **an override naming a line the inherited statement does not
+carry** — the message lists the lines it does; an `add` of a line it already
+carries; and an override that changes nothing, or a second override of the
+same line.
+
 The fact keys have five of their own. A statement carrying any `xbrl` key must
 name its `taxonomy`; a key is at least a metric and one domain member, each
 part a qualified name such as `bas:m9`, with no empty or padded part and no
@@ -3168,6 +3249,13 @@ or you are not ready to map them — leave the file out and let your chart fall
 back to `packs/generic/`, the country-less pack whose rules are all
 `account_type`. That is what the eighteen account types buy, and it gives a
 chart with no legal codes a balance sheet that ties out.
+
+If your country prescribes no format and its companies report under IFRS for
+SMEs, **inherit** the framework's statements instead of copying them:
+`"inherit": "IFRS-SME"`, one entry per statement with your code and no
+`lines`, and an override for each line your country presents differently —
+[A country with no format of its own inherits the framework's](#a-country-with-no-format-of-its-own-inherits-the-frameworks).
+Say so in the README of the pack.
 
 Add `xbrl` fact keys only for a taxonomy you can verify, and leave them null
 otherwise. A wrong key is worse than no key.

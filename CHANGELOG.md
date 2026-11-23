@@ -11,6 +11,17 @@ somewhere has already run it.
 
 ### Added
 
+- **A pack of a country with no statement format of its own inherits the
+  framework's statements.** `statements.json` may declare
+  `"inherit": "IFRS-SME"`: each statement without `lines` is the statement of
+  the same kind in `packs/generic/`, lines and `account_type` rules included,
+  under the pack's own code, and `overrides` renames, adjusts or adds the
+  lines where the country differs. `ekwo pack build` resolves the inheritance
+  when it reads the pack, so the seed holds ordinary statements and no
+  migration is needed; `ekwo pack check` refuses an override that names a line
+  the inherited statement does not carry. A rule by code outranks a rule by
+  type in `pack check` as it does in `financial_statement()`.
+  [`docs/packs.md`](docs/packs.md#a-country-with-no-format-of-its-own-inherits-the-frameworks).
 - **A pack gives a document number the shape its law prescribes.** Most laws
   leave the shape of the number to the seller; where one does not, the pack
   says so in `documents.number_shape` — `max_length`, `characters` (`letters`,
