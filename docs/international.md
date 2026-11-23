@@ -92,6 +92,55 @@ it. How a professional reviews a pack is in
 | A cash-flow statement | **Not yet** — the format accepts one, and no pack prescribes it yet |
 | Consolidation across companies | **Not yet** |
 | A pack proved against figures | **Done** — a golden year per pack, and a legal source on every tax and box |
+| A bank account in the scheme of its country, on every row that names one | **Done** — a scheme and a value, see [below](#from-recognising-who-paid-an-account-is-a-scheme-and-a-value) |
+
+## From recognising who paid: an account is a scheme and a value
+
+An IBAN is the European answer to "which account?". The United States names
+an account by an ABA routing number and an account number, Canada by a transit
+number, an institution number and an account number, Australia by a BSB, India
+by an IFSC, the United Kingdom by a sort code. A statement line from a customer
+in one of those countries carries their account in that scheme, and the books
+recognise who paid by comparing it with the account recorded against the
+contact.
+
+So every account the books record is a **scheme and a value**, the shape the
+schema already gives an electronic address (`peppol_scheme`,
+`peppol_identifier`):
+
+| Fact | Scheme | Value | Deprecated name, kept in step |
+|---|---|---|---|
+| The company's own account | `bank_accounts.account_scheme` | `account_identifier` | `iban` |
+| Its bank | `bank_accounts.bank_scheme` | `bank_identifier` | `bic` |
+| A contact's account | `contacts.account_scheme` | `account_identifier` | `iban` |
+| A contact's bank | `contacts.bank_scheme` | `bank_identifier` | `bic` |
+| The other side of a statement line | `bank_transactions.counterpart_account_scheme` | `counterpart_account_identifier` | `counterpart_iban` |
+| The account a document asks to be paid into (EN 16931 BT-84) | `documents.payee_account_scheme` | `payee_account_identifier` | `payee_iban` |
+
+The schemes are a closed list held by the database, `bank_identifier_schemes`:
+the account schemes the packs declare (`iban`, `aba-routing-account`,
+`sort-code-account`, `bsb-account`, `ifsc-account`, `clabe`, `zengin`,
+`transit-institution-account`, and `account-number` for a number as the bank
+gives it) and the schemes that name a bank (`bic`, `aba`, `sort-code`, `bsb`,
+`ifsc`, `transit-institution`, `zengin-bank-branch`). The check follows the
+scheme: `bank_identifier_problem()` reads the scheme first, then ISO 7064
+mod 97-10 for an IBAN, the 3-7-1 weighted sum for an ABA routing number; a
+scheme with no check digit is stored as written, and nothing is refused for not
+being an IBAN.
+
+The old columns stay readable and writable, held in step by a trigger the way
+`companies.vat_period` is held to `company_filing_periods`: a write to `iban`
+writes the pair in the scheme `iban`, a write to the pair writes `iban` when its
+scheme is `iban` and clears it otherwise. A client that knows only the old
+names keeps working; a newer client reading a database without the pair reads
+the old columns (`SCHEMA_FEATURES.account_identifier_pairs`). The old names are
+removed by a later major version, never by a minor one.
+
+Recognising who paid (`contact_candidates()`, `suggest_contacts()`,
+`confirm_contact()`) compares the pair, and a statement imported by
+`import_bank_statement()` keeps the scheme its reader recognised. The electronic
+invoice writes BT-84 in its own scheme: UBL `PayeeFinancialAccount/ID` for any
+account, Factur-X `IBANID` for an IBAN and `ProprietaryID` for any other.
 
 ## How a country is added
 

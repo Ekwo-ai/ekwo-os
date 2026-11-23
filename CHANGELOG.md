@@ -33,6 +33,34 @@ somewhere has already run it.
 
 ### Added
 
+- **Every account of the books is a scheme and a value.** A contact's
+  account and bank, the bank of a company's account, the counterpart of a
+  statement line and the payee of a document (EN 16931 BT-84) each get a
+  scheme and a value beside the column that named an IBAN or a BIC alone:
+  `contacts.account_scheme` / `account_identifier` and `bank_scheme` /
+  `bank_identifier`, `bank_accounts.bank_scheme` / `bank_identifier`,
+  `bank_transactions.counterpart_account_scheme` /
+  `counterpart_account_identifier`, `documents.payee_account_scheme` /
+  `payee_account_identifier` (`20261123203300`, additive). The schemes are the
+  closed list `bank_identifier_schemes` — `iban` and `bic` are entries of it,
+  beside the ABA routing number, the BSB, the IFSC, the sort code and the
+  others the packs declare — and `bank_identifier_problem()` checks a value by
+  its scheme, storing one without a check digit as written. `iban`, `bic`,
+  `counterpart_iban` and `payee_iban` are **deprecated** and stay readable and
+  writable, mirrored with the pair by a trigger both ways, as
+  `companies.vat_period` is. Recognising who paid compares the pair, so a
+  customer paying from a routing number and an account is recognised by it;
+  `import_bank_statement()` keeps the scheme its reader recognised; a sales
+  document takes the scheme of the company's default account; and
+  `document_header` publishes `payee_account_scheme`,
+  `payee_account_identifier`, `payee_bank_scheme` and `payee_bank_identifier`.
+  The electronic invoice writes BT-84 in any scheme (UBL
+  `PayeeFinancialAccount/ID`, Factur-X `ProprietaryID` beside `IBANID`). The
+  MCP tools `create_contact` and `create_bank_transaction` take the pairs.
+  `SCHEMA_MIN` does not move: a newer client reads a database without the
+  pairs from the old columns (`SCHEMA_FEATURES.account_identifier_pairs`).
+  [`docs/international.md`](docs/international.md#from-recognising-who-paid-an-account-is-a-scheme-and-a-value).
+
 - **A pack of a country with no statement format of its own inherits the
   framework's statements.** `statements.json` may declare
   `"inherit": "IFRS-SME"`: each statement without `lines` is the statement of
