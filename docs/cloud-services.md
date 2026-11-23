@@ -35,6 +35,22 @@ If no, it is a service, because something has to be kept alive for it to work:
 | A portfolio across installations, for an accounting firm | a control plane above installations that do not see each other |
 | Operating instances: monitoring, upgrades, backups | a fleet watched over time |
 
+## Upgrades, edition by edition
+
+Upgrading is the one service of the list that changes the database itself, so
+each edition says who does it:
+
+| | Who upgrades | What protects the books |
+|---|---|---|
+| Ekwo OS on your own project | You, with `ekwo migrate`, when you decide | The snapshot you take first; each migration in its own transaction; `ekwo doctor` afterwards |
+| Your own project, linked to Ekwo Cloud | You — or Ekwo Cloud, only if you chose it, and until you turn it off | For an upgrade Ekwo Cloud runs: a copy of every company, a rehearsal that is rolled back, then one transaction undone if a single figure would move |
+| A project Ekwo hosts, and the shared instance | Ekwo Cloud, at every release; there is no switch | The same copy, rehearsal and checked transaction |
+
+No edition is forced forward by a release: an installation that is not
+upgraded keeps working, and a newer client reads it down to the schema floor
+it declares. The steps, how to pause, and what "down to the floor" means are
+in [`upgrades.md`](upgrades.md).
+
 ## What comes back is yours
 
 This matters as much as the list above. **What comes back from a filing is open
