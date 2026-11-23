@@ -42,6 +42,18 @@ the text it rests on. The register in `pack.json` holds four texts, all opened o
 - **Language**: English, the official language. No `i18n`.
 - **Currency**: the Trinidad and Tobago dollar (`TTD`, two decimals).
 
+## Financial statements: inherited, not rewritten
+
+The statement of financial position and the income statement are not written
+out here. `statements.json` inherits them from the IFRS for SMEs framework
+of the repository (`"inherit": "IFRS-SME"`, [`packs/generic/`](../generic/statements.json)),
+whose lines take the accounts by account type, and keeps its own codes,
+`TT-IFRS-SME-SFP` and `TT-IFRS-SME-IS`, with its own legal references. The overrides say only where this
+country's presentation differs: 6 lines keep the caption this pack prints; it adds `A-NC-INT`, `A-C-INV`, `A-C-PRE`, `L-C-TAX`, lines the framework does not carry, and the totals `A-NC`, `A-C`, `L-C` add them; `A-C-REC`, `A-C-OTH`, `L-C-PAY`, `L-C-OTH` keep the code ranges of this chart, because its account types alone would not separate those accounts from the lines added.
+`golden/statements.json` proves the result line by line for this country, as
+before. The format is in
+[`docs/packs.md`](../../docs/packs.md#a-country-with-no-format-of-its-own-inherits-the-frameworks).
+
 ## What the pack does not say yet
 
 - **The Act read is an unofficial version updated to 31 December 2016.** The

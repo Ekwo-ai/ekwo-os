@@ -48,6 +48,18 @@ Division and the Laws of Dominica site) except where said, and all opened on
 - **Currency**: the East Caribbean dollar (`XCD`, two decimals), shared with the
   other members of the Eastern Caribbean Currency Union.
 
+## Financial statements: inherited, not rewritten
+
+The statement of financial position and the income statement are not written
+out here. `statements.json` inherits them from the IFRS for SMEs framework
+of the repository (`"inherit": "IFRS-SME"`, [`packs/generic/`](../generic/statements.json)),
+whose lines take the accounts by account type, and keeps its own codes,
+`DM-IFRS-SME-SFP` and `DM-IFRS-SME-IS`, with its own legal references. The overrides say only where this
+country's presentation differs: 6 lines keep the caption this pack prints; it adds `A-NC-INT`, `A-C-INV`, `A-C-PRE`, `L-C-TAX`, lines the framework does not carry, and the totals `A-NC`, `A-C`, `L-C` add them; `A-C-REC`, `A-C-OTH`, `L-C-PAY`, `L-C-OTH` keep the code ranges of this chart, because its account types alone would not separate those accounts from the lines added.
+`golden/statements.json` proves the result line by line for this country, as
+before. The format is in
+[`docs/packs.md`](../../docs/packs.md#a-country-with-no-format-of-its-own-inherits-the-frameworks).
+
 ## What the pack does not say yet
 
 - **The box layout is the pack's own.** The Division's monthly VAT return form

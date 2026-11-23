@@ -36,7 +36,7 @@ and invoices included) that give a true and fair view, kept at least five
 years, and nothing more. No reporting framework is imposed either, so the
 chart is original and IFRS-inspired: four digits, `1` assets, `2` liabilities,
 `3` equity, `4` revenue and other income, `5` cost of sales, `6` operating
-expenses. It is flat; `statements.json` groups by code range. 106 accounts.
+expenses. It is flat; `statements.json` inherits the framework's lines, which group it by account type, and keeps code ranges where it splits a line further. 106 accounts.
 There is no tax account of any kind: no sales tax to collect, and no income
 tax to provision or defer. Accounts exist for what a Cayman company does book:
 customs duty on purchased goods (5025), government fees and levies payable,
@@ -50,6 +50,18 @@ purchases, `vat_category` `O`, base postings only, no `tax_report.json`, no
 settlement account and no `tax_payable` / `tax_receivable` roles. There is no
 VAT, GST or general sales tax, and no income, corporate, capital gains or
 payroll tax; the 2026-2027 budget created none.
+
+## Financial statements: inherited, not rewritten
+
+The statement of financial position and the income statement are not written
+out here. `statements.json` inherits them from the IFRS for SMEs framework
+of the repository (`"inherit": "IFRS-SME"`, [`packs/generic/`](../generic/statements.json)),
+whose lines take the accounts by account type, and keeps its own codes,
+`KY-IFRS-SME-SFP` and `KY-IFRS-SME-IS`, with its own legal references. The overrides say only where this
+country's presentation differs: 7 lines keep the caption this pack prints; it adds `A-NC-INT`, `A-C-INV`, `A-C-PRE`, lines the framework does not carry, and the totals `A-NC`, `A-C` add them; `A-C-REC`, `A-C-OTH`, `L-C-PAY`, `L-C-OTH` keep the code ranges of this chart, because its account types alone would not separate those accounts from the lines added.
+`golden/statements.json` proves the result line by line for this country, as
+before. The format is in
+[`docs/packs.md`](../../docs/packs.md#a-country-with-no-format-of-its-own-inherits-the-frameworks).
 
 ## Levies left out of the pack
 

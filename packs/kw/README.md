@@ -77,3 +77,18 @@ VAT or selective-tax law has been promulgated since 10 October 2026; (4) the
 scope of the end-of-service indemnity and social security accounts; (5) the
 default interest rule for commercial debts; (6) the IFRS decrees, with the
 current Ministry of Commerce text.
+
+## Financial statements: inherited, not rewritten
+
+The statement of financial position and the income statement are not written
+out here. `statements.json` inherits them from the IFRS for SMEs framework
+of the repository (`"inherit": "IFRS-SME"`, [`packs/generic/`](../generic/statements.json)),
+whose lines take the accounts by account type, and keeps its own codes,
+`KW-IFRS-SFP` and `KW-IFRS-IS`, with its own legal references. The overrides say only where this
+country's presentation differs: 7 lines keep the caption this pack prints; it adds `A-NC-INT`, `A-C-INV`, `A-C-PRE`, `L-C-TAX`, lines the framework does not carry, and the totals `A-NC`, `A-C`, `L-C` add them; `A-C-REC`, `A-C-OTH`, `L-C-PAY`, `L-C-OTH` keep the code ranges of this chart, because its account types alone would not separate those accounts from the lines added.
+Kuwait applies full IFRS, not IFRS for SMEs: what is inherited is the
+layout of the minimum line items, which this pack already presented, and the
+statements keep `"framework": "IFRS"`.
+`golden/statements.json` proves the result line by line for this country, as
+before. The format is in
+[`docs/packs.md`](../../docs/packs.md#a-country-with-no-format-of-its-own-inherits-the-frameworks).

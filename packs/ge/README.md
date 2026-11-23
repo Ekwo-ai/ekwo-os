@@ -197,6 +197,15 @@ current declaration should be confirmed by a reviewer.
 ველები ყველგან ცარიელია — საქართველოს კუთვნილი XBRL ტაქსონომიის
 არსებობა დადასტურებული არ არის.
 
+ეს ორი ანგარიშგება აქ თავიდან აღარ იწერება: `statements.json` მათ
+მემკვიდრეობით იღებს რეპოზიტორიის IFRS for SMEs ჩარჩოდან
+(`"inherit": "IFRS-SME"`, [`packs/generic/`](../generic/statements.json)),
+რომლის ხაზებიც ანგარიშებს ანგარიშის ტიპის მიხედვით იღებს. პაკეტი
+ინარჩუნებს საკუთარ კოდებს (`GE-IFRS-BS`, `GE-IFRS-IS`), საკუთარ სამართლებრივ
+მითითებებს და ხაზების ქართულ დასახელებებს (`overrides`); სხვა არაფერი
+განსხვავდება. `golden/statements.json` შედეგს კვლავ ხაზ-ხაზ ამოწმებს.
+ფორმატი: [`docs/packs.md`](../../docs/packs.md#a-country-with-no-format-of-its-own-inherits-the-frameworks).
+
 ## ანგარიშ-ფაქტურაზე
 
 **ნუმერაცია `sequential`, წელთან მიბმის გარეშე.** კომერციული

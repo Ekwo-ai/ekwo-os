@@ -201,10 +201,16 @@ arke, jo faturë e strukturuar e shkëmbyer ndërmjet palëve) që asnjë format
 `statements.json` mban Pasqyrën e Pozicionit Financiar dhe Pasqyrën e të
 Ardhurave Gjithëpërfshirëse sipas zërave minimalë të seksioneve 4 dhe 5 të
 IFRS for SMEs (Ligji Nr. 06/L-032, neni 8, për organizatat e vogla dhe të
-mesme; neni 7, IFRS-të e plota, për organizatat e mëdha). Rregullat janë
-diapazone të kodeve të llogarive të vetë këtij paketi, jo
-kode të një formulari zyrtar — sepse asnjë formular i tillë nuk ekziston me
-rreshta të miratuara me ligj.
+mesme; neni 7, IFRS-të e plota, për organizatat e mëdha). Asnjë formular
+zyrtar me rreshta të miratuara me ligj nuk ekziston, prandaj këto dy pasqyra
+nuk shkruhen këtu nga e para: `statements.json` i trashëgon nga korniza IFRS
+for SMEs e depos (`"inherit": "IFRS-SME"`,
+[`packs/generic/`](../generic/statements.json)), rreshtat e së cilës i marrin
+llogaritë sipas llojit të llogarisë. Paketa mban kodet e veta (`XK-IFRS-BS`,
+`XK-IFRS-IS`), referencat e veta ligjore dhe emërtimet shqip të rreshtave
+(`overrides`); asgjë tjetër nuk ndryshon. `golden/statements.json` e provon
+rezultatin rresht për rresht, si më parë. Formati:
+[`docs/packs.md`](../../docs/packs.md#a-country-with-no-format-of-its-own-inherits-the-frameworks).
 
 **Rregjimi i mikro-ndërmarrjeve (neni 5, paragrafi 2: bilanc ≤ 350.000 €,
 qarkullim ≤ 700.000 €, ≤ 10 punonjës) nuk është modeluar veçmas.** Neni 9 ia

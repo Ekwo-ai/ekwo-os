@@ -72,6 +72,21 @@ that one is expected (the IMF urged it in February 2026; the finance minister
 has said Qatar plans it): none of that is law. `vat_category` is `O` and
 `exemption_code` is null.
 
+## Financial statements: inherited, not rewritten
+
+The statement of financial position and the income statement are not written
+out here. `statements.json` inherits them from the IFRS for SMEs framework
+of the repository (`"inherit": "IFRS-SME"`, [`packs/generic/`](../generic/statements.json)),
+whose lines take the accounts by account type, and keeps its own codes,
+`QA-IFRS-SFP` and `QA-IFRS-IS`, with its own legal references. The overrides say only where this
+country's presentation differs: 6 lines keep the caption this pack prints; it adds `A-NC-INT`, `A-C-INV`, `A-C-PRE`, `L-C-TAX`, `PBT`, `TAX`, lines the framework does not carry, and the totals `A-NC`, `A-C`, `L-C`, `PROFIT` add them; `A-C-REC`, `A-C-OTH`, `L-C-PAY`, `L-C-OTH` keep the code ranges of this chart, because its account types alone would not separate those accounts from the lines added.
+Qatar applies full IFRS, not IFRS for SMEs: what is inherited is the
+layout of the minimum line items, which this pack already presented, and the
+statements keep `"framework": "IFRS"`.
+`golden/statements.json` proves the result line by line for this country, as
+before. The format is in
+[`docs/packs.md`](../../docs/packs.md#a-country-with-no-format-of-its-own-inherits-the-frameworks).
+
 ## What this pack does not carry (levies outside the pack)
 
 - **Income tax** — Law No. 24 of 2018, art. 9: 10 % of taxable income. Income

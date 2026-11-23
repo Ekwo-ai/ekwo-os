@@ -48,3 +48,15 @@ No chart is prescribed. This one is original: 107 accounts, four digits, blocked
 ## Reviewing this pack
 
 Open an issue titled "Review: British Virgin Islands". A local accountant should read first: the Order's schedule against `VG-FR-*`; the payroll class thresholds and rates against the Act; the nine-month rule and exemptions against s. 98A; the retention period under s. 98; whether the status of Pillar Two legislation has changed; whether an e-invoicing mandate has appeared.
+
+## Financial statements: inherited, not rewritten
+
+The statement of financial position and the income statement are not written
+out here. `statements.json` inherits them from the IFRS for SMEs framework
+of the repository (`"inherit": "IFRS-SME"`, [`packs/generic/`](../generic/statements.json)),
+whose lines take the accounts by account type, and keeps its own codes,
+`VG-FR-BS` and `VG-FR-IS`, with its own legal references. The overrides say only where this
+country's presentation differs: 5 lines keep the caption this pack prints; it adds `A-NC-INT`, `A-C-INV`, `A-C-PRE`, `L-C-TAX`, `OTH-EXP`, `PRE-TAX`, `TAX`, lines the framework does not carry, and the totals `A-NC`, `A-C`, `L-C`, `PROFIT` add them; `A-C-REC`, `A-C-OTH`, `L-C-PAY`, `L-C-OTH` keep the code ranges of this chart, because its account types alone would not separate those accounts from the lines added.
+`golden/statements.json` proves the result line by line for this country, as
+before. The format is in
+[`docs/packs.md`](../../docs/packs.md#a-country-with-no-format-of-its-own-inherits-the-frameworks).
