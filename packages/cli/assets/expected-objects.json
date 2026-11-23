@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.28.0",
-  "migration": "20261123070913",
+  "migration": "20261123150000",
   "socle": {
     "schema": "ekwo",
     "tables": [
@@ -15889,6 +15889,43 @@
           ]
         },
         {
+          "name": "generic_email_domains",
+          "columns": [
+            {
+              "name": "company_id",
+              "type": "uuid"
+            },
+            {
+              "name": "created_at",
+              "type": "timestamp with time zone"
+            },
+            {
+              "name": "domain",
+              "type": "text"
+            },
+            {
+              "name": "id",
+              "type": "uuid"
+            },
+            {
+              "name": "kind",
+              "type": "text"
+            },
+            {
+              "name": "note",
+              "type": "text"
+            },
+            {
+              "name": "shipped",
+              "type": "boolean"
+            },
+            {
+              "name": "updated_at",
+              "type": "timestamp with time zone"
+            }
+          ]
+        },
+        {
           "name": "pipelines",
           "columns": [
             {
@@ -16060,6 +16097,10 @@
           "arguments": "p_company_id uuid, p_contact_id uuid"
         },
         {
+          "name": "contact_from_email",
+          "arguments": "p_company_id uuid, p_email text, p_name text, p_source text"
+        },
+        {
           "name": "contact_vcard",
           "arguments": "p_company_id uuid, p_contact_id uuid"
         },
@@ -16074,6 +16115,14 @@
         {
           "name": "detach_document",
           "arguments": "p_company_id uuid, p_document_id uuid"
+        },
+        {
+          "name": "email_address",
+          "arguments": "p_text text"
+        },
+        {
+          "name": "email_domain",
+          "arguments": "p_text text"
         },
         {
           "name": "fold_card_on_merge",
@@ -16092,6 +16141,14 @@
           "arguments": ""
         },
         {
+          "name": "interactions_of",
+          "arguments": "p_company_id uuid, p_contact_ids uuid[]"
+        },
+        {
+          "name": "is_generic_email_domain",
+          "arguments": "p_company_id uuid, p_domain text"
+        },
+        {
           "name": "join_segment",
           "arguments": "p_company_id uuid, p_segment_id uuid, p_contact_id uuid, p_added_by text, p_note text"
         },
@@ -16104,12 +16161,20 @@
           "arguments": "p_company_id uuid, p_contact_id uuid, p_kind crm.activity_kind, p_subject text, p_body text, p_deal_id uuid, p_actor text, p_occurred_at timestamp with time zone, p_link text, p_payload jsonb, p_source text, p_source_ref text"
         },
         {
+          "name": "log_activity_by_email",
+          "arguments": "p_company_id uuid, p_email text, p_kind crm.activity_kind, p_subject text, p_body text, p_deal_id uuid, p_actor text, p_occurred_at timestamp with time zone, p_link text, p_payload jsonb, p_source text, p_source_ref text, p_name text"
+        },
+        {
           "name": "move_deal",
           "arguments": "p_company_id uuid, p_deal_id uuid, p_stage_id uuid"
         },
         {
           "name": "open_deal",
           "arguments": "p_company_id uuid, p_pipeline_id uuid, p_contact_id uuid, p_title text, p_amount numeric, p_currency_code character, p_expected_on date, p_external_url text, p_owner text"
+        },
+        {
+          "name": "organisation_of_domain",
+          "arguments": "p_company_id uuid, p_domain text"
         },
         {
           "name": "place_deal",
@@ -16183,6 +16248,16 @@
         {
           "table": "deals",
           "name": "crm_deals_write",
+          "command": "all"
+        },
+        {
+          "table": "generic_email_domains",
+          "name": "crm_generic_email_domains_select",
+          "command": "select"
+        },
+        {
+          "table": "generic_email_domains",
+          "name": "crm_generic_email_domains_write",
           "command": "all"
         },
         {
@@ -16262,6 +16337,10 @@
         {
           "table": "deals",
           "name": "deals_contact_id_not_merged"
+        },
+        {
+          "table": "generic_email_domains",
+          "name": "crm_generic_email_domains_set_updated_at"
         },
         {
           "table": "pipelines",
@@ -16430,6 +16509,22 @@
             ]
           },
           {
+            "name": "generic_email_domains",
+            "anon": [],
+            "authenticated": [
+              "delete",
+              "insert",
+              "select",
+              "update"
+            ],
+            "service_role": [
+              "delete",
+              "insert",
+              "select",
+              "update"
+            ]
+          },
+          {
             "name": "pipelines",
             "anon": [],
             "authenticated": [
@@ -16542,6 +16637,17 @@
             ]
           },
           {
+            "name": "contact_from_email",
+            "arguments": "p_company_id uuid, p_email text, p_name text, p_source text",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
             "name": "contact_vcard",
             "arguments": "p_company_id uuid, p_contact_id uuid",
             "anon": [],
@@ -16586,6 +16692,28 @@
             ]
           },
           {
+            "name": "email_address",
+            "arguments": "p_text text",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "email_domain",
+            "arguments": "p_text text",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
             "name": "fold_card_on_merge",
             "arguments": "",
             "trigger": true,
@@ -16616,6 +16744,28 @@
             "anon": [],
             "authenticated": [],
             "service_role": []
+          },
+          {
+            "name": "interactions_of",
+            "arguments": "p_company_id uuid, p_contact_ids uuid[]",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "is_generic_email_domain",
+            "arguments": "p_company_id uuid, p_domain text",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
           },
           {
             "name": "join_segment",
@@ -16651,6 +16801,17 @@
             ]
           },
           {
+            "name": "log_activity_by_email",
+            "arguments": "p_company_id uuid, p_email text, p_kind crm.activity_kind, p_subject text, p_body text, p_deal_id uuid, p_actor text, p_occurred_at timestamp with time zone, p_link text, p_payload jsonb, p_source text, p_source_ref text, p_name text",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
             "name": "move_deal",
             "arguments": "p_company_id uuid, p_deal_id uuid, p_stage_id uuid",
             "anon": [],
@@ -16664,6 +16825,17 @@
           {
             "name": "open_deal",
             "arguments": "p_company_id uuid, p_pipeline_id uuid, p_contact_id uuid, p_title text, p_amount numeric, p_currency_code character, p_expected_on date, p_external_url text, p_owner text",
+            "anon": [],
+            "authenticated": [
+              "execute"
+            ],
+            "service_role": [
+              "execute"
+            ]
+          },
+          {
+            "name": "organisation_of_domain",
+            "arguments": "p_company_id uuid, p_domain text",
             "anon": [],
             "authenticated": [
               "execute"
