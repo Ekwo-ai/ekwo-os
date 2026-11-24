@@ -57,6 +57,16 @@ somewhere has already run it.
   `contracts/20261124090300`, `crm/20261124090400`; additive.
   [`docs/international.md`](docs/international.md#an-amount-is-written-at-the-decimals-of-its-currency).
 
+- **A merge carries a contact's account as a scheme and a value.**
+  `merge_contacts()` decided whether the kept contact had an account by its
+  `iban` alone and copied `iban` and `bic`: an account in another scheme — an
+  ABA routing number and account, a BSB, an IFSC — was lost when absorbed,
+  and a kept contact holding one had it overwritten by the absorbed IBAN. The
+  rule is the one it had, read on the pair: the kept contact keeps its
+  account in any scheme; when it has none it takes the absorbed contact's
+  account and bank together, both pairs and their mirrors. `filled` names the
+  pairs beside `iban` and `bic`. Migration `20261124091000`, additive.
+
 ### Added
 
 - **Every account of the books is a scheme and a value.** A contact's

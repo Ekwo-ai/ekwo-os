@@ -310,6 +310,58 @@ describe('merge_contacts() moves every reference', () => {
     });
   });
 
+  it('carries an account in a scheme other than IBAN, and its bank, to a kept contact without one', async () => {
+    // 123456780 satisfies the ABA 3-7-1 check digit and names no real bank.
+    const keep = await contact();
+    const absorb = await contact();
+    await db.query(
+      `update contacts set account_scheme = 'aba-routing-account', account_identifier = '123456780 000111222',
+              bank_scheme = 'aba', bank_identifier = '123456780'
+        where id = $1`,
+      [absorb],
+    );
+
+    const merged = await merge(keep, absorb);
+    expect(
+      await one(db, `select account_scheme, account_identifier, bank_scheme, bank_identifier, iban, bic from contacts where id = $1`, [keep]),
+    ).toEqual({
+      account_scheme: 'aba-routing-account',
+      account_identifier: '123456780 000111222',
+      bank_scheme: 'aba',
+      bank_identifier: '123456780',
+      // The mirror: an account that is not an IBAN never lands in iban.
+      iban: null,
+      bic: null,
+    });
+    expect(merged.filled).toEqual(expect.arrayContaining(['account_scheme', 'account_identifier', 'bank_scheme', 'bank_identifier']));
+  });
+
+  it('keeps the account of the kept contact, in whatever scheme, over the absorbed one', async () => {
+    const keep = await contact();
+    const absorb = await contact();
+    await db.query(
+      `update contacts set account_scheme = 'aba-routing-account', account_identifier = '123456780 000333444',
+              bank_scheme = 'aba', bank_identifier = '123456780'
+        where id = $1`,
+      [keep],
+    );
+    await db.query(`update contacts set iban = 'TEST-IBAN-02', bic = 'TESTBIC2' where id = $1`, [absorb]);
+
+    const merged = await merge(keep, absorb);
+    expect(
+      await one(db, `select account_scheme, account_identifier, bank_scheme, bank_identifier, iban, bic from contacts where id = $1`, [keep]),
+    ).toEqual({
+      account_scheme: 'aba-routing-account',
+      account_identifier: '123456780 000333444',
+      bank_scheme: 'aba',
+      bank_identifier: '123456780',
+      iban: null,
+      bic: null,
+    });
+    expect(merged.filled).not.toContain('account_identifier');
+    expect(merged.filled).not.toContain('iban');
+  });
+
   it('folds the learned motifs of the two: one motif both had keeps both histories', async () => {
     const keep = await contact();
     const absorb = await contact();
