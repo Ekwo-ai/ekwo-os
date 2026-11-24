@@ -10,7 +10,7 @@ import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { FISCAL_SYSTEM_ENV, cloudOfferSilenced, directoryTransport, parseFiscalSystem, registrationInvitation, type EinvoiceTransport, type FiscalSystem } from '@ekwo-ai/core';
 import type { Backend, Row, SessionPosting } from './backend.js';
 import { ENV, openBackend, readConfig, sessionPostingFrom, toolLoadingFrom } from './config.js';
-import { assertSchemaSupported } from './schema.js';
+import { SCHEMA_MIN, UPGRADE_COMMAND, readSchemaStatus } from './schema.js';
 import { buildServer } from './server.js';
 import { installedModules } from './tools/modules.js';
 import { postingOf } from './tools/read.js';
@@ -46,9 +46,10 @@ export async function serverFromEnvironment(env: NodeJS.ProcessEnv = process.env
   }
 
   const backend = await openBackend(config);
-  // Before anything else: a database older than this server is refused by
-  // name rather than answered from wrong assumptions.
-  const schemaVersion = await assertSchemaSupported(backend);
+  // Before anything else: a database that is not an Ekwo database is refused,
+  // and one older than the floor is opened for reading only — every write is
+  // refused by name, with the command that upgrades it.
+  const schema = await readSchemaStatus(backend);
   // What this installation carries, from the registry table. A database that
   // predates the module framework answers with nothing, and the socle's own
   // tools are all a client then sees.
@@ -65,11 +66,13 @@ export async function serverFromEnvironment(env: NodeJS.ProcessEnv = process.env
       ...(einvoiceTransport === undefined ? {} : { einvoiceTransport }),
       ...(fiscalSystem === undefined ? {} : { fiscalSystem }),
       ...loading,
+      ...(schema.belowFloor ? { belowFloor: schema.installed } : {}),
     }),
     backend,
     summary:
       `ekwo-mcp: connected over ${config.mode === 'sql' ? 'a direct Postgres connection' : 'PostgREST as the signed-in user'}` +
-      `, schema ${schemaVersion}` +
+      `, schema ${schema.installed}` +
+      `${schema.belowFloor ? ` — older than ${SCHEMA_MIN}: read only, every write refused until \`${UPGRADE_COMMAND}\` upgrades it` : ''}` +
       `${modules.length > 0 ? `, modules: ${modules.join(', ')}` : ''}` +
       `${einvoiceTransport === undefined ? '' : `, electronic invoices to the folder ${env[ENV.einvoiceDirectory]?.trim() ?? ''}`}` +
       `${tools === 'on_demand' ? ', tools on demand' : ''}` +

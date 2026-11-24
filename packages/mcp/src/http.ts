@@ -42,7 +42,7 @@ import { WebStandardStreamableHTTPServerTransport } from '@modelcontextprotocol/
 import { isServiceRoleKey, serviceRoleRefusal } from '@ekwo-ai/core';
 import { EkwoMcpError, type AgentSession, type Backend } from './backend.js';
 import { postgrestBackend } from './postgrest.js';
-import { assertSchemaSupported } from './schema.js';
+import { readSchemaStatus } from './schema.js';
 import { buildServer } from './server.js';
 import { installedModules } from './tools/modules.js';
 
@@ -146,6 +146,13 @@ function messagesOf(body: unknown): { method?: unknown; id?: unknown }[] {
 const NEEDS_MODULES = new Set(['tools/list', 'tools/call']);
 
 /**
+ * Methods whose answer depends on the version of the schema: the handshake,
+ * whose instructions say when the books are open for reading only, and a call,
+ * which is refused when it writes below the floor.
+ */
+const NEEDS_SCHEMA = new Set(['initialize', 'tools/call']);
+
+/**
  * Answers one HTTP request of the MCP Streamable HTTP transport.
  *
  * `connection` is who this request acts as, decided by the host before it
@@ -187,12 +194,16 @@ export async function handleHttpRequest(
   }
 
   try {
-    if (methods.has('initialize')) {
-      // The one moment a client is told what this server is, so the moment a
-      // database older than it is refused by name. On stdio this is the start
-      // of the process; here there is no such thing.
+    // Each request builds its server, so each one that is told what the
+    // server is or calls a tool asks the schema its version: a database that
+    // is not an Ekwo database is refused, and one older than the floor is
+    // opened for reading only. On stdio this is the start of the process;
+    // here there is no such thing.
+    let belowFloor: string | undefined;
+    if ([...methods].some((method) => typeof method === 'string' && NEEDS_SCHEMA.has(method))) {
       try {
-        await assertSchemaSupported(backend);
+        const schema = await readSchemaStatus(backend);
+        if (schema.belowFloor) belowFloor = schema.installed;
       } catch (error) {
         return rpcError(200, -32002, error instanceof Error ? error.message : String(error), firstId);
       }
@@ -201,7 +212,7 @@ export async function handleHttpRequest(
     const needsModules = [...methods].some((method) => typeof method === 'string' && NEEDS_MODULES.has(method));
     const modules = options.modules ?? (needsModules ? await installedModules(backend) : []);
 
-    const server = buildServer(backend, { modules });
+    const server = buildServer(backend, { modules, ...(belowFloor === undefined ? {} : { belowFloor }) });
     const transport = new WebStandardStreamableHTTPServerTransport({
       sessionIdGenerator: undefined,
       enableJsonResponse: true,

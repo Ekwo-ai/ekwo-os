@@ -42,7 +42,7 @@ export {
 } from './server.js';
 export { TOOL_EFFECTS, annotationsFor, effectOf, type EffectAnnotations, type EffectDetails, type ToolEffect } from './tools/effect.js';
 export { CORE_TOOLS, LOADING_TOOLS, TOOL_LOADING, loadTools, searchTools, type FoundTool, type ToolLoading } from './tools/loading.js';
-export { SCHEMA_MIN, assertSchemaSupported, installedSchemaVersion } from './schema.js';
+export { SCHEMA_MIN, UPGRADE_COMMAND, assertSchemaSupported, installedSchemaVersion, readSchemaStatus, type SchemaStatus } from './schema.js';
 export { einvoiceTransportFrom, postingSummary, serverFromEnvironment, shouldInviteToRegister, type Started } from './start.js';
 export { STDIO_HELP, runStdio, type StdioOptions } from './stdio.js';
 export { isMissingConfiguration, unconfiguredBackend } from './unconfigured.js';

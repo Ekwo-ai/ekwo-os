@@ -18,6 +18,12 @@
  *   answers without a column, a function or a table the schema lacks;
  * - what a feature brings is refused by name there, never by Postgres.
  *
+ * And below the floor, on the database of the last tag before it, the MCP
+ * server of this checkout still opens the books, for reading: the reads a
+ * project is opened with answer, a read that reaches for what that schema
+ * lacks is refused by name, and every write is refused by name with the
+ * command that upgrades the database, before it reaches it.
+ *
  * A change that breaks one of those fails here. The fix is to name what it
  * reads in `SCHEMA_FEATURES`, or to raise the floor on purpose, to the version
  * of the migration that made it necessary.
@@ -51,7 +57,7 @@ import {
   supports,
   type SchemaFeature,
 } from '../packages/core/src/index.js';
-import { buildServer } from '../packages/mcp/src/index.js';
+import { buildServer, readSchemaStatus } from '../packages/mcp/src/index.js';
 import { freshDatabase, one, repoRoot, rows } from './helpers/db.js';
 import { DEMO_OWNER, demoCompanyId } from './helpers/factory.js';
 import { backendFor } from './mcp/helpers.js';
@@ -68,6 +74,16 @@ function hasTag(): boolean {
   }
 }
 
+/** The last release tag before the floor, when the clone has one. */
+function tagBelowTheFloor(): string | undefined {
+  const tags = execFileSync('git', ['tag', '--list', 'v*'], { cwd: repoRoot, encoding: 'utf8' })
+    .split('\n')
+    .map((tag) => tag.trim())
+    .filter((tag) => /^v\d+\.\d+\.\d+$/.test(tag) && compareSchemaVersions(tag.slice(1), SCHEMA_MIN) < 0)
+    .sort((a, b) => compareSchemaVersions(a.slice(1), b.slice(1)));
+  return tags.at(-1);
+}
+
 const READY = hasTag();
 if (!READY && process.env['EKWO_SCHEMA_FLOOR_REQUIRED'] !== undefined) {
   throw new Error(`schema_floor_tag_missing: ${TAG} is not in this clone. Fetch the tags (git fetch --tags) to prove the floor.`);
@@ -77,10 +93,10 @@ if (!READY && process.env['EKWO_SCHEMA_FLOOR_REQUIRED'] !== undefined) {
  * The files of the tag a database is built from, extracted once per commit
  * and kept beside the schema images of the run.
  */
-async function checkoutOfTheFloor(): Promise<string> {
-  const commit = execFileSync('git', ['rev-parse', `${TAG}^{commit}`], { cwd: repoRoot, encoding: 'utf8' }).trim();
+async function checkoutOf(tag: string): Promise<string> {
+  const commit = execFileSync('git', ['rev-parse', `${tag}^{commit}`], { cwd: repoRoot, encoding: 'utf8' }).trim();
   const base = process.env['EKWO_TEST_SCHEMA_DIR'] ?? join(tmpdir(), 'ekwo-test-schema');
-  const dir = join(base, `checkout-${TAG}-${commit.slice(0, 12)}`);
+  const dir = join(base, `checkout-${tag}-${commit.slice(0, 12)}`);
   if (await stat(dir).catch(() => undefined)) return dir;
   const partial = `${dir}.${process.pid}.${randomUUID()}`;
   await mkdir(partial, { recursive: true });
@@ -142,7 +158,7 @@ describe.runIf(READY)(`a project at the schema floor (${TAG})`, () => {
   let companyId: string;
 
   beforeAll(async () => {
-    floor = await freshDatabase({ root: await checkoutOfTheFloor() });
+    floor = await freshDatabase({ root: await checkoutOf(TAG) });
     current = await freshDatabase();
     companyId = await demoCompanyId(floor);
     const server = buildServer(backendFor(floor, DEMO_OWNER));
@@ -369,5 +385,89 @@ describe.runIf(READY)(`a project at the schema floor (${TAG})`, () => {
         importStatementFile(backend, { company_id: companyId, format: 'csv', content, bank_account_id: account!.id }),
       ).rejects.toMatchObject({ code: 'csv_profile_required' });
     });
+  });
+});
+
+const BELOW = READY ? tagBelowTheFloor() : undefined;
+
+describe.runIf(BELOW !== undefined)(`a project below the schema floor (${BELOW ?? 'no tag'})`, () => {
+  let below: PGlite;
+  let client: Client;
+  let companyId: string;
+  let installed: string;
+
+  beforeAll(async () => {
+    below = await freshDatabase({ root: await checkoutOf(BELOW as string) });
+    companyId = await demoCompanyId(below);
+    const backend = backendFor(below, DEMO_OWNER);
+    const schema = await readSchemaStatus(backend);
+    expect(schema.belowFloor).toBe(true);
+    installed = schema.installed;
+    const server = buildServer(backend, { belowFloor: installed });
+    const [clientTransport, serverTransport] = InMemoryTransport.createLinkedPair();
+    client = new Client({ name: 'schema-below-floor', version: '0.0.0' });
+    await Promise.all([client.connect(clientTransport), server.connect(serverTransport)]);
+  }, 600_000);
+
+  afterAll(async () => {
+    await client?.close();
+    await below?.close();
+  });
+
+  async function call(name: string, args: Record<string, unknown>): Promise<{ isError: boolean; text: string }> {
+    const answer = (await client.callTool({ name, arguments: args })) as {
+      isError?: boolean;
+      content: Array<{ type: string; text?: string }>;
+    };
+    return { isError: answer.isError === true, text: answer.content.map((c) => c.text ?? '').join('\n') };
+  }
+
+  it('tells the client at the handshake that the books are open for reading', () => {
+    const instructions = client.getInstructions() ?? '';
+    expect(instructions).toContain(`schema is at ${installed}, older than ${SCHEMA_MIN}`);
+    expect(instructions).toContain('npx -y ekwo-os@latest migrate');
+  });
+
+  it('answers the reads a project is opened with, and refuses the others by name', async () => {
+    const known: Record<string, unknown> = { company_id: companyId };
+    const { tools } = await client.listTools();
+    const reads = tools.filter((tool) => tool.annotations?.readOnlyHint === true);
+    const answered: string[] = [];
+    const saidByPostgres: string[] = [];
+    for (const tool of reads) {
+      const properties = (tool.inputSchema.properties ?? {}) as Record<string, unknown>;
+      const args = Object.fromEntries(Object.keys(properties).filter((key) => known[key] !== undefined).map((key) => [key, known[key]]));
+      const answer = await call(tool.name, args);
+      if (MISSING_OBJECT.test(answer.text)) saidByPostgres.push(`${tool.name}: ${answer.text.slice(0, 300)}`);
+      else if (!answer.isError) answered.push(tool.name);
+      else if (answer.text.startsWith('schema_too_old:')) {
+        expect(answer.text).toContain(`${tool.name} reads what schema ${SCHEMA_MIN} or newer has`);
+      }
+    }
+    expect(saidByPostgres, 'reads refused with the words of Postgres rather than by name').toEqual([]);
+    expect(answered).toEqual(expect.arrayContaining(['list_companies', 'get_company', 'list_accounts', 'search_contacts']));
+  });
+
+  it('refuses every write by name before it reaches the database', async () => {
+    const before = await one<{ n: number }>(below, `select count(*)::int as n from contacts where company_id = $1`, [companyId]);
+    const { tools } = await client.listTools();
+    const writes = tools.filter((tool) => tool.annotations?.readOnlyHint !== true);
+    expect(writes.map((tool) => tool.name)).toEqual(expect.arrayContaining(['create_contact', 'create_document', 'post_document']));
+    const refused: string[] = [];
+    for (const tool of writes) {
+      // The arguments of a first contact: a tool that needs others is stopped
+      // by its own input schema, which never reaches the database either.
+      const answer = await call(tool.name, { company_id: companyId, name: 'Below Floor Customer', contact_type: 'customer' });
+      expect(answer.isError, tool.name).toBe(true);
+      if (/Input validation error/i.test(answer.text)) continue;
+      refused.push(tool.name);
+      expect(answer.text, tool.name).toMatch(
+        new RegExp(`^schema_too_old: ${tool.name} writes, and this database is at ${installed.replace(/\./g, '\\.')}, below `),
+      );
+      expect(answer.text, tool.name).toContain('npx -y ekwo-os@latest migrate');
+    }
+    expect(refused).toContain('create_contact');
+    const after = await one<{ n: number }>(below, `select count(*)::int as n from contacts where company_id = $1`, [companyId]);
+    expect(after.n).toBe(before.n);
   });
 });

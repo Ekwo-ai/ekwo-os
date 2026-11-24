@@ -176,6 +176,43 @@ describe('one request, one answer', () => {
   });
 });
 
+describe('a database older than the floor', () => {
+  /** The owner's own books, on a database that says it is older than the floor. */
+  function belowTheFloor(): Backend {
+    return {
+      ...asOwner,
+      rpc: async <T>(fn: string, args?: Record<string, unknown>): Promise<T[]> =>
+        fn === 'ekwo_schema_version' ? (['0.0.9'] as T[]) : asOwner.rpc<T>(fn, args),
+    };
+  }
+
+  it('is opened at the handshake, and told it is for reading', async () => {
+    const { result, error } = await answer(await handleHttpRequest(call('initialize', INITIALIZE), belowTheFloor()));
+    expect(error).toBeUndefined();
+    expect(String(result?.['instructions'])).toContain('schema is at 0.0.9, older than');
+  });
+
+  it('answers a read, and refuses a write by name without writing', async () => {
+    const backend = belowTheFloor();
+    const read = await answer(await handleHttpRequest(call('tools/call', { name: 'list_companies', arguments: {} }), backend, { modules: [] }));
+    expect(read.result?.['isError']).toBeUndefined();
+    expect(toolText(read.result)).toContain(fx.companyId);
+
+    const before = await db.query<{ n: number }>(`select count(*)::int as n from contacts where company_id = $1`, [fx.companyId]);
+    const write = await answer(
+      await handleHttpRequest(
+        call('tools/call', { name: 'create_contact', arguments: { company_id: fx.companyId, name: 'Below The Floor', contact_type: 'customer' } }),
+        backend,
+        { modules: [] },
+      ),
+    );
+    expect(write.result?.['isError']).toBe(true);
+    expect(toolText(write.result)).toMatch(/^schema_too_old: create_contact writes, and this database is at 0\.0\.9/);
+    const after = await db.query<{ n: number }>(`select count(*)::int as n from contacts where company_id = $1`, [fx.companyId]);
+    expect(after.rows[0]?.n).toBe(before.rows[0]?.n);
+  });
+});
+
 describe('what is not a request of this server', () => {
   it('refuses to open a stream: it never speaks first', async () => {
     const response = await handleHttpRequest(new Request(`${ORIGIN}/mcp`, { method: 'GET' }), asOwner);

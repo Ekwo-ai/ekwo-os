@@ -255,12 +255,18 @@ and a release that only adds leaves it where it is
   is taken, or the one call that needs it is refused by name
   (`schema_too_old_for`), saying which version brings it. Ekwo Cloud adds a
   line saying an update is available.
-- **Below the floor**, a newer client refuses rather than half-work: the MCP
-  server answers `schema_too_old` with the command to run, and Ekwo Cloud
-  shows the update screen instead of the books until the project is
-  upgraded. The command line does not refuse: it prints the floor and warns.
-  The data is untouched, and any PostgreSQL client still reads it.
-  `npx -y ekwo-os@latest migrate` is the way back above the floor.
+- **Below the floor**, a newer client still opens the installation, for
+  reading: an update is proposed, never imposed, and nobody is locked out of
+  their own books behind "update first". The MCP server says at the handshake
+  that the books are open for reading; every tool that reads answers with
+  what the installed schema holds, and one that reaches for what it lacks is
+  refused by name. Every tool that writes is refused with `schema_too_old`,
+  naming the tool and the command to run, before it reaches the database.
+  Ekwo Cloud still shows its update screen there until the project is
+  upgraded. The command line does not refuse: it prints the floor and warns. The data
+  is untouched, and any PostgreSQL client still reads it.
+  `npx -y ekwo-os@latest migrate` is the way back above the floor, and
+  writing again.
 
 A project Ekwo hosts does not wait there: every wave takes it.
 

@@ -13,6 +13,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import {
   SCHEMA_MIN,
   assertSchemaSupported,
+  readSchemaStatus,
   readTools,
   writeTools,
   type Backend,
@@ -131,6 +132,16 @@ describe('the schema this server needs', () => {
     await expect(assertSchemaSupported(older)).rejects.toThrow(new RegExp(SCHEMA_MIN));
   });
 
+  it('opens a database older than the floor, for reading only', async () => {
+    const older: Backend = {
+      ...backend,
+      rpc: async <T>(fn: string): Promise<T[]> =>
+        (fn === 'ekwo_schema_version' ? ['0.0.9'] : []) as T[],
+    };
+    expect(await readSchemaStatus(older)).toEqual({ installed: '0.0.9', belowFloor: true });
+    expect(await readSchemaStatus(backend)).toMatchObject({ belowFloor: false });
+  });
+
   it('refuses a database that is not an Ekwo database at all', async () => {
     const nothing: Backend = {
       ...backend,
@@ -139,5 +150,6 @@ describe('the schema this server needs', () => {
       },
     };
     await expect(assertSchemaSupported(nothing)).rejects.toThrow(/schema_not_found/);
+    await expect(readSchemaStatus(nothing)).rejects.toThrow(/schema_not_found/);
   });
 });

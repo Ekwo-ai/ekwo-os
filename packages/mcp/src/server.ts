@@ -14,6 +14,7 @@ import type { AnySchema, ZodRawShapeCompat } from '@modelcontextprotocol/sdk/ser
 import type { CallToolResult, ToolAnnotations } from '@modelcontextprotocol/sdk/types.js';
 import { z } from 'zod';
 import { EkwoMcpError, type Backend, type Row } from './backend.js';
+import { MISSING_OBJECT, SCHEMA_MIN, UPGRADE_COMMAND, belowFloorRefusal } from './schema.js';
 import { columns, relayableCloudOffer, relayableInvitation, type EinvoiceTransport, type FiscalSystem, type LogoFetch } from '@ekwo-ai/core';
 import * as read from './tools/read.js';
 import * as write from './tools/write.js';
@@ -113,6 +114,14 @@ export interface ServerOptions {
    * `tools/loading.ts`.
    */
   tools?: ToolLoading;
+  /**
+   * The version of a database older than `SCHEMA_MIN`, which this server
+   * opens for reading only: every tool that writes is refused by name with
+   * the command that upgrades it, and the instructions say so. `start.ts` and
+   * `http.ts` set it from `readSchemaStatus()`; left out, the database is at
+   * the floor or above.
+   */
+  belowFloor?: string;
 }
 
 /**
@@ -139,7 +148,13 @@ export function instructionsFor(options: ServerOptions = {}): string {
     ...(options.inviteToRegister === true ? [relayableInvitation()] : []),
     ...(options.offerCloud === true ? [relayableCloudOffer()] : []),
     ...(options.tools === 'on_demand' ? [ON_DEMAND_INSTRUCTIONS] : []),
+    ...(options.belowFloor === undefined ? [] : [belowFloorInstructions(options.belowFloor)]),
   ].join('\n\n');
+}
+
+/** What a client is told at the handshake about a database below the floor. */
+export function belowFloorInstructions(installed: string): string {
+  return `This installation's schema is at ${installed}, older than ${SCHEMA_MIN}, the oldest this server writes to. Its books are open for reading: every tool that reads answers with what this schema holds. Every tool that writes is refused with schema_too_old until the database is upgraded with \`${UPGRADE_COMMAND}\`. Say so once to the person you act for, who decides when to upgrade; nothing in the books is lost by it.`;
 }
 
 /**
@@ -186,12 +201,32 @@ export type RegisterTool = <
  * `tests/mcp/surface.test.ts` reads the list a client sees to make sure none
  * slipped past.
  */
-function toolRegistrar(server: McpServer, registered: Map<string, RegisteredTool>): RegisterTool {
+function toolRegistrar(server: McpServer, registered: Map<string, RegisteredTool>, belowFloor?: string): RegisterTool {
   return (name, config, cb) => {
-    const tool = server.registerTool(name, titled(config), cb);
+    const callback = belowFloor === undefined ? cb : readOnlyBelowTheFloor(name, config.annotations, cb, belowFloor);
+    const tool = server.registerTool(name, titled(config), callback);
     registered.set(name, tool);
     return tool;
   };
+}
+
+/**
+ * A tool on a database below the floor. One that writes is refused before it
+ * reaches the database; one that reads runs, and a read that asked for a
+ * column, a function or a table this schema does not have is refused by name
+ * rather than answered with Postgres's sentence.
+ */
+function readOnlyBelowTheFloor<Callback>(name: string, annotations: EffectAnnotations, cb: Callback, installed: string): Callback {
+  if (annotations.readOnlyHint !== true) {
+    return (async () => fail(belowFloorRefusal(name, installed, 'write'))) as Callback;
+  }
+  const run = cb as unknown as (...args: unknown[]) => Promise<CallToolResult>;
+  return (async (...args: unknown[]) => {
+    const answer = await run(...args);
+    if (answer.isError !== true) return answer;
+    const said = answer.content.map((part) => (part.type === 'text' ? part.text : '')).join('\n');
+    return MISSING_OBJECT.test(said) ? fail(belowFloorRefusal(name, installed, 'read')) : answer;
+  }) as Callback;
 }
 
 /**
@@ -213,7 +248,7 @@ export function sessionPosting(backend: Backend): string {
 export function buildServer(backend: Backend, options: ServerOptions = {}): McpServer {
   const server = new McpServer({ name: SERVER_NAME, version: SERVER_VERSION }, { instructions: instructionsFor(options) });
   const tools = new Map<string, RegisteredTool>();
-  const register = toolRegistrar(server, tools);
+  const register = toolRegistrar(server, tools, options.belowFloor);
 
   // -------------------------------------------------------------------- read
 

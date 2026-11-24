@@ -211,6 +211,21 @@ somewhere has already run it.
   be becomes 1.26.0; the chart's certification stays `community`. No
   migration.
 
+### Changed
+
+- **The MCP server opens an installation below the schema floor for
+  reading.** It used to refuse to start (`schema_too_old`) on a database
+  older than `SCHEMA_MIN`. It now says at the handshake that the books are
+  open for reading; every tool that reads answers with what the installed
+  schema holds, a read that reaches for what that schema lacks is refused by
+  name, and every tool that writes is refused with `schema_too_old`, naming
+  the tool and `npx -y ekwo-os@latest migrate`, before it reaches the
+  database. Over HTTP the version is asked at the handshake and at each call.
+  `readSchemaStatus()` is exported beside `assertSchemaSupported()`, which
+  keeps its strict meaning. `tests/schema_floor.test.ts` proves it on the
+  database of the last tag below the floor.
+  [`docs/upgrades.md`](docs/upgrades.md#an-installation-that-is-not-upgraded).
+
 ### Fixed
 
 - **Another product's migrations in the same database are left alone.** When
