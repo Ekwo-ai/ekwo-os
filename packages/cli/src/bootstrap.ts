@@ -39,6 +39,14 @@ export interface BankAccountOptions {
    */
   scheme?: string | null | undefined;
   bic?: string | undefined;
+  /**
+   * The bank in any institution scheme of `bank_identifier_schemes` (`bic`,
+   * `aba`, `sort-code`, `bsb`, `ifsc`, …), given together with
+   * `bankIdentifier` and checked by the schema's `bank_identifier_problem()`.
+   * `bic` alone stays a BIC.
+   */
+  bankScheme?: string | undefined;
+  bankIdentifier?: string | undefined;
   bankName?: string | undefined;
   /** What it is called in the books. Defaults to the bank name, then to `Bank account`. */
   label?: string | undefined;
@@ -759,6 +767,24 @@ export async function ensureBankAccount(
 ): Promise<BankAccountOutcome> {
   const read = readBankAccountIdentifier(options.scheme, options.identifier);
   if (!read.ok) throw new Error(read.error);
+  if ((options.bankScheme === undefined) !== (options.bankIdentifier === undefined)) {
+    throw new Error('missing_bank_identifier: a bank is named by a scheme and a value together.');
+  }
+  if (options.bankScheme !== undefined && options.bic !== undefined) {
+    throw new Error('bank_identifier_disagrees: name the bank once — a BIC, or a scheme and a value.');
+  }
+  if (options.bankScheme !== undefined) {
+    // The one check of a bank identifier is the schema's.
+    const problem = await scalar<string | null>(
+      db,
+      `select coalesce(bank_identifier_problem($1, $2),
+                       case when not exists (select 1 from bank_identifier_schemes s
+                                              where s.code = $1 and s.identifies = 'institution')
+                            then 'not_a_bank_scheme: ' || $1 || ' identifies an account, not the bank that keeps it.' end)`,
+      [options.bankScheme, options.bankIdentifier],
+    );
+    if (problem !== null && problem !== undefined) throw new Error(problem);
+  }
   const label = options.label ?? options.bankName ?? 'Bank account';
 
   const journal = await first<{ id: string; default_account_id: string | null; code: string }>(
@@ -794,9 +820,11 @@ export async function ensureBankAccount(
       db,
       // `iban` is not written here: the table fills it when the scheme is
       // `iban` and leaves it empty for every other scheme.
+      // The bank goes in as `bic` or as its pair, and the table mirrors one
+      // into the other.
       `insert into bank_accounts (company_id, name, account_scheme, account_identifier, bic,
-                                  bank_name, currency_code, account_id, journal_id)
-       values ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+                                  bank_name, currency_code, account_id, journal_id${options.bankScheme === undefined ? '' : ', bank_scheme, bank_identifier'})
+       values ($1, $2, $3, $4, $5, $6, $7, $8, $9${options.bankScheme === undefined ? '' : ', $10, $11'})
        returning id`,
       [
         companyId,
@@ -808,6 +836,7 @@ export async function ensureBankAccount(
         currencyCode,
         journal.default_account_id,
         journal.id,
+        ...(options.bankScheme === undefined ? [] : [options.bankScheme, options.bankIdentifier]),
       ],
     );
     if (created === undefined) throw new Error('bank_account_insert_failed: no row returned');

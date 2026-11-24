@@ -149,3 +149,58 @@ describe('create_bank_account()', () => {
     expect(await rows(db, 'select id from bank_accounts where company_id = $1', [company.companyId])).toHaveLength(2);
   });
 });
+
+describe('create_bank_account() names the bank in any scheme of bank_identifier_schemes', () => {
+  // 123456780 satisfies the ABA 3-7-1 check digit and EXAMPLE1 the shape of
+  // ISO 9362; neither names a real bank.
+  const bankOf = async (identifier: string) =>
+    (
+      await rows<{ bank_scheme: string | null; bank_identifier: string | null; bic: string | null }>(
+        db,
+        'select bank_scheme, bank_identifier, bic from bank_accounts where account_identifier = $1',
+        [identifier],
+      )
+    )[0];
+
+  it('takes a BIC given as p_bic alone, as an older caller sends it, and writes the pair', async () => {
+    const identifier = ibanOf('000800000001');
+    await create(owner, { p_account_identifier: identifier, p_name: 'By BIC', p_bic: 'EXAMPLE1' });
+    expect(await bankOf(identifier)).toEqual({ bank_scheme: 'bic', bank_identifier: 'EXAMPLE1', bic: 'EXAMPLE1' });
+  });
+
+  it('takes a bank in another scheme, checked, and leaves bic empty', async () => {
+    const identifier = ibanOf('000800000002');
+    const answer = await create(owner, {
+      p_account_identifier: identifier,
+      p_name: 'By routing number',
+      p_bank_scheme: 'aba',
+      p_bank_identifier: '123456780',
+    });
+    expect(answer['created']).toBe(true);
+    expect(await bankOf(identifier)).toEqual({ bank_scheme: 'aba', bank_identifier: '123456780', bic: null });
+  });
+
+  it('takes a BIC given as a pair, and mirrors it into bic', async () => {
+    const identifier = ibanOf('000800000003');
+    await create(owner, { p_account_identifier: identifier, p_name: 'By pair', p_bank_scheme: 'bic', p_bank_identifier: 'EXAMPLE1' });
+    expect(await bankOf(identifier)).toEqual({ bank_scheme: 'bic', bank_identifier: 'EXAMPLE1', bic: 'EXAMPLE1' });
+  });
+
+  it('refuses a bank it cannot hold, each by name, and creates nothing', async () => {
+    const identifier = ibanOf('000800000004');
+    const attempt = (args: Record<string, unknown>) => create(owner, { p_account_identifier: identifier, p_name: 'Refused', ...args });
+    await expect(attempt({ p_bank_scheme: 'aba' })).rejects.toThrow(/missing_bank_identifier/);
+    await expect(attempt({ p_bank_identifier: '123456780' })).rejects.toThrow(/missing_bank_identifier/);
+    await expect(attempt({ p_bank_scheme: 'aba', p_bank_identifier: '123456789' })).rejects.toThrow(
+      /invalid_bank_identifier: the ABA routing number check digit/,
+    );
+    await expect(attempt({ p_bank_scheme: 'no-such-scheme', p_bank_identifier: '1' })).rejects.toThrow(
+      /unknown_bank_identifier_scheme/,
+    );
+    await expect(attempt({ p_bank_scheme: 'account-number', p_bank_identifier: '1234' })).rejects.toThrow(/not_a_bank_scheme/);
+    await expect(attempt({ p_bic: 'EXAMPLE1', p_bank_scheme: 'aba', p_bank_identifier: '123456780' })).rejects.toThrow(
+      /bank_identifier_disagrees/,
+    );
+    expect(await bankOf(identifier)).toBeUndefined();
+  });
+});

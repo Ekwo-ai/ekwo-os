@@ -84,6 +84,8 @@ export const INIT_FLAGS = [
   'iban',
   'bank-identifier',
   'bic',
+  'bank-scheme',
+  'bank',
   'bank-name',
   'demo',
   'register',
@@ -114,6 +116,8 @@ const COMPANY_ONLY_FLAGS = [
   'iban',
   'bank-identifier',
   'bic',
+  'bank-scheme',
+  'bank',
   'bank-name',
 ] as const;
 
@@ -329,9 +333,13 @@ export async function initCommand(args: ParsedArgs, deps: InitDeps = {}): Promis
         : {
             identifier,
             scheme: scheme.key,
+            // The bank in any scheme of bank_identifier_schemes, named with
+            // its scheme and never assumed; --bic alone is a BIC.
+            bankScheme: stringFlag(args, 'bank-scheme'),
+            bankIdentifier: stringFlag(args, 'bank'),
             bic:
               stringFlag(args, 'bic') ??
-              (interactive && scheme.key === 'iban'
+              (interactive && scheme.key === 'iban' && stringFlag(args, 'bank-scheme') === undefined
                 ? emptyToUndefined(await askText('BIC? (optional)'))
                 : undefined),
             bankName:

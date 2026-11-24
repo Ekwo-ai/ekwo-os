@@ -449,6 +449,9 @@ ${bold('ekwo init')}
                             an account number… ekwo pack describe <cc> names it.
                             Optional. --iban is the old spelling, for IBAN countries.
   --bic <bic>, --bank-name <name>   On that account. Optional.
+  --bank-scheme <scheme> --bank <v>  The bank of that account in any scheme of
+                            bank_identifier_schemes (bic, aba, sort-code, bsb,
+                            ifsc…), the two together, checked. Optional.
   --vat-period <cadence>    How often the company files its VAT return: month,
                             bimonth, quarter, four_month, half_year or year.
                             Asked when the country's form offers several and

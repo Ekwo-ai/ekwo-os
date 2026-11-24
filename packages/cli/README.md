@@ -481,6 +481,7 @@ the connection string: copy it from the dashboard, Connect → Session pooler.
 | `--language <xx>` | Language of the books, two letters. Defaults to `country_defaults.language_default`, which the pack fills. It decides which label of the pack lands on each account; the others are kept in `name_i18n`. |
 | `--bank-identifier <value>` | Creates the main bank account, wired to the bank journal and its ledger account. What it is written in is the country's: an IBAN, an ABA routing number and an account number (`"021000021 123456789"`), a sort code and an account number, a BSB, an IFSC, a CLABE… `ekwo pack describe <cc>` names it, and it is checked. A country whose pack declares none is asked for an account number as the bank wrote it. `--iban` is the old spelling and is refused where the banks do not use IBANs. Omitted, no bank account is created and `ekwo doctor` says so. |
 | `--bic <bic>` | Optional, on that account, for a bank that has one. |
+| `--bank-scheme <scheme> --bank <v>` | Optional: the bank of that account in any scheme of `bank_identifier_schemes` — `bic`, `aba`, `sort-code`, `bsb`, `ifsc`… — the two together, checked by its scheme. |
 | `--bank-name <name>` | Optional. It also names the account in the books. |
 | `--demo` | Also load the sample company. |
 | `--register` | Register without being asked. `--register-email` sets the address. |

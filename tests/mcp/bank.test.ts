@@ -133,6 +133,30 @@ describe('create_bank_account', () => {
     expect(all).toHaveLength(1);
   });
 
+  it('names the bank in any scheme of the registry, and refuses a bank it cannot check', async () => {
+    await expect(
+      writeTools.createBankAccount(accountant, {
+        company_id: one.companyId,
+        iban: 'BE68 5390 0754 7034',
+        label: 'Refused',
+        bank_scheme: 'aba',
+        bank_identifier: '123456789',
+      }),
+    ).rejects.toThrow(/invalid_bank_identifier/);
+    // 123456780 satisfies the ABA 3-7-1 check digit and names no real bank.
+    const created = record(
+      await writeTools.createBankAccount(accountant, {
+        company_id: one.companyId,
+        iban: 'BE68 5390 0754 7034',
+        label: 'By routing number',
+        bank_scheme: 'aba',
+        bank_identifier: '123456780',
+      }),
+    );
+    expect(record(created['bank_account'])).toMatchObject({ bank_scheme: 'aba', bank_identifier: '123456780', bic: null });
+    await db.query('delete from bank_accounts where company_id = $1 and name = $2', [one.companyId, 'By routing number']);
+  });
+
   it('is invisible from another company of the same installation', async () => {
     const theirs = record(await readTools.listBankAccounts(otherOwner, { company_id: two.companyId }));
     expect(list(theirs['bank_accounts'])).toHaveLength(0);

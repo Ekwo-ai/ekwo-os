@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.28.0",
-  "migration": "20261124091000",
+  "migration": "20261124092000",
   "socle": {
     "schema": "ekwo",
     "tables": [
@@ -5343,7 +5343,7 @@
       },
       {
         "name": "create_bank_account",
-        "arguments": "p_company_id uuid, p_account_identifier text, p_name text, p_bank_name text, p_bic text, p_currency_code text, p_journal_id uuid, p_account_id uuid"
+        "arguments": "p_company_id uuid, p_account_identifier text, p_name text, p_bank_name text, p_bic text, p_currency_code text, p_journal_id uuid, p_account_id uuid, p_bank_scheme text, p_bank_identifier text"
       },
       {
         "name": "create_company",
@@ -10577,7 +10577,7 @@
         },
         {
           "name": "create_bank_account",
-          "arguments": "p_company_id uuid, p_account_identifier text, p_name text, p_bank_name text, p_bic text, p_currency_code text, p_journal_id uuid, p_account_id uuid",
+          "arguments": "p_company_id uuid, p_account_identifier text, p_name text, p_bank_name text, p_bic text, p_currency_code text, p_journal_id uuid, p_account_id uuid, p_bank_scheme text, p_bank_identifier text",
           "anon": [],
           "authenticated": [
             "execute"

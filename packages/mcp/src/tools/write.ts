@@ -559,7 +559,9 @@ export const CreateBankAccountInput = z.object({
     .describe("What identifies the account at its bank, in the scheme of the company's country: an IBAN, an ABA routing number and an account number, a sort code and an account number, a BSB and an account number, an IFSC and an account number, a CLABE… `list_bank_accounts` and `describe_pack` say which. Separators are ignored and the value is stored in the canonical form of its scheme; it is the natural key of a bank account in a company. Where the country's pack declares no scheme, any account number as the bank wrote it."),
   iban: z.string().min(5).optional().describe('Deprecated: an alias of account_identifier, accepted only where the country identifies accounts by IBAN.'),
   label: z.string().min(1).optional().describe('What it is called in the books. Defaults to the bank name, then to the identifier.'),
-  bic: z.string().min(1).optional().describe('The bank identifier code, where the bank has one.'),
+  bic: z.string().min(1).optional().describe('The bank identifier code, where the bank has one. Prefer bank_scheme and bank_identifier, which name a bank in any scheme.'),
+  bank_scheme: z.string().min(1).optional().describe('The scheme the bank of the account is named in, a code of bank_identifier_schemes that identifies a bank: bic, aba, sort-code, bsb, ifsc, transit-institution, zengin-bank-branch. Given together with bank_identifier; never assumed.'),
+  bank_identifier: z.string().min(1).optional().describe('The bank itself, in the scheme bank_scheme names, checked by its scheme (an ABA routing number by its check digit, a BIC by its shape).'),
   bank_name: z.string().min(1).optional(),
   currency_code: z.string().length(3).optional().describe("Defaults to the company's own currency."),
   journal_id: uuid.optional(),
@@ -615,6 +617,11 @@ export async function createBankAccount(
       p_currency_code: args.currency_code ?? null,
       p_journal_id: journalId ?? null,
       p_account_id: accountId ?? null,
+      // Only when given: an older schema without the two parameters still
+      // creates an account named by its BIC, or by nothing.
+      ...(args.bank_scheme === undefined && args.bank_identifier === undefined
+        ? {}
+        : { p_bank_scheme: args.bank_scheme ?? null, p_bank_identifier: args.bank_identifier ?? null }),
     }),
     'the bank account could not be created',
   );

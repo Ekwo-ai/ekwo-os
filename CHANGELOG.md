@@ -69,6 +69,19 @@ somewhere has already run it.
 
 ### Added
 
+- **A company's bank account names its bank in any scheme.**
+  `create_bank_account()` took the bank as `p_bic` alone; it now takes
+  `p_bank_scheme` and `p_bank_identifier`, any institution scheme of
+  `bank_identifier_schemes` (`bic`, `aba`, `sort-code`, `bsb`, `ifsc`, …),
+  checked by `bank_identifier_problem()` and refused by name
+  (`missing_bank_identifier`, `invalid_bank_identifier`,
+  `unknown_bank_identifier_scheme`, `not_a_bank_scheme`,
+  `bank_identifier_disagrees`). The two parameters come last with a null
+  default, so a caller that sends `p_bic` or nothing gets what it got before;
+  the mirror keeps `bic` in step. The MCP tool `create_bank_account` takes
+  `bank_scheme` and `bank_identifier`, and `ekwo init` takes `--bank-scheme`
+  and `--bank`. Migration `20261124092000`.
+
 - **Every account of the books is a scheme and a value.** A contact's
   account and bank, the bank of a company's account, the counterpart of a
   statement line and the payee of a document (EN 16931 BT-84) each get a

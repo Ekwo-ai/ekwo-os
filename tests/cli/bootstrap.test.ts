@@ -301,6 +301,35 @@ describe('bootstrap', () => {
     expect(journal[0]?.bank_account_id).toBe(result.bankAccountId);
   });
 
+
+  it('names the bank of that account in any scheme of the registry, checked, and refuses one that does not add up', async () => {
+    // 123456780 satisfies the ABA 3-7-1 check digit and names no real bank.
+    const userId = await makeAuthUser(db);
+    const result = await bootstrap(db, {
+      organization: 'Example Group',
+      country: HOME,
+      company: 'Example One',
+      fiscalYear: 2026,
+      adminUserId: userId,
+      bankAccount: { identifier: 'BE71 0961 2345 6769', scheme: 'iban', bankScheme: 'aba', bankIdentifier: '123456780' },
+    });
+    const bank = await db.query<{ bank_scheme: string; bank_identifier: string; bic: string | null }>(
+      'select bank_scheme, bank_identifier, bic from bank_accounts where company_id = $1',
+      [result.companyId],
+    );
+    expect(bank).toEqual([{ bank_scheme: 'aba', bank_identifier: '123456780', bic: null }]);
+
+    await expect(
+      bootstrap(db, {
+        organization: 'Example Group',
+        country: HOME,
+        company: 'Example Two',
+        fiscalYear: 2026,
+        adminUserId: userId,
+        bankAccount: { identifier: 'BE68 5390 0754 7034', scheme: 'iban', bankScheme: 'aba', bankIdentifier: '123456789' },
+      }),
+    ).rejects.toThrow(/invalid_bank_identifier/);
+  });
   it('finds the same bank account on a second run rather than creating another', async () => {
     const userId = await makeAuthUser(db);
     const options = {
