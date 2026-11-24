@@ -142,6 +142,29 @@ Recognising who paid (`contact_candidates()`, `suggest_contacts()`,
 invoice writes BT-84 in its own scheme: UBL `PayeeFinancialAccount/ID` for any
 account, Factur-X `IBANID` for an IBAN and `ProprietaryID` for any other.
 
+## An amount is written at the decimals of its currency
+
+A currency has the decimals `currencies.decimal_places` gives it — two for the
+euro, none for the yen or the Icelandic krona, three for the Kuwaiti or the
+Tunisian dinar — and a country rounds by the method its pack declares. One
+function, `round_amount()`, applies the pair, and every amount the engine
+computes passes through it. A money column is a bare `numeric`: it holds what
+the currency has, and cuts nothing.
+
+An amount a person or a program writes as it is — a line keyed on a draft
+entry, a statement line, a payment, the amount to match, the tax a supplier's
+invoice states, the share capital, and in the modules the cost of an asset, a
+budget line, the value of a contract or the amount of a deal — is held to its
+currency by `assert_amount_of_currency()`: one finer than the currency is
+refused, `amount_finer_than_currency`, with the amount, the currency and the
+decimals it has. It is never rounded behind the writer's back, because two
+lines of a balanced entry rounded each on its own can end a unit apart. An
+amount in another currency than the company's is held to its own; `12.30` is a
+euro amount and `1200.00` a yen amount, since trailing zeros are not decimals.
+A unit price, a quantity or a rate is not an amount and may be finer. A bank
+statement file is read at the decimals of the account's currency, so a dinar
+statement imports its thousandths.
+
 ## How a country is added
 
 A country is added the same way whoever adds it: from the official texts, in a

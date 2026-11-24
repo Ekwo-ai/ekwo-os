@@ -133,7 +133,9 @@ for (const pack of packs) {
         [companyId],
       );
       const currency = await one<{ currency_code: string }>(db, `select currency_code from companies where id = $1`, [companyId]);
-      xml = statementOf({ currency: currency.currency_code, open, date: golden.fiscalYear.end, fee: '4.50' });
+      // A whole fee, which every currency can hold: a fraction of a unit of a
+      // currency with none — the krona, the yen — is refused by the import.
+      xml = statementOf({ currency: currency.currency_code, open, date: golden.fiscalYear.end, fee: '4.00' });
     }, 300_000);
 
     afterAll(async () => {
@@ -148,7 +150,7 @@ for (const pack of packs) {
       const file = readCamt053(xml);
       expect(file.violations).toEqual([]);
       expect(file.statements[0]?.balanced).toBe(true);
-      expect(file.statements[0]?.lines.map((line) => line.amount)).toEqual([open.amount_open, '-4.50']);
+      expect(file.statements[0]?.lines.map((line) => line.amount)).toEqual([open.amount_open, '-4.00']);
     });
 
     it('is imported by the owner under row level security, and books nothing', async () => {

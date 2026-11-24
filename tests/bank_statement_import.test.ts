@@ -387,7 +387,7 @@ describe('what is refused, by name, before anything is written', () => {
     const file = change(change(golden, '<Amt Ccy="EUR">0.01</Amt>', '<Amt Ccy="EUR">0.015</Amt>'), '1562.36', '1562.365');
     const message = await refusal(company.companyId, readCamt053(file));
     expect(message).toContain('unreadable_statement_line');
-    expect(message).toContain('more than two decimals');
+    expect(message).toContain('more decimals than EUR has');
     await untouched();
   });
 

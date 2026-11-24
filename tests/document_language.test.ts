@@ -62,6 +62,9 @@ const READS_THE_COLUMN = [
   // Replaces document_header once more, with the payee's account as a scheme
   // and a value: columns the views above do not have, so it follows them.
   '20261123203500_an_account_is_a_scheme_and_a_value.sql',
+  // Guards document_lines.stated_tax_amount, which the left-out
+  // 20261120100000 adds, against an amount finer than its currency.
+  '20261124090000_an_amount_finer_than_its_currency_is_refused.sql',
 ];
 
 let db: PGlite;

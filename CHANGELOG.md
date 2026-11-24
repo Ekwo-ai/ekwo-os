@@ -31,6 +31,32 @@ somewhere has already run it.
   `contracts/20261123203300`, `crm/20261123203400`; additive, no data
   rewritten, no change to the oldest schema a client reads.
 
+- **An amount finer than its currency is refused.** Since money columns hold
+  what their currency has, an amount written as it is — rather than computed
+  by `round_amount()` — was stored as sent: `12.3456` in euros on a line keyed
+  on a draft entry, a statement line, a payment. One check,
+  `assert_amount_of_currency()`, asks `rounding_of()` and compares the amount
+  with `round_amount()` of itself, and refuses it by name,
+  `amount_finer_than_currency`, with the amount, the currency, the decimals it
+  holds and the amount at the currency's decimals; it never rounds. It runs
+  from an `after insert or update` trigger on `entry_lines` (`debit`, `credit`
+  in the company's currency, `amount_currency` in the line's),
+  `bank_transactions`, `bank_statements` (the balances, in the account's
+  currency), `payments`, `reconciliations` (the amount `reconcile()` is given),
+  `document_lines.stated_tax_amount` (the document's currency) and
+  `companies.share_capital`, and in the modules on `fixed_assets` (cost,
+  residual value, proceeds of a disposal), `budgets.lines`,
+  `contracts.contracts` and `crm.deals`. An update judges only the amounts it
+  changes, the installer passes, and nothing written before is validated: the
+  migration creates triggers and reads no row. `import_bank_statement()`
+  reads a file at the decimals of the account's currency instead of two
+  whatever the currency — a dinar statement imports its thousandths, a krona
+  statement with a fraction of a krona is refused, `unreadable_statement_line`.
+  Unit prices, quantities and rates are untouched. Migrations
+  `20261124090000`, `assets/20261124090100`, `budgets/20261124090200`,
+  `contracts/20261124090300`, `crm/20261124090400`; additive.
+  [`docs/international.md`](docs/international.md#an-amount-is-written-at-the-decimals-of-its-currency).
+
 ### Added
 
 - **Every account of the books is a scheme and a value.** A contact's
