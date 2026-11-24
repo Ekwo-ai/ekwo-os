@@ -265,7 +265,10 @@ create or replace trigger document_lines_amounts_of_currency
 -- currency has, so the limit is the currency's: a dinar statement imports its
 -- thousandths, and a yen statement with a fraction of a yen is refused before
 -- anything is written, under the name it always had
--- (`unreadable_statement_line`), the whole file with it. Rewritten from the
+-- (`unreadable_statement_line`), the whole file with it. The sentences that
+-- name a balance — `unbalanced_statement`, `statement_conflict`,
+-- `statement_already_covered` — write it with `amount_text_format()`, the
+-- balances judged first so that the mask hides no decimal. Rewritten from the
 -- catalogue, the way `20261123203500` rewrote it, so nothing else of its
 -- latest definition moves.
 -- ---------------------------------------------------------------------------
@@ -292,13 +295,47 @@ begin
     $old$or scale(trim_scale((l.value ->> 'amount')::numeric)) > 2);$old$,
     $new$or round_amount((l.value ->> 'amount')::numeric, rounding_of(p_company_id, v_currency))
                <> (l.value ->> 'amount')::numeric);$new$);
+  -- The balances are judged before they are added up, so that the sentence
+  -- of an unbalanced statement can write them with the mask of the currency.
   v_new := replace(v_new,
-    $old$if scale(trim_scale(v_opening)) > 2 or scale(trim_scale(v_closing)) > 2 then
-      raise exception 'unreadable_statement_line: the balances of statement % carry more than two decimals', v_ref;$old$,
-    $new$if round_amount(v_opening, rounding_of(p_company_id, v_currency)) <> v_opening
+    $old$    if scale(trim_scale(v_opening)) > 2 or scale(trim_scale(v_closing)) > 2 then
+      raise exception 'unreadable_statement_line: the balances of statement % carry more than two decimals', v_ref;
+    end if;
+$old$, '');
+  v_new := replace(v_new,
+    $old$    if v_opening + v_movement <> v_closing then
+      raise exception 'unbalanced_statement: statement % opens at %, its booked lines add up to %, and it closes at % — a difference of %',
+        v_ref, v_opening, v_movement, v_closing, v_closing - (v_opening + v_movement);
+    end if;$old$,
+    $new$    if round_amount(v_opening, rounding_of(p_company_id, v_currency)) <> v_opening
        or round_amount(v_closing, rounding_of(p_company_id, v_currency)) <> v_closing then
-      raise exception 'unreadable_statement_line: the balances of statement % carry more decimals than % has', v_ref, v_currency;$new$);
-  if position('two decimals' in v_new) > 0 or position('> 2' in v_new) > 0 then
+      raise exception 'unreadable_statement_line: the balances of statement % carry more decimals than % has', v_ref, v_currency;
+    end if;
+    if v_opening + v_movement <> v_closing then
+      raise exception 'unbalanced_statement: statement % opens at %, its booked lines add up to %, and it closes at % — a difference of %',
+        v_ref,
+        to_char(v_opening, amount_text_format(rounding_of(p_company_id, v_currency))),
+        to_char(v_movement, amount_text_format(rounding_of(p_company_id, v_currency))),
+        to_char(v_closing, amount_text_format(rounding_of(p_company_id, v_currency))),
+        to_char(v_closing - (v_opening + v_movement), amount_text_format(rounding_of(p_company_id, v_currency)));
+    end if;$new$);
+  v_new := replace(v_new,
+    $old$          v_ref, v_end, v_existing.balance_start, v_existing.balance_end_declared, v_opening, v_closing;$old$,
+    $new$          v_ref, v_end,
+          to_char(v_existing.balance_start, amount_text_format(rounding_of(p_company_id, v_currency))),
+          to_char(v_existing.balance_end_declared, amount_text_format(rounding_of(p_company_id, v_currency))),
+          to_char(v_opening, amount_text_format(rounding_of(p_company_id, v_currency))),
+          to_char(v_closing, amount_text_format(rounding_of(p_company_id, v_currency)));$new$);
+  v_new := replace(v_new,
+    $old$          v_ref, v_account.name, v_end, v_opening, v_closing, v_covering.source_format, v_covering.statement_ref;$old$,
+    $new$          v_ref, v_account.name, v_end,
+          to_char(v_opening, amount_text_format(rounding_of(p_company_id, v_currency))),
+          to_char(v_closing, amount_text_format(rounding_of(p_company_id, v_currency))),
+          v_covering.source_format, v_covering.statement_ref;$new$);
+  if position('two decimals' in v_new) > 0 or position('> 2' in v_new) > 0
+     or position('v_ref, v_opening, v_movement' in v_new) > 0
+     or position('v_existing.balance_end_declared, v_opening' in v_new) > 0
+     or position('v_end, v_opening, v_closing' in v_new) > 0 then
     raise exception 'an_amount_finer_than_its_currency_is_refused: import_bank_statement no longer reads the decimals it was written against.';
   end if;
   execute v_new;

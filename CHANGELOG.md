@@ -51,7 +51,8 @@ somewhere has already run it.
   migration creates triggers and reads no row. `import_bank_statement()`
   reads a file at the decimals of the account's currency instead of two
   whatever the currency — a dinar statement imports its thousandths, a krona
-  statement with a fraction of a krona is refused, `unreadable_statement_line`.
+  statement with a fraction of a krona is refused, `unreadable_statement_line`;
+  its sentences that name a balance write it with `amount_text_format()`.
   Unit prices, quantities and rates are untouched. Migrations
   `20261124090000`, `assets/20261124090100`, `budgets/20261124090200`,
   `contracts/20261124090300`, `crm/20261124090400`; additive.
