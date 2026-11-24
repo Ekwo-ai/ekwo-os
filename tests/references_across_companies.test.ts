@@ -61,6 +61,11 @@ const LATER = [
   // Recreates the triggers and views over the amounts as the migrations
   // above leave them, so it comes after all of them.
   '20261123203000_an_amount_holds_the_decimals_of_its_currency.sql',
+  // Guards document_lines.stated_tax_amount, which 20261120100000 adds.
+  '20261124090000_an_amount_finer_than_its_currency_is_refused.sql',
+  // Rewrites merge_contacts() from the catalogue, which 20261019090000
+  // defines.
+  '20261124091000_a_merge_carries_the_account_pair.sql',
 ];
 
 let db: PGlite;
