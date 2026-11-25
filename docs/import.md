@@ -186,7 +186,8 @@ The ledger is the minimum an import brings. When the former system also holds
 the invoices — a purchase with its supplier, lines and taxes, and the PDF
 behind it — bring them in as documents: the purchase or sale becomes a
 `documents` row, its entry is the one the document posts, and the PDF goes on
-the document (`attachments.entity_type = 'document'`). Never hang the PDF on a
+the document (`attachments.entity_type = 'document'`; `attach_document_file`,
+or `ekwo doc attach`, records it where it is stored). Never hang the PDF on a
 ledger entry that stands in for an invoice: a document is what a reader opens
 to find the receipt, and an entry posted by a document refuses a file
 (decision 0069). For a year already closed, reopen it with

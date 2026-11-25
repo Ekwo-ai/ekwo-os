@@ -60,6 +60,7 @@ const READ_TOOLS = [
   'read_audit_log',
   'describe_pack',
   'status',
+  'list_document_files',
 ];
 
 const WRITE_TOOLS = [
@@ -71,6 +72,7 @@ const WRITE_TOOLS = [
   'update_product',
   'create_document',
   'update_document_lines',
+  'attach_document_file',
   'post_document',
   'accept_document',
   'decline_document',

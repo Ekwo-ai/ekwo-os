@@ -1,7 +1,8 @@
 /**
  * The verbs on a document: `doc new`, `doc line add`, `doc approve`, `post`,
- * `cancel`, `doc list` and `doc show` — and, on a quote or an order, the
- * other party's answer: `doc accept`, `doc decline` and `doc answer undo`.
+ * `cancel`, `doc list` and `doc show` — on a quote or an order, the other
+ * party's answer: `doc accept`, `doc decline` and `doc answer undo` — and its
+ * piece: `doc attach` and `doc files`.
  *
  * All five work on the same object, so they are named after it. A document is
  * a sale invoice, a purchase invoice — a bill — a quote or a credit note,
@@ -23,23 +24,28 @@ import {
   acceptDocument,
   addDocumentLine,
   approveDocument,
+  attachDocumentFile,
   declineDocument,
   undoDocumentAnswer,
   undoDocument,
   createDocument,
   getDocument,
+  listDocumentFiles,
   listDocuments,
   postDocument,
   renderDocumentPdf,
   resolveContact,
   resolveDocument,
+  type AttachDocumentFileArgs,
   type CreateDocumentArgs,
   type DocType,
   type LineArgs,
   type DocumentPdfArgs,
   type ListDocumentsArgs,
 } from '@ekwo-ai/core';
+import { createHash } from 'node:crypto';
 import { readFile, writeFile } from 'node:fs/promises';
+import { basename, extname } from 'node:path';
 import { UsageError, boolFlag, numberFlag, rejectUnknownFlags, stringFlag, stringFlags, type ParsedArgs } from '../args.js';
 import {
   BOOKS_FLAGS,
@@ -347,6 +353,8 @@ export async function docCommand(args: ParsedArgs, deps: BooksDeps = {}): Promis
   if (action === 'accept') return docAnswer(args, deps, 'accept');
   if (action === 'decline') return docAnswer(args, deps, 'decline');
   if (action === 'answer' && second === 'undo') return docAnswer(args, deps, 'undo');
+  if (action === 'attach') return docAttach(args, deps);
+  if (action === 'files') return docFiles(args, deps);
   throw new UsageError(
     'usage: ekwo doc new --contact <name|id> --line "name=…,price=…,tax=…" [--type --date --ref]' +
       ' | ekwo doc line add <document> --price <amount> [--name --account --tax]' +
@@ -354,7 +362,9 @@ export async function docCommand(args: ParsedArgs, deps: BooksDeps = {}): Promis
       ' | ekwo doc show <document>' +
       ' | ekwo doc approve <document>' +
       ' | ekwo doc accept <document> [--by <who> --at <date>] | ekwo doc decline <document> [--at <date>] | ekwo doc answer undo <document>' +
-      ' | ekwo doc pdf <document> [--factur-x --out <file> --page-size A4|Letter --labels <file.json>]',
+      ' | ekwo doc pdf <document> [--factur-x --out <file> --page-size A4|Letter --labels <file.json>]' +
+      ' | ekwo doc attach <document> <storage-path> [--file <local copy> --name <file name> --mime <type>]' +
+      ' | ekwo doc files <document>',
   );
 }
 
@@ -480,4 +490,88 @@ async function docPdf(args: ParsedArgs, deps: BooksDeps): Promise<number> {
   line();
   note(dim('Rendered from the books, and recorded nowhere: the copy you send is yours to keep.'));
   return violations.length > 0 ? EXIT_ERROR : EXIT_OK;
+}
+
+const ATTACH_FLAGS = [...BOOKS_FLAGS, 'file', 'name', 'mime'] as const;
+
+/** The media types a piece usually has, by its extension; anything else is left unsaid. */
+const MEDIA_TYPES: Record<string, string> = {
+  '.pdf': 'application/pdf',
+  '.xml': 'application/xml',
+  '.png': 'image/png',
+  '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.heic': 'image/heic',
+  '.tif': 'image/tiff',
+  '.tiff': 'image/tiff',
+};
+
+/**
+ * `ekwo doc attach <document> <storage-path> [--file <local copy>]` — records
+ * the file stored at `<storage-path>` as the piece of the document, through
+ * `attachDocumentFile()`, which `attach_document_file` calls too. Nothing is
+ * uploaded: the file is where the installation keeps files already. With
+ * `--file`, a copy of it on this machine is read for its size and its SHA-256,
+ * so that the same file recorded again is recognised; its name is the file's
+ * unless `--name` says another.
+ */
+async function docAttach(args: ParsedArgs, deps: BooksDeps): Promise<number> {
+  rejectUnknownFlags(args, ATTACH_FLAGS);
+  const { backend, company } = await openBooks(args, deps);
+  const documentId = await resolveDocument(backend, company.id, required(args.positional[1], 'the document', '<document>'));
+  const storagePath = required(args.positional[2], 'where the file is stored', '<storage-path>');
+  const local = stringFlag(args, 'file');
+  let measured: { byte_size: number; checksum: string } | undefined;
+  if (local !== undefined) {
+    let bytes: Buffer;
+    try {
+      bytes = await readFile(local);
+    } catch (error) {
+      throw new UsageError(`bad_value: --file names a copy of the file on this machine; ${local} could not be read (${error instanceof Error ? error.message : String(error)}).`);
+    }
+    measured = { byte_size: bytes.byteLength, checksum: createHash('sha256').update(bytes).digest('hex') };
+  }
+  const fileName = stringFlag(args, 'name') ?? basename(local ?? storagePath);
+  const result = (await attachDocumentFile(
+    backend,
+    given({
+      document_id: documentId,
+      storage_path: storagePath,
+      file_name: fileName,
+      mime_type: stringFlag(args, 'mime') ?? MEDIA_TYPES[extname(fileName).toLowerCase()],
+      ...measured,
+    }) as unknown as AttachDocumentFileArgs,
+  )) as Row;
+  setResult(result);
+  const attachment = (result['attachment'] ?? {}) as Row;
+  heading(`${result['replayed'] === true ? 'Already recorded' : 'Recorded'}, in ${company.name}`);
+  pairs([
+    ['document', documentId],
+    ['file', `${text(attachment['file_name'])}  ${dim(text(attachment['mime_type']))}`],
+    ['stored at', text(attachment['storage_path'])],
+    ['sha-256', text(attachment['checksum'])],
+  ]);
+  line();
+  note(dim('The row is recorded; the file stays where it is stored.'));
+  return 0;
+}
+
+/** `ekwo doc files <document>` — the pieces recorded on a document, through `listDocumentFiles()`. */
+async function docFiles(args: ParsedArgs, deps: BooksDeps): Promise<number> {
+  rejectUnknownFlags(args, BOOKS_FLAGS);
+  const { backend, company } = await openBooks(args, deps);
+  const documentId = await resolveDocument(backend, company.id, required(args.positional[1], 'the document', '<document>'));
+  const result = (await listDocumentFiles(backend, { document_id: documentId })) as { attachments: Row[]; count: number };
+  setResult(result);
+  heading(`Files of the document, in ${company.name}`);
+  if (result.attachments.length === 0) note(dim('None.'));
+  else {
+    table(
+      [{ title: 'name' }, { title: 'type' }, { title: 'bytes', align: 'right' }, { title: 'stored at' }, { title: 'id' }],
+      result.attachments.map((a) => [
+        text(a['file_name']), text(a['mime_type']), text(a['byte_size']), text(a['storage_path']), dim(text(a['id'])),
+      ]),
+    );
+  }
+  return 0;
 }

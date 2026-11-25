@@ -202,7 +202,10 @@ ${bold('Connecting')} ${dim('(every command)')}
               --at <date>] | decline <document> [--at <date>] | answer undo
               <document> — the other party's answer to a quote or an order,
               a dated fact; its status is derived (draft, sent, accepted,
-              declined, expired). ${dim('ekwo invoice is the old name of doc, kept; ekwo document is its whole word.')}
+              declined, expired). attach <document> <storage-path> [--file
+              <local copy> --name --mime] | files <document> — the piece of a
+              document, the PDF of a supplier's invoice or a receipt, recorded
+              where it is stored; nothing is uploaded. ${dim('ekwo invoice is the old name of doc, kept; ekwo document is its whole word.')}
   ${cyan('post')}        <document> — book it, through post_document(). --dry-run shows
               the entry the database would write, and writes nothing.
   ${cyan('cancel')}      <document> — undo a posted invoice, and say how: back to draft

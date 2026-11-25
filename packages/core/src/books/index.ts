@@ -31,3 +31,4 @@ export * from './financial-statements.js';
 export * from './closing.js';
 export * from './document-pdf.js';
 export * from './archive.js';
+export * from './attachments.js';

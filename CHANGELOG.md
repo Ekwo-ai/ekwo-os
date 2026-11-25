@@ -70,6 +70,21 @@ somewhere has already run it.
 
 ### Added
 
+- **The piece of a document is recorded from the tools.** The PDF of a
+  supplier's invoice, the photograph of a receipt, the copy a customer was
+  sent: `attachments` held it on the document since decision 0069, and only
+  `import_bank_statement` could record a file, on a statement. The MCP tools
+  `attach_document_file` and `list_document_files`, the commands `ekwo doc
+  attach <document> <storage-path> [--file <local copy>]` and `ekwo doc files
+  <document>`, and `attachDocumentFile()` / `listDocumentFiles()` of the core
+  record and read it. Nothing is uploaded: the file is stored first, wherever
+  the installation keeps files, and the row says where, with its name, type,
+  size and SHA-256 (`--file` measures a local copy). The same file recorded
+  again on a document is returned, `replayed: true` — by its SHA-256, or by
+  where it is stored without one. Written under `documents.write`, read under
+  `documents.read`, and carried by the company archive as before. No
+  migration.
+
 - **A company's bank account names its bank in any scheme.**
   `create_bank_account()` took the bank as `p_bic` alone; it now takes
   `p_bank_scheme` and `p_bank_identifier`, any institution scheme of

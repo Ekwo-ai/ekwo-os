@@ -45,6 +45,7 @@ export {
   getDocument,
   journalBook,
   listAnalyticAxes,
+  listDocumentFiles,
   listDocuments,
   listStatements,
   listTaxCertificates,
@@ -245,6 +246,8 @@ export const ListDocumentsInput = z.object({
 });
 
 export const GetDocumentInput = z.object({ document_id: uuid });
+
+export const ListDocumentFilesInput = z.object({ document_id: uuid.describe('The document, from list_documents.') });
 
 export const RenderInvoicePdfInput = z.object({
   document_id: uuid.describe('A sale invoice or a sale credit note. A draft is rendered titled as a draft, without a number.'),

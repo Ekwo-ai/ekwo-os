@@ -361,6 +361,18 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
   );
 
   register(
+    'list_document_files',
+    {
+      title: 'The files recorded on a document',
+      description:
+        'The pieces recorded on one document — the PDF of a supplier\'s invoice, the photograph of a receipt — with where each is stored, its name, type, size and SHA-256, the first recorded first. The rows only: the file is read where storage_path says, by whoever has access to that storage.',
+      inputSchema: read.ListDocumentFilesInput.shape,
+      annotations: { readOnlyHint: true, openWorldHint: false },
+    },
+    async (args) => guard(() => read.listDocumentFiles(backend, args)),
+  );
+
+  register(
     'render_invoice_pdf',
     {
       title: 'The PDF of an invoice',
@@ -820,6 +832,18 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
       annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: true, openWorldHint: false },
     },
     async (args) => guard(() => write.updateDocumentLines(backend, args)),
+  );
+
+  register(
+    'attach_document_file',
+    {
+      title: 'Record the file of a document',
+      description:
+        'Records a file as the piece of a document: the PDF of the supplier\'s invoice a purchase invoice was created from, the photograph of a receipt, the copy a customer was sent. This server stores no bytes: the file is stored first, in the storage of the installation or wherever its application keeps files, and this records where, with its name, type, size and SHA-256. The same file recorded again on the same document is returned (replayed: true), not recorded twice. A piece goes on its document, never on the entry the document posted; a document of any state takes one. Nothing is booked. Next: list_document_files reads them back.',
+      inputSchema: write.AttachDocumentFileInput.shape,
+      annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false },
+    },
+    async (args) => guard(() => write.attachDocumentFile(backend, args)),
   );
 
   register(

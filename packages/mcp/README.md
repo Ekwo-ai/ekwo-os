@@ -231,6 +231,7 @@ Every write names its company explicitly.
 | `search_products` | The catalogue: code, unit, price, account and tax of what is sold and bought |
 | `list_documents` | Invoices, credit notes and quotes, filtered |
 | `get_document` | One document with its lines and the entry it produced |
+| `list_document_files` | The pieces recorded on a document: where each is stored, its name, type, size and SHA-256 |
 | `render_invoice_pdf` | The PDF of a sale invoice or credit note, as a PDF resource (base64) beside a JSON summary, rendered from the books by [`@ekwo-ai/invoice-pdf`](../formats/invoice-pdf/README.md). `factur_x` embeds the CII of a posted sale (Factur-X, EN 16931, PDF/A-3) and returns the rules it breaks; the words of the layout are in the document's language where a set exists for it, in English otherwise (`labels_language` says which), the words the law of the country names are the pack's (`pack_labels` lists them), and `labels` puts other words over them. The logo is fetched by the server from the company's `logo_url`, never from a local or private address. Records nothing |
 | `list_bank_accounts` | The bank accounts of a company, with the journal and ledger account behind each and the profile of its CSV statements (`statement_profile`) when one is kept |
 | `list_bank_transactions` | Statement lines, pending by default |
@@ -267,6 +268,7 @@ Every write names its company explicitly.
 | `pin_accounts` | Adds accounts to the working chart a company sees first, or takes one back out with `pinned: false` |
 | `create_document` | A draft invoice, credit note or quote, with its lines. With `client_ref`, calling twice creates once |
 | `update_document_lines` | Replaces the lines of a **draft** |
+| `attach_document_file` | Records the piece of a document — the PDF of a supplier's invoice, a receipt, the copy a customer was sent — where the caller stored it, with its name, type, size and SHA-256. The server stores no bytes. The same file recorded again is returned (`replayed: true`), by its SHA-256 or by where it is stored |
 | `post_document` | Books it, in review or autopilot ([below](#review-or-autopilot)): in `review`, only once a person approved the draft as it stands, refused with `approval_required` otherwise; in `autopilot`, directly. `dry_run: true` returns the entry the database would write, and writes nothing, in both |
 | `accept_document` / `decline_document` | Records on a sale quote or a purchase order that the other party accepted it (`accepted_at`, `accepted_by`) or declined it (`declined_at`): a dated fact, nothing booked. `get_document` and `list_documents` then say `quote_status` — `draft`, `sent`, `accepted`, `declined`, `expired` or `cancelled` — derived by the database's `quote_status()`. Where the `crm` module holds a deal that carries the quote, the database moves the deal: won on an acceptance, lost on a refusal when no other quote of the deal is still alive. Held to `agent_posting` as a posting is |
 | `undo_document_answer` | Takes back an answer recorded by mistake; a deal it had closed opens again |

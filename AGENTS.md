@@ -192,6 +192,7 @@ reach and whether you may write; without that box ticked, you read.
 | Accounts and tax codes | the country's set-up page | `list_accounts`, `describe_pack` |
 | A draft invoice | `ekwo doc new --contact <name> --line "name=…,price=…,account=<code>,tax=<code>" --ref <yours>` | `create_document` |
 | The answer to a quote or an order, and its status | `ekwo doc accept <doc> --by <who>`, `ekwo doc decline <doc>`, `ekwo doc answer undo <doc>` | `accept_document`, `decline_document`, `undo_document_answer` |
+| The file behind a document — the supplier's PDF, a receipt — recorded where it is stored | `ekwo doc attach <doc> <storage-path> [--file <local copy>]`, `ekwo doc files <doc>` | `attach_document_file`, `list_document_files` |
 | See the transaction before recording it | `ekwo post <doc> --dry-run` | — |
 | Record it | `ekwo post <doc>` | `post_document` |
 | Undo it | `ekwo cancel <doc>` | `cancel_document` |

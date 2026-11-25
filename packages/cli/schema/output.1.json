@@ -639,6 +639,38 @@
         "properties": { "documents": { "type": "array", "items": { "$ref": "#/$defs/row" } }, "count": { "type": "integer" } }
       },
       "doc pdf": { "$ref": "#/$defs/documentPdf" },
+      "doc attach": {
+        "$comment": "attachDocumentFile() of @ekwo-ai/core — the MCP server's attach_document_file: the row of attachments as recorded on the document, and replayed: true when the same file was recorded on it before. byte_size is a decimal string.",
+        "type": "object",
+        "required": ["attachment"],
+        "properties": {
+          "attachment": {
+            "type": "object",
+            "required": ["id", "entity_type", "entity_id", "file_name", "storage_path"],
+            "properties": {
+              "id": { "type": "string" },
+              "entity_type": { "const": "document" },
+              "entity_id": { "type": "string" },
+              "file_name": { "type": "string" },
+              "mime_type": { "type": ["string", "null"] },
+              "byte_size": { "type": ["string", "null"] },
+              "storage_path": { "type": "string" },
+              "checksum": { "type": ["string", "null"] }
+            }
+          },
+          "replayed": { "type": "boolean" }
+        }
+      },
+      "doc files": {
+        "$comment": "listDocumentFiles() of @ekwo-ai/core — the MCP server's list_document_files: the pieces recorded on the document, the first recorded first.",
+        "type": "object",
+        "required": ["document_id", "attachments", "count"],
+        "properties": {
+          "document_id": { "type": "string" },
+          "attachments": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+          "count": { "type": "integer" }
+        }
+      },
       "doc accept": { "$ref": "#/$defs/quoteAnswer" },
       "doc decline": { "$ref": "#/$defs/quoteAnswer" },
       "doc answer undo": { "$ref": "#/$defs/quoteAnswer" },

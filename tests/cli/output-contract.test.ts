@@ -13,6 +13,7 @@
  * the sentence the database wrote, word for word.
  */
 
+import { createHash } from 'node:crypto';
 import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -326,6 +327,12 @@ describe('every command answers --json with one document of the published shape'
     expect(pdf.command).toBe('document pdf');
     expect(pdf.exitCode).toBe(0);
     expect(pdf.data).toMatchObject({ media_type: 'application/pdf', page_count: 1, written_to: join(cwd, 'd-1.pdf') });
+    // The copy that was sent, recorded as the piece of the invoice where it is stored, measured from the local copy: once.
+    const sha = createHash('sha256').update(await readFile(join(cwd, 'd-1.pdf'))).digest('hex');
+    const attached = await asPerson(['doc', 'attach', 'd-1', 'sent/d-1.pdf', '--file', join(cwd, 'd-1.pdf')]);
+    expect(attached.data).toMatchObject({ attachment: { file_name: 'd-1.pdf', mime_type: 'application/pdf', storage_path: 'sent/d-1.pdf', checksum: sha } });
+    expect((await asPerson(['doc', 'attach', 'd-1', 'moved/d-1.pdf', '--file', join(cwd, 'd-1.pdf')])).data).toMatchObject({ replayed: true });
+    expect((await asPerson(['doc', 'files', 'd-1'])).data).toMatchObject({ count: 1, attachments: [{ storage_path: 'sent/d-1.pdf' }] });
     const bank = await root.query<{ id: string }>(
       `insert into bank_accounts (company_id, name, currency_code, account_id, journal_id)
        select c.id, 'Bank', c.currency_code,

@@ -43,6 +43,7 @@ export * from './import-books.js';
 // exported from here under the names they always had.
 export {
   acceptDocument,
+  attachDocumentFile,
   cancelDocument,
   closeFiscalYear,
   closeFiscalYearFinally,
@@ -399,6 +400,22 @@ export const CreateDocumentInput = z.object({
 export const UpdateDocumentLinesInput = z.object({
   document_id: uuid,
   lines: z.array(LineInput).min(1).describe('The complete new set of lines; what is there now is replaced.'),
+});
+
+export const AttachDocumentFileInput = z.object({
+  document_id: uuid.describe('The document the file is the piece of: a purchase invoice created from it, a receipt, the copy a customer was sent.'),
+  storage_path: z
+    .string()
+    .min(1)
+    .describe('Where the file is stored: the path in the storage of the installation, or any address its application opens. This server stores no bytes; store the file first, then record it here.'),
+  file_name: z.string().min(1).describe('The name the file had.'),
+  mime_type: z.string().min(1).optional().describe('Its media type, application/pdf for instance.'),
+  byte_size: z.number().int().nonnegative().optional().describe('Its size in bytes.'),
+  checksum: z
+    .string()
+    .regex(/^[0-9a-f]{64}$/, 'the SHA-256 of the file, as 64 lower-case hexadecimal digits')
+    .optional()
+    .describe('The SHA-256 of the file, in hexadecimal. With it, the same file recorded again on the document is recognised and returned (replayed: true) wherever it is stored; without it, the same storage_path is.'),
 });
 
 export const PostDocumentInput = z.object({
