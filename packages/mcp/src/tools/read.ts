@@ -242,6 +242,11 @@ export const ListDocumentsInput = z.object({
   from: isoDate.optional().describe('Earliest document date.'),
   to: isoDate.optional().describe('Latest document date.'),
   unpaid: z.boolean().optional().describe('True: posted and still owed — not paid, or partially.'),
+  number: z
+    .string()
+    .min(1)
+    .optional()
+    .describe('The document number, whole or in part, any case — "DEV-2025-0043", "2025-0043". A draft has no number yet.'),
   limit: z.number().int().min(1).max(200).optional(),
 });
 

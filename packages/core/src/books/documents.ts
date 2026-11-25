@@ -131,6 +131,8 @@ export interface ListDocumentsArgs {
   to?: string | undefined;
   /** Posted and still owed: not paid, or partially. Drafts are owed by nobody. */
   unpaid?: boolean | undefined;
+  /** The document's number, whole or in part, any case: `DEV-2025-0043`, `2025-0043`, `0043`. */
+  number?: string | undefined;
   limit?: number | undefined;
 }
 
@@ -771,6 +773,9 @@ export async function listDocuments(
   if (args.contact_id !== undefined) where.push({ column: 'contact_id', op: 'eq', value: args.contact_id });
   if (args.from !== undefined) where.push({ column: 'document_date', op: 'gte', value: args.from });
   if (args.to !== undefined) where.push({ column: 'document_date', op: 'lte', value: args.to });
+  if (args.number !== undefined && args.number.trim() !== '') {
+    where.push({ column: 'number', op: 'ilike', value: `%${args.number.trim()}%` });
+  }
 
   const documents = await backend.select<Row>({
     table: 'documents',

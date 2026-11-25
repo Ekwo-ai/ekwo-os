@@ -341,7 +341,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     {
       title: 'List documents',
       description:
-        'Invoices, credit notes and quotes of a company, filtered by type, state, settlement state, contact or date range. `state` is the document (draft, posted, cancelled) and `payment_state` is the settlement (not_paid, partially_paid, paid) — two different questions. A quote or an order also carries its answer (accepted_at, accepted_by, declined_at) and `quote_status` — draft, sent, accepted, declined, expired or cancelled — derived by the database from those facts; null on other documents. Returns headers and totals, not lines; use get_document for those.',
+        'Invoices, credit notes and quotes of a company, filtered by type, state, settlement state, contact, date range or number — a document asked for by its number is found with `number`, without scanning dates. `state` is the document (draft, posted, cancelled) and `payment_state` is the settlement (not_paid, partially_paid, paid) — two different questions. A quote or an order also carries its answer (accepted_at, accepted_by, declined_at) and `quote_status` — draft, sent, accepted, declined, expired or cancelled — derived by the database from those facts; null on other documents. Returns headers and totals, not lines; use get_document for those.',
       inputSchema: read.ListDocumentsInput.shape,
       annotations: { readOnlyHint: true, openWorldHint: false },
     },

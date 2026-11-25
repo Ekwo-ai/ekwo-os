@@ -229,7 +229,7 @@ Every write names its company explicitly.
 | `contact_statement` | The statement of account of one contact over a period: the balance carried forward, each posted line of their receivable and payable accounts with its running balance and how far it is matched, and the closing balance |
 | `list_tax_certificates` | The certificates the buyers handed over — resale, exemption, declarations of intent — with the territory each was given under and the days it covers |
 | `search_products` | The catalogue: code, unit, price, account and tax of what is sold and bought |
-| `list_documents` | Invoices, credit notes and quotes, filtered |
+| `list_documents` | Invoices, credit notes and quotes, filtered — by type, state, contact, dates or number |
 | `get_document` | One document with its lines and the entry it produced |
 | `list_document_files` | The pieces recorded on a document: where each is stored, its name, type, size and SHA-256 |
 | `render_invoice_pdf` | The PDF of a sale invoice or credit note, as a PDF resource (base64) beside a JSON summary, rendered from the books by [`@ekwo-ai/invoice-pdf`](../formats/invoice-pdf/README.md). `factur_x` embeds the CII of a posted sale (Factur-X, EN 16931, PDF/A-3) and returns the rules it breaks; the words of the layout are in the document's language where a set exists for it, in English otherwise (`labels_language` says which), the words the law of the country names are the pack's (`pack_labels` lists them), and `labels` puts other words over them. The logo is fetched by the server from the company's `logo_url`, never from a local or private address. Records nothing |

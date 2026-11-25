@@ -70,6 +70,10 @@ somewhere has already run it.
 
 ### Added
 
+- **A document found by its number.** `list_documents` takes `number`, matched
+  whole or in part and in any case (`DEV-2025-0043`, `2025-0043`): an agent
+  asked for one quote or invoice reads it in one call instead of scanning
+  date ranges.
 - **The piece of a document is recorded from the tools.** The PDF of a
   supplier's invoice, the photograph of a receipt, the copy a customer was
   sent: `attachments` held it on the document since decision 0069, and only

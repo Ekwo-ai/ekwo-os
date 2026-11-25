@@ -237,6 +237,19 @@ describe('through @ekwo-ai/core, as the MCP server and the command line call it'
     expect(record(record(await getDocument(backend, { document_id: invoice }))['document'])['quote_status']).toBeNull();
   });
 
+  it('finds a document by its number, whole or in part, any case', async () => {
+    const backend = backendFor(db, fx.ownerId);
+    const id = await quote();
+    const other = await quote();
+    await db.query(`update documents set number = $2 where id = $1`, [id, 'DEV-2025-0043']);
+    await db.query(`update documents set number = $2 where id = $1`, [other, 'DEV-2025-0042']);
+    const ids = async (number: string) =>
+      (record(await listDocuments(backend, { company_id: fx.companyId, number }))['documents'] as Record<string, unknown>[]).map((d) => d['id']);
+    expect(await ids('DEV-2025-0043')).toEqual([id]);
+    expect(await ids('dev-2025-004')).toEqual(expect.arrayContaining([id, other]));
+    expect(await ids('0043')).toEqual([id]);
+  });
+
   it('names every status the database derives, in the words of each language', async () => {
     const derived = await rows<{ status: string }>(db, `select distinct quote_status(d) as status from documents d where quote_status(d) is not null`);
     for (const { status } of derived) expect(QUOTE_STATUSES).toContain(status);
