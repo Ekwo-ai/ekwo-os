@@ -132,13 +132,18 @@ export {
 } from './pack/vat-codes.js';
 export {
   euVatScopeOf,
+  parseSeedRows,
   parseTerritorySeed,
+  readPackReferences,
   readTerritories,
+  referenceIssues,
   territoryOf,
   territoryWithin,
   territoryWithinForTax,
   TerritoryError,
   type EuVatScope,
+  type PackReference,
+  type SeedRow,
   type Territory,
 } from './pack/territories.js';
 export { validate, type Issue } from './pack/schema.js';
