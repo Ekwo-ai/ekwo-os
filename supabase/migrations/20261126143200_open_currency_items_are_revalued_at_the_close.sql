@@ -19,12 +19,13 @@
 -- Summed by account, counterparty and currency: one position each.
 --
 -- **At which rate.** The closing rate is an input, as every rate of the
--- schema is: `closing_rates` holds, per company, currency and day, the units
--- of that currency for one unit of the company's — the convention of
--- `documents.exchange_rate`. The close reads the rate of the last day of the
--- year, that day exactly, and refuses by name (`fx_closing_rate_missing`) a
--- currency still open without one. `currency_rates` is not read, for the
--- reasons decision 0097 gives.
+-- schema is: the company's own row of `currency_rates` for the currency and
+-- the day — a row that names its company, in units of that currency for one
+-- unit of the company's, the convention of `documents.exchange_rate`. The
+-- close reads the rate of the last day of the year, that day exactly, and
+-- refuses by name (`fx_closing_rate_missing`) a currency still open without
+-- one. The instance-wide rows, with no company, are in another base and are
+-- never read for a close (decision 0097 gives why).
 --
 -- **Where the difference goes.** On the position's own account, against the
 -- counterparty, and on the accounts the pack names:
@@ -52,7 +53,7 @@
 -- stands as an open item. `currency_revaluations` records the pair for the
 -- year; `reopen_fiscal_year()` takes both back with their mirrors.
 --
--- Additive: two nullable columns, two tables, three functions added, two
+-- Additive: three nullable columns, one table, three functions added, two
 -- rewritten with their signature, their grants and their errors.
 
 -- ---------------------------------------------------------------------------
@@ -69,54 +70,56 @@ comment on column ekwo.country_defaults.fx_unrealised_loss_code is
   'The same for an unrealised loss. A pair, because a chart that defers the difference keeps the two on opposite sides of the balance sheet.';
 
 -- ---------------------------------------------------------------------------
--- 2. closing_rates — the rates a company closes at
+-- 2. currency_rates — a company's own rate of a day, beside the instance's
 -- ---------------------------------------------------------------------------
+--
+-- `currency_rates` has held, since the first migration, the rates of the
+-- installation: units of a currency for one unit of the instance reference
+-- currency. A company's closing rate is the same notion — a currency, a day,
+-- a rate, a source — measured against the company's own currency, so it is a
+-- row of the same table that names its company. The column says which base a
+-- row is in, and no row is ever read against the other one:
+--   - `company_id` null: the instance-wide rate, exactly as before, for every
+--     existing row and every reader that reads them;
+--   - `company_id` set: that company's rate of that day, in units of the
+--     currency for one unit of the company's currency, the convention of
+--     `documents.exchange_rate`. Only a reader that names the company reads
+--     it, and only those rows; the close reads nothing else.
 
-create table ekwo.closing_rates (
-  id            uuid primary key default gen_random_uuid(),
-  company_id    uuid not null references ekwo.companies(id) on delete cascade,
-  currency_code char(3) not null references ekwo.currencies(code),
-  rate_date     date not null,
-  rate          numeric(18, 8) not null,
-  source        text,
-  created_at    timestamptz not null default now(),
-  updated_at    timestamptz not null default now(),
-  unique (company_id, currency_code, rate_date),
-  constraint closing_rates_positive check (rate > 0)
-);
+alter table ekwo.currency_rates
+  add column company_id uuid references ekwo.companies(id) on delete cascade;
 
-comment on table ekwo.closing_rates is
-  'The exchange rates a company states its open foreign-currency items at on a closing date: one row per currency and day. close_fiscal_year() reads the row of the last day of the year for every currency still open, and refuses one that is missing (fx_closing_rate_missing).';
-comment on column ekwo.closing_rates.rate is
-  'Units of currency_code for one unit of the company''s currency, as documents.exchange_rate holds a rate. The amount in the company''s currency is the amount in currency_code divided by it.';
-comment on column ekwo.closing_rates.rate_date is
-  'The day the rate is the closing rate of. A close reads this day exactly: a rate of another day is never taken for it.';
-comment on column ekwo.closing_rates.source is
-  'Where the rate comes from — a central bank, a published series — so that a revaluation can be traced to it.';
+comment on column ekwo.currency_rates.company_id is
+  'The company whose own rate the row is, or null for the instance-wide rate. It fixes the base of rate: null, units of currency_code for one unit of the instance reference currency; set, units of currency_code for one unit of that company''s currency, as documents.exchange_rate holds a rate. A reader names the company it reads for, or company_id is null, and never mixes the two.';
+comment on column ekwo.currency_rates.rate_date is
+  'The day the rate is the rate of. A close reads the company''s row of the last day of the year exactly: a rate of another day is never taken for it.';
 
-create index closing_rates_currency_idx on ekwo.closing_rates (currency_code);
+-- One rate per currency and day, for the instance and for each company.
+alter table ekwo.currency_rates
+  drop constraint currency_rates_currency_code_rate_date_key,
+  add constraint currency_rates_company_currency_day_key
+    unique nulls not distinct (company_id, currency_code, rate_date);
 
-create trigger closing_rates_set_updated_at
-  before update on ekwo.closing_rates
-  for each row execute function ekwo.set_updated_at();
+create index currency_rates_currency_idx on ekwo.currency_rates (currency_code);
 
-alter table ekwo.closing_rates enable row level security;
-
-create policy closing_rates_select on ekwo.closing_rates
-  for select using (company_id = any ((select ekwo.companies_with_capability('entries.read'))::uuid[]));
-create policy closing_rates_write on ekwo.closing_rates
+drop policy currency_rates_select on ekwo.currency_rates;
+create policy currency_rates_select on ekwo.currency_rates
+  for select using (
+    case when company_id is null then ekwo.is_known_caller()
+         else company_id = any ((select ekwo.companies_with_capability('entries.read'))::uuid[]) end);
+create policy currency_rates_write on ekwo.currency_rates
   for all using (company_id = any ((select ekwo.companies_with_capability('year_end.close'))::uuid[]))
   with check (company_id = any ((select ekwo.companies_with_capability('year_end.close'))::uuid[]));
 
-comment on policy closing_rates_select on ekwo.closing_rates is
-  'Whoever reads the ledger reads the rates its revaluations were made at.';
-comment on policy closing_rates_write on ekwo.closing_rates is
-  'year_end.close: the rate a year is closed at is chosen by whoever closes it.';
+comment on policy currency_rates_select on ekwo.currency_rates is
+  'An instance-wide rate is reference data, read by any caller the installation knows; a company''s rate is read by whoever reads its ledger, since its revaluations were made at it.';
+comment on policy currency_rates_write on ekwo.currency_rates is
+  'A company''s rate only, under year_end.close: the rate a year is closed at is chosen by whoever closes it. An instance-wide rate, with no company, is written by nobody through the API, as before.';
 
-grant select, insert, update, delete on table ekwo.closing_rates to authenticated, service_role;
+grant insert, update, delete on table ekwo.currency_rates to authenticated, service_role;
 
-create trigger closing_rates_audit
-  after insert or update or delete on ekwo.closing_rates
+create trigger currency_rates_audit
+  after insert or update or delete on ekwo.currency_rates
   for each row execute function ekwo.audit_changes('{"company":"company_id","key":["currency_code","rate_date"]}');
 
 -- ---------------------------------------------------------------------------
@@ -204,8 +207,8 @@ create trigger currency_revaluations_audit
 -- A company leaves with its rates, and with the revaluations after the
 -- entries they name.
 insert into ekwo.company_archive_registry (table_name, disposition, load_order, via_column, via_table, reason) values
-  ('closing_rates', 'exported', 42, null, null,
-   'The rates the company closed its years at: a revaluation in the ledger was made at them.'),
+  ('currency_rates', 'exported', 42, null, null,
+   'The company''s own rates, those that name it, which its years were closed at: a revaluation in the ledger was made at them. The instance-wide rates name no company and stay with the installation.'),
   ('currency_revaluations', 'exported', 64, null, null,
    'Which entries a close wrote to revalue the open foreign-currency items, after those entries, so that the year can still be reopened where it arrives.')
 on conflict (table_schema, table_name) do nothing;
@@ -297,7 +300,7 @@ as $$
          round_amount(p.amount_currency / r.rate, (select rnd from company)),
          round_amount(p.amount_currency / r.rate, (select rnd from company)) - p.carrying
     from positions p
-    left join closing_rates r
+    left join currency_rates r
       on r.company_id = p_company_id
      and r.currency_code = p.currency_code
      and r.rate_date = p_at
@@ -306,7 +309,7 @@ as $$
 $$;
 
 comment on function ekwo.currency_revaluation(uuid, date) is
-  'The foreign-currency positions of a company still open on a day, and what stating them at the closing rate of that day moves: per account, counterparty and currency, the amount in the currency, the amount the ledger carries it at, the rate of closing_rates for that day (null where none is recorded), the amount at that rate and the difference. A position is the open part of the lines in that currency of a receivable or payable account — what no matching dated on or before the day settled — or the whole of the lines in that currency of the account of a bank account kept in it. What close_fiscal_year() books, and nothing is written here.';
+  'The foreign-currency positions of a company still open on a day, and what stating them at the closing rate of that day moves: per account, counterparty and currency, the amount in the currency, the amount the ledger carries it at, the company''s own rate of currency_rates for that day (null where none is recorded), the amount at that rate and the difference. A position is the open part of the lines in that currency of a receivable or payable account — what no matching dated on or before the day settled — or the whole of the lines in that currency of the account of a bank account kept in it. What close_fiscal_year() books, and nothing is written here.';
 
 revoke execute on function ekwo.currency_revaluation(uuid, date) from public, anon;
 grant execute on function ekwo.currency_revaluation(uuid, date) to authenticated, service_role;
@@ -352,7 +355,7 @@ begin
   select string_agg(distinct currency_code::text, ', ' order by currency_code::text) into v_missing
     from currency_revaluation(v_year.company_id, v_year.end_date) where closing_rate is null;
   if v_missing is not null then
-    raise exception 'fx_closing_rate_missing: % still open on %; record the closing rate of that day in closing_rates before closing %',
+    raise exception 'fx_closing_rate_missing: % still open on %; record the company''s rate of that day in currency_rates before closing %',
       v_missing, v_year.end_date, v_year.name
       using errcode = '55006';
   end if;

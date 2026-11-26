@@ -3,7 +3,7 @@
  *
  * `close_fiscal_year()` states every receivable and payable still open in a
  * currency that is not the company's, and every bank account kept in one, at
- * the closing rate of the last day of the year (`closing_rates`), books the
+ * the closing rate of the last day of the year (the company's own row of `currency_rates`), books the
  * difference on the accounts the pack names, and reverses it the next day.
  * `reopen_fiscal_year()` takes both back. A pack that names no account for
  * an unrealised difference still closes a year with nothing open in a
@@ -128,7 +128,7 @@ async function sale(fx: Fixture, pack: Pack, customer: string, date: string, for
 async function closingRate(fx: Fixture, pack: Pack, date: string, rate: number): Promise<void> {
   await asUser(db, fx.ownerId, () =>
     db.query(
-      `insert into closing_rates (company_id, currency_code, rate_date, rate, source)
+      `insert into currency_rates (company_id, currency_code, rate_date, rate, source)
        values ($1, $2, $3::date, $4, 'Test series')`,
       [fx.companyId, foreignOf(pack), date, rate],
     ),

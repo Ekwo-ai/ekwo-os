@@ -33,12 +33,20 @@ of a bank account kept in that currency, whole. Summed by account,
 counterparty and currency. A line in the company's currency is not a position
 in another one, whatever account it is on.
 
-**The rate is an input, of that day.** `closing_rates` holds, per company,
-currency and day, the units of the currency for one unit of the company's —
-the convention of `documents.exchange_rate`. The close reads the row of the
-last day exactly; a currency still open without one refuses the close,
-`fx_closing_rate_missing`. `currency_rates` is not read, for the reasons
-[0097](0097-a-group-translates-at-its-own-rates.md) gives.
+**The rate is an input, of that day, in the one table of rates.**
+`currency_rates` has held the installation's dated rates since the first
+migration. It gains an optional `company_id`: a row that names a company is
+that company's rate of the day, in units of the currency for one unit of the
+company's currency — the convention of `documents.exchange_rate`; a row
+without one is the instance-wide rate, in units for one unit of the instance
+reference currency, exactly as before. The column fixes the base of the row,
+so the two are never read against each other: the close reads only the
+company's own row of the last day, exactly, and a currency still open without
+one refuses the close, `fx_closing_rate_missing`. The instance-wide rows are
+not read, for the reasons [0097](0097-a-group-translates-at-its-own-rates.md)
+gives. A third table of rates beside `currency_rates` and the group's
+`consolidation.rates` was considered and rejected: it would hold the same
+notion — a currency, a day, a rate, a source — under another name.
 
 **The accounts are roles of the pack, never a default.** A receivable or
 payable is revalued against `defaults.roles.fx_unrealised_gain` and
@@ -74,8 +82,11 @@ the two new entries together, and the next close starts again.
 - A provision for an unrealised loss, where a chart requires one besides the
   deferral, is not computed: it is the accountant's entry.
 - Revaluation between two closes — a monthly one, for a management account —
-  is not done; `closing_rates` is per day so that it can come without a new
+  is not done; a company's rate is per day so that it can come without a new
   table.
+- A reader of the instance-wide rates through the API names them with
+  `company_id=is.null`: a caller who reads a company's ledger also sees that
+  company's own rows. No reader in this repository reads the table.
 
 ## See also
 

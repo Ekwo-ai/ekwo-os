@@ -28,8 +28,10 @@ companies ─┬─ company_members            who may read or write, in four pr
            └─ attachments                files; an invoice's piece on its document
 ```
 
-Reference data sits outside any company: `currencies`, `currency_rates`, and
-the four template tables plus `country_defaults` that
+Reference data sits outside any company: `currencies`, the instance-wide
+rows of `currency_rates` (those with no `company_id`; a row that names a
+company is that company's own rate, read by its ledger's readers), and the
+four template tables plus `country_defaults` that
 `install_country_template()` copies into a new company.
 
 ## Six rules the schema enforces

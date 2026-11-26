@@ -306,14 +306,15 @@ export const SCHEMA_FEATURES = {
   },
   /**
    * What is still open in a foreign currency, revalued at the close at the
-   * rate the company records for the last day of the year, and reversed the
+   * rate the company records for the last day of the year — its own row of
+   * `currency_rates`, the one that names it — and reversed the
    * next day (`20261126143200_open_currency_items_are_revalued_at_the_close`,
    * decision 0100). Below it, setting a closing rate and reading the
    * positions are refused by name, and a close revalues nothing.
    */
   currency_revaluation: {
     since: '0.28.0',
-    columns: ['closing_rates.rate'],
+    columns: ['currency_rates.company_id'],
     functions: ['currency_revaluation'],
   },
 } as const satisfies Record<string, { since: string; columns: readonly string[]; functions: readonly string[] }>;

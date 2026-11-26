@@ -930,7 +930,7 @@
         }
       },
       "close rate": {
-        "$comment": "setClosingRate() of @ekwo-ai/core — the MCP server's set_closing_rate: the row of closing_rates for the currency and the day, the rate as a decimal string.",
+        "$comment": "setClosingRate() of @ekwo-ai/core — the MCP server's set_closing_rate: the company's own row of currency_rates for the currency and the day, the rate as a decimal string.",
         "type": "object",
         "required": ["closing_rate", "note"],
         "properties": {

@@ -28,8 +28,10 @@ companies ─┬─ company_members            who may read or write, in four pr
            └─ attachments                files; an invoice's piece on its document
 ```
 
-Reference data sits outside any company: `currencies`, `currency_rates`, and
-the four template tables plus `country_defaults` that
+Reference data sits outside any company: `currencies`, the instance-wide
+rows of `currency_rates` (those with no `company_id`; a row that names a
+company is that company's own rate, read by its ledger's readers), and the
+four template tables plus `country_defaults` that
 `install_country_template()` copies into a new company.
 
 ## Six rules the schema enforces
@@ -194,7 +196,6 @@ bank charge that pays no item.
 | [`capabilities`](#capabilities) | Everything a member may be allowed to do, one row per code. Seeded by this migration for the core; a module adds its own with `area` set to the module code. |
 | [`chart_templates`](#chart_templates) | Charts of accounts a country offers, from the `charts` list of packs/<cc>/pack.json. One of them is the default `ekwo init` installs when nobody names one. |
 | [`classification_schemes`](#classification_schemes) | The classifications of goods and services a country uses on its documents, compiled from its pack: the attribute of a line or a product that holds the code, the name of the classification, the anchored pattern of its codes and the article that prescribes it. A code held under one of these names in document_lines.attributes or products.attributes must match the pattern (decision 0078). |
-| [`closing_rates`](#closing_rates) | The exchange rates a company states its open foreign-currency items at on a closing date: one row per currency and day. close_fiscal_year() reads the row of the last day of the year for every currency still open, and refuses one that is missing (fx_closing_rate_missing). |
 | [`companies`](#companies) | Legal entities kept in this instance. One instance may hold several. |
 | [`company_archive_registry`](#company_archive_registry) | What an archive of one company does with each table of the socle that belongs to a company: `exported`, or `excluded` with the reason. A table of a company that is not named here stops every export. Modules answer for their own tables through `<schema>.archive_tables()`. |
 | [`company_filing_periods`](#company_filing_periods) | How often this company files each declaration it is subject to: one row per form of tax_report_templates, and no row where nothing has been recorded. A company files its periodic return on one cadence and its recapitulative statement on another, and the second is not derivable from the first in any country read so far. |
@@ -725,27 +726,6 @@ Constraints:
 - `CHECK ((country ~ '^[A-Z]{2}$'::text))`
 - `CHECK ((pattern ~ '^\^.*\$$'::text))`
 - `PRIMARY KEY (country, attribute)`
-
-### `closing_rates`
-
-The exchange rates a company states its open foreign-currency items at on a closing date: one row per currency and day. close_fiscal_year() reads the row of the last day of the year for every currency still open, and refuses one that is missing (fx_closing_rate_missing).
-
-| Column | Type | Notes |
-|---|---|---|
-| `id` | `uuid` | not null |
-| `company_id` | `uuid` | not null |
-| `currency_code` | `character(3)` | not null |
-| `rate_date` | `date` | not null — The day the rate is the closing rate of. A close reads this day exactly: a rate of another day is never taken for it. |
-| `rate` | `numeric(18,8)` | not null — Units of currency_code for one unit of the company's currency, as documents.exchange_rate holds a rate. The amount in the company's currency is the amount in currency_code divided by it. |
-| `source` | `text` | Where the rate comes from — a central bank, a published series — so that a revaluation can be traced to it. |
-| `created_at` | `timestamp with time zone` | not null |
-| `updated_at` | `timestamp with time zone` | not null |
-
-Constraints:
-
-- `CHECK ((rate > (0)::numeric))`
-- `PRIMARY KEY (id)`
-- `UNIQUE (company_id, currency_code, rate_date)`
 
 ### `companies`
 
@@ -1284,16 +1264,17 @@ Dated exchange rates. A document stores the rate it used; this table is the hist
 |---|---|---|
 | `id` | `uuid` | not null |
 | `currency_code` | `character(3)` | not null |
-| `rate_date` | `date` | not null |
+| `rate_date` | `date` | not null — The day the rate is the rate of. A close reads the company's row of the last day of the year exactly: a rate of another day is never taken for it. |
 | `rate` | `numeric(18,8)` | not null |
 | `source` | `text` |  |
 | `created_at` | `timestamp with time zone` | not null |
+| `company_id` | `uuid` | The company whose own rate the row is, or null for the instance-wide rate. It fixes the base of rate: null, units of currency_code for one unit of the instance reference currency; set, units of currency_code for one unit of that company's currency, as documents.exchange_rate holds a rate. A reader names the company it reads for, or company_id is null, and never mixes the two. |
 
 Constraints:
 
 - `CHECK ((rate > (0)::numeric))`
 - `PRIMARY KEY (id)`
-- `UNIQUE (currency_code, rate_date)`
+- `UNIQUE NULLS NOT DISTINCT (company_id, currency_code, rate_date)`
 
 ### `currency_revaluations`
 
@@ -2765,7 +2746,7 @@ Constraints:
 | `create_document(p_document jsonb, p_lines jsonb)` | Creates a draft and its lines in one statement: a refused line creates nothing, rather than an empty draft. The header names company_id, doc_type, contact_id, document_date and currency_code, and optionally due_date, accounting_date, number, supplier_reference, journal_id, payment_reference and client_ref. Security invoker. |
 | `currency_of_bank_account()` | Fills a statement line's currency_code from its bank account, and from the company as a last resort. |
 | `currency_of_company()` | Fills currency_code from the company when the caller named none. The one place the question is answered for a table that belongs to a company. |
-| `currency_revaluation(p_company_id uuid, p_at date)` | The foreign-currency positions of a company still open on a day, and what stating them at the closing rate of that day moves: per account, counterparty and currency, the amount in the currency, the amount the ledger carries it at, the rate of closing_rates for that day (null where none is recorded), the amount at that rate and the difference. A position is the open part of the lines in that currency of a receivable or payable account — what no matching dated on or before the day settled — or the whole of the lines in that currency of the account of a bank account kept in it. What close_fiscal_year() books, and nothing is written here. |
+| `currency_revaluation(p_company_id uuid, p_at date)` | The foreign-currency positions of a company still open on a day, and what stating them at the closing rate of that day moves: per account, counterparty and currency, the amount in the currency, the amount the ledger carries it at, the company's own rate of currency_rates for that day (null where none is recorded), the amount at that rate and the difference. A position is the open part of the lines in that currency of a receivable or payable account — what no matching dated on or before the day settled — or the whole of the lines in that currency of the account of a bank account kept in it. What close_fiscal_year() books, and nothing is written here. |
 | `currency_revaluations_guard()` | Keeps currency_revaluations to the close that writes it and the reopening that takes it back, under the setting ekwo.revaluing. The cascades of a company and of a fiscal year pass, and so does the installer. |
 | `currency_unit(p_rounding money_rounding)` | The smallest amount a currency has: a cent in the euro, a yen in the yen. A tolerance is written as a fraction of this rather than as a fraction of a cent. |
 | `current_api_key()` | The key presented in this transaction, or nothing. What a client reads back to know what it may do. |

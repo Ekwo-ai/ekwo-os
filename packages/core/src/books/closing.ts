@@ -81,8 +81,10 @@ export interface ClosingRateArgs {
 const CLOSING_RATE_COLUMNS = ['id', 'currency_code', 'rate_date::text', 'rate::text', 'source'];
 
 /**
- * Records the rate a company closes a currency at on a day, in
- * `closing_rates`: the same currency and day again replaces the rate. Whoever
+ * Records the rate a company closes a currency at on a day: its own row of
+ * `currency_rates`, the one that names the company, in units of the currency
+ * for one unit of the company's. The same currency and day again replaces
+ * the rate; the instance-wide rows, with no company, are never touched. Whoever
  * may close a year may set it (`year_end.close`), and the table's policies
  * say so, not this function.
  */
@@ -93,12 +95,12 @@ export async function setClosingRate(backend: Backend, args: ClosingRateArgs): P
     { column: 'rate_date', op: 'eq' as const, value: args.rate_date },
   ];
   const patch: Row = { rate: String(args.rate), source: args.source ?? null };
-  const updated = await backend.update<Row>('closing_rates', patch, where, CLOSING_RATE_COLUMNS);
+  const updated = await backend.update<Row>('currency_rates', patch, where, CLOSING_RATE_COLUMNS);
   const rate =
     updated[0] ??
     (
       await backend.insert<Row>(
-        'closing_rates',
+        'currency_rates',
         [{ company_id: args.company_id, currency_code: args.currency_code.toUpperCase(), rate_date: args.rate_date, ...patch }],
         CLOSING_RATE_COLUMNS,
       )

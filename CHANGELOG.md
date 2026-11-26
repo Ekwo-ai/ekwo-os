@@ -76,8 +76,10 @@ somewhere has already run it.
   settled — and every bank account kept in one, at the closing rate of the
   last day, before it works out the result, and reverses the revaluation on
   the first day of the next year with `reverse_entry()`, which matches each
-  line with its mirror. The rate is the company's input, `closing_rates`, per
-  currency and day; a currency still open without it refuses the close
+  line with its mirror. The rate is the company's input, per
+  currency and day, in `currency_rates`: its new optional `company_id` names
+  the company whose own rate a row is, in units of the currency for one unit
+  of the company's; a row without it is the instance-wide rate, as before; a currency still open without it refuses the close
   (`fx_closing_rate_missing`). A receivable or payable goes to the accounts
   the pack names, `defaults.roles.fx_unrealised_gain` and
   `fx_unrealised_loss`; a bank account to `fx_gain` and `fx_loss`. A missing

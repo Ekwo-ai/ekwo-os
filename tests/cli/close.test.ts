@@ -168,7 +168,7 @@ describe('a closing rate', () => {
     expect(second.exitCode).toBe(0);
     const rows = await one<{ n: number; rate: string }>(
       pg,
-      `select count(*)::int as n, max(rate)::float8::text as rate from closing_rates where company_id = $1`,
+      `select count(*)::int as n, max(rate)::float8::text as rate from currency_rates where company_id = $1`,
       [companyId],
     );
     expect(rows).toEqual({ n: 1, rate: '1.3' });

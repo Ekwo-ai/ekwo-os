@@ -916,43 +916,6 @@
         ]
       },
       {
-        "name": "closing_rates",
-        "columns": [
-          {
-            "name": "company_id",
-            "type": "uuid"
-          },
-          {
-            "name": "created_at",
-            "type": "timestamp with time zone"
-          },
-          {
-            "name": "currency_code",
-            "type": "character(3)"
-          },
-          {
-            "name": "id",
-            "type": "uuid"
-          },
-          {
-            "name": "rate",
-            "type": "numeric(18,8)"
-          },
-          {
-            "name": "rate_date",
-            "type": "date"
-          },
-          {
-            "name": "source",
-            "type": "text"
-          },
-          {
-            "name": "updated_at",
-            "type": "timestamp with time zone"
-          }
-        ]
-      },
-      {
         "name": "companies",
         "columns": [
           {
@@ -2155,6 +2118,10 @@
       {
         "name": "currency_rates",
         "columns": [
+          {
+            "name": "company_id",
+            "type": "uuid"
+          },
           {
             "name": "created_at",
             "type": "timestamp with time zone"
@@ -6728,16 +6695,6 @@
         "command": "select"
       },
       {
-        "table": "closing_rates",
-        "name": "closing_rates_select",
-        "command": "select"
-      },
-      {
-        "table": "closing_rates",
-        "name": "closing_rates_write",
-        "command": "all"
-      },
-      {
         "table": "companies",
         "name": "companies_insert",
         "command": "insert"
@@ -6881,6 +6838,11 @@
         "table": "currency_rates",
         "name": "currency_rates_select",
         "command": "select"
+      },
+      {
+        "table": "currency_rates",
+        "name": "currency_rates_write",
+        "command": "all"
       },
       {
         "table": "currency_revaluations",
@@ -7369,14 +7331,6 @@
         "name": "bank_transactions_set_updated_at"
       },
       {
-        "table": "closing_rates",
-        "name": "closing_rates_audit"
-      },
-      {
-        "table": "closing_rates",
-        "name": "closing_rates_set_updated_at"
-      },
-      {
         "table": "companies",
         "name": "companies_agent_posting_by_a_person"
       },
@@ -7579,6 +7533,10 @@
       {
         "table": "country_packs",
         "name": "country_packs_audit"
+      },
+      {
+        "table": "currency_rates",
+        "name": "currency_rates_audit"
       },
       {
         "table": "currency_revaluations",
@@ -8713,22 +8671,6 @@
           ]
         },
         {
-          "name": "closing_rates",
-          "anon": [],
-          "authenticated": [
-            "delete",
-            "insert",
-            "select",
-            "update"
-          ],
-          "service_role": [
-            "delete",
-            "insert",
-            "select",
-            "update"
-          ]
-        },
-        {
           "name": "companies",
           "anon": [],
           "authenticated": [
@@ -8944,10 +8886,16 @@
           "name": "currency_rates",
           "anon": [],
           "authenticated": [
-            "select"
+            "delete",
+            "insert",
+            "select",
+            "update"
           ],
           "service_role": [
-            "select"
+            "delete",
+            "insert",
+            "select",
+            "update"
           ]
         },
         {
