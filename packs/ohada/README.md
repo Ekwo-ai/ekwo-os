@@ -205,3 +205,29 @@ outside the books at the year end (Titre X, chapitre 1); its model names no
 account (Titre X, chapitre 2). A double-entry chart could imitate it only by
 inventing accounts the text does not have; see [what the packs do not say
 yet](../../docs/international.md#what-the-packs-do-not-say-yet).
+
+## Translation differences at the close: 478 and 479
+
+The chart names the two accounts a receivable or a payable in a foreign
+currency still open at the close is revalued against: « 478 ÉCARTS DE
+CONVERSION - ACTIF » for a loss and « 479 ÉCARTS DE CONVERSION - PASSIF » for a
+gain (Journal officiel de l'OHADA, numéro spécial du 15 février 2017, Titre
+VII, liste des comptes, source `syscohada`; the rule is the Acte uniforme's
+article on receivables and debts in foreign currency, source `audcif`). The
+manifest names them `fx_unrealised_loss` and `fx_unrealised_gain`, and
+`close_fiscal_year()` books the difference there and reverses it on the first
+day of the next year. The two accounts already reach lines `BU` and `DV` of
+the balance sheet.
+
+The roles name the three-digit accounts, not the sub-accounts 4781 to 4798
+and 4791 to 4798, which split the difference by the nature of the item (a
+receivable or a debt, of operations or financial): one role per sign cannot
+choose among them, and the heading is the account of the list that holds
+every one of them.
+
+A bank account kept in a foreign currency is revalued too, its difference on
+the exchange accounts a settlement already uses (`656`, `756`).
+
+**Not booked by the close.** The provision for the unrealised loss (194
+« Provisions pour pertes de change ») is the accountant's entry: the close does
+not compute it.

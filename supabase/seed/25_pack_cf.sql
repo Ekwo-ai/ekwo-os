@@ -1,6 +1,6 @@
 -- Ekwo OS — Centrafrique: chart of accounts, journals, taxes and defaults.
 --
--- Generated from packs/cf at version 0.3.0, do not edit.
+-- Generated from packs/cf at version 0.4.0, do not edit.
 -- Change the pack and run `ekwo pack build cf`; `ekwo pack check --all`
 -- refuses a seed that is not the exact output of its pack, and the CI runs it.
 --
@@ -24,7 +24,7 @@ insert into country_packs
   (country, name, version, released_at, schema_min, certification_status,
    certified_by, certified_at, checksum, sources)
 values
-  ('CF', 'Centrafrique', '0.3.0', date '2026-09-21', '20261011120000', 'community', null, null, '5b081fdbc00345a49e34a1504213e99652d74355646b191fa86113b640ab7ef1', '[{"key":"audcif","title":"Acte uniforme relatif au droit comptable et à l''information financière (AUDCIF), adopté à Brazzaville le 26 janvier 2017","publisher":"OHADA — Bibliothèque numérique de l''OHADA","url":"https://biblio.ohada.org/doc_num.php?explnum_id=2061","consulted_on":"2026-09-21","kind":"law"},{"key":"syscohada","title":"Journal officiel de l''OHADA, numéro spécial du 15 février 2017 — Acte uniforme relatif au droit comptable et à l''information financière et Système comptable OHADA (SYSCOHADA révisé), version complète signée","publisher":"OHADA — Bibliothèque numérique de l''OHADA","url":"https://biblio.ohada.org/doc_num.php?explnum_id=2063","consulted_on":"2026-09-21","kind":"law"},{"key":"cgi","title":"Code Général des Impôts 2017, mise à jour 2023 — édition officielle de la Direction Générale des Impôts et des Domaines (442 p.)","publisher":"Ministère des Finances, du Budget et de la Coopération Publique-Privée de la République Centrafricaine","url":"https://www.finances.gouv.cf/sites/default/files/2023-05/CGI%20RCA%202017%20mise%20%C3%A0%20jour%202023.pdf","consulted_on":"2026-09-21","kind":"law"},{"key":"directive-cemac-tva","title":"Directive n° 11/22-CEMAC-UEAC-010A-CM-38 du 10 novembre 2022 portant harmonisation des législations des États membres de la CEMAC en matière de taxe sur la valeur ajoutée et du droit d''accises","publisher":"Secrétariat général de la CEMAC","url":"https://www.sgg.cg/txts-droit-reg/CEMAC-Directive-2022-11-TVA.pdf","consulted_on":"2026-09-21","kind":"law"},{"key":"portail","title":"Portail du Ministère des Finances, du Budget et de la Coopération Publique-Privée","publisher":"Ministère des Finances, du Budget et de la Coopération Publique-Privée de la République Centrafricaine","url":"https://www.finances.gouv.cf/","consulted_on":"2026-09-21","kind":"portal"}]'::jsonb)
+  ('CF', 'Centrafrique', '0.4.0', date '2026-11-26', '20261011120000', 'community', null, null, '0d5d99b083e335a390cff82261946a14af3744a443ce5ab7e6dd54be48e289aa', '[{"key":"audcif","title":"Acte uniforme relatif au droit comptable et à l''information financière (AUDCIF), adopté à Brazzaville le 26 janvier 2017","publisher":"OHADA — Bibliothèque numérique de l''OHADA","url":"https://biblio.ohada.org/doc_num.php?explnum_id=2061","consulted_on":"2026-09-21","kind":"law"},{"key":"syscohada","title":"Journal officiel de l''OHADA, numéro spécial du 15 février 2017 — Acte uniforme relatif au droit comptable et à l''information financière et Système comptable OHADA (SYSCOHADA révisé), version complète signée","publisher":"OHADA — Bibliothèque numérique de l''OHADA","url":"https://biblio.ohada.org/doc_num.php?explnum_id=2063","consulted_on":"2026-09-21","kind":"law"},{"key":"cgi","title":"Code Général des Impôts 2017, mise à jour 2023 — édition officielle de la Direction Générale des Impôts et des Domaines (442 p.)","publisher":"Ministère des Finances, du Budget et de la Coopération Publique-Privée de la République Centrafricaine","url":"https://www.finances.gouv.cf/sites/default/files/2023-05/CGI%20RCA%202017%20mise%20%C3%A0%20jour%202023.pdf","consulted_on":"2026-09-21","kind":"law"},{"key":"directive-cemac-tva","title":"Directive n° 11/22-CEMAC-UEAC-010A-CM-38 du 10 novembre 2022 portant harmonisation des législations des États membres de la CEMAC en matière de taxe sur la valeur ajoutée et du droit d''accises","publisher":"Secrétariat général de la CEMAC","url":"https://www.sgg.cg/txts-droit-reg/CEMAC-Directive-2022-11-TVA.pdf","consulted_on":"2026-09-21","kind":"law"},{"key":"portail","title":"Portail du Ministère des Finances, du Budget et de la Coopération Publique-Privée","publisher":"Ministère des Finances, du Budget et de la Coopération Publique-Privée de la République Centrafricaine","url":"https://www.finances.gouv.cf/","consulted_on":"2026-09-21","kind":"portal"}]'::jsonb)
 on conflict (country) do update set
   name                 = excluded.name,
   version              = excluded.version,
@@ -2122,3 +2122,8 @@ on conflict (country, code) do update set
   valid_from      = excluded.valid_from,
   valid_to        = excluded.valid_to,
   legal_reference = excluded.legal_reference;
+
+update country_defaults set
+  fx_unrealised_gain_code = '479',
+  fx_unrealised_loss_code = '478'
+ where country = 'CF';

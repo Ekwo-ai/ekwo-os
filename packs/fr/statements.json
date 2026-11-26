@@ -606,9 +606,16 @@
             {
               "kind": "code_range",
               "code_from": "45",
-              "code_to": "47",
+              "code_to": "475",
               "side": "debit",
               "sequence": 20
+            },
+            {
+              "kind": "code_range",
+              "code_from": "478",
+              "code_to": "47",
+              "side": "debit",
+              "sequence": 25
             },
             {
               "kind": "code_range",
@@ -709,6 +716,20 @@
           ]
         },
         {
+          "code": "CM",
+          "parent": "CO",
+          "name": "Écarts de conversion actif (V)",
+          "sequence": 325,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "476",
+              "code_to": "476",
+              "sequence": 10
+            }
+          ]
+        },
+        {
           "code": "CO",
           "name": "TOTAL GÉNÉRAL DE L'ACTIF",
           "sequence": 330,
@@ -716,7 +737,8 @@
           "plus": [
             "AA",
             "BJ",
-            "CJ"
+            "CJ",
+            "CM"
           ]
         },
         {
@@ -1160,9 +1182,16 @@
             {
               "kind": "code_range",
               "code_from": "45",
-              "code_to": "47",
+              "code_to": "475",
               "side": "credit",
               "sequence": 10
+            },
+            {
+              "kind": "code_range",
+              "code_from": "478",
+              "code_to": "47",
+              "side": "credit",
+              "sequence": 15
             }
           ]
         },
@@ -1201,6 +1230,21 @@
           ]
         },
         {
+          "code": "ED",
+          "parent": "EE",
+          "name": "Écarts de conversion passif (V)",
+          "sequence": 625,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "477",
+              "code_to": "477",
+              "sequence": 10
+            }
+          ]
+        },
+        {
           "code": "EE",
           "name": "TOTAL GÉNÉRAL DU PASSIF",
           "sequence": 630,
@@ -1209,7 +1253,8 @@
             "DL",
             "DO",
             "DR",
-            "EC"
+            "EC",
+            "ED"
           ]
         }
       ]
@@ -2293,13 +2338,28 @@
           ]
         },
         {
+          "code": "A476",
+          "parent": "ATOT",
+          "name": "Écarts de conversion actif",
+          "sequence": 155,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "476",
+              "code_to": "476",
+              "sequence": 10
+            }
+          ]
+        },
+        {
           "code": "ATOT",
           "name": "TOTAL GÉNÉRAL DE L'ACTIF",
           "sequence": 160,
           "is_total": true,
           "plus": [
             "AI",
-            "AC"
+            "AC",
+            "A476"
           ]
         },
         {
@@ -2798,7 +2858,13 @@
             {
               "kind": "code_range",
               "code_from": "47",
-              "code_to": "47"
+              "code_to": "475"
+            },
+            {
+              "kind": "code_range",
+              "code_from": "478",
+              "code_to": "47",
+              "sequence": 5
             }
           ]
         },
@@ -2839,6 +2905,21 @@
           ]
         },
         {
+          "code": "P477",
+          "parent": "PTOT",
+          "name": "Écarts de conversion passif",
+          "sequence": 485,
+          "sign": -1,
+          "rules": [
+            {
+              "kind": "code_range",
+              "code_from": "477",
+              "code_to": "477",
+              "sequence": 10
+            }
+          ]
+        },
+        {
           "code": "PTOT",
           "name": "TOTAL GÉNÉRAL DU PASSIF",
           "sequence": 490,
@@ -2847,7 +2928,8 @@
             "FA",
             "P15",
             "P19",
-            "DTOT"
+            "DTOT",
+            "P477"
           ]
         }
       ]

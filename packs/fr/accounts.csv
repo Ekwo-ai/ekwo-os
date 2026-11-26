@@ -201,6 +201,10 @@ code,parent,type,reconcilable,name,sequence
 47,,liability_current,false,Comptes transitoires ou d'attente,1930
 471,47,liability_current,false,Comptes d'attente,1940
 471000,471,liability_current,false,Compte d'attente,1950
+476,47,asset_current,false,Différences de conversion — Actif,1952
+476000,476,asset_current,false,Différences de conversion — Actif,1954
+477,47,liability_current,false,Différences de conversion — Passif,1956
+477000,477,liability_current,false,Différences de conversion — Passif,1958
 478,47,liability_current,false,Autres comptes transitoires,1960
 48,,liability_current,false,Comptes de régularisation,1970
 486,48,asset_prepayments,false,Charges constatées d'avance,1980

@@ -267,6 +267,38 @@ The research tax credit is not taxable income (same paragraph): the rule
 `699100` from the result the estimate starts from. Both 699 and 695 sit on
 line HK of form 2052, so the income statement is unchanged by the choice.
 
+## Translation differences at the close: 476 and 477 (1.26.0)
+
+A receivable or a payable still open in a foreign currency at the close is
+stated at the closing rate, and the difference is not part of the result: the
+plan defers it to « 476 Différence de conversion — Actif » (a loss: a
+receivable that fell, a debt that rose) or « 477 Différences de conversion —
+Passif » (a gain), and the entry is reversed at the opening of the next year
+(plan de comptes of règlement ANC n° 2014-03 as amended by règlement ANC
+2022-06, source `anc-2022-06`, accounts 476 and 477 and their functioning).
+The chart carries both at six digits, `476000` and `477000`, in both charts
+(the association chart takes the plan's accounts, règlement ANC n° 2018-06,
+art. 320-1), and names them `fx_unrealised_loss` and `fx_unrealised_gain`.
+
+| Role | Account | Statement line |
+|---|---|---|
+| `fx_unrealised_loss` | `476000` Différences de conversion — Actif | 2050 `CM` « Écarts de conversion actif (V) »; `FR-ASSOC-BS` `A476` |
+| `fx_unrealised_gain` | `477000` Différences de conversion — Passif | 2051 `ED` « Écarts de conversion passif (V) »; `FR-ASSOC-BS` `P477` |
+
+The ranges of « Autres créances » (`BZ`), « Autres dettes » (`EA`) and the
+association's `D47` stop at 475 and resume at 478, so the two accounts reach
+their own line only.
+
+A bank account kept in a foreign currency is revalued too, and its difference
+goes to the result, on the exchange accounts a settlement already uses
+(`666000`, `766000`).
+
+**Not booked by the close.** The plan requires a provision for the
+unrealised loss (« 1515 Provisions pour pertes de change », by « 6865 »)
+where no hedge covers it; the close does not compute one, and the
+accountant books it. The 2050 line `CM` is printed outside the total of the
+current assets, as the form does.
+
 ## The chart of associations and foundations: `association`
 
 Since 1.24.0 the pack carries a second chart, `association`, audience

@@ -684,6 +684,20 @@
             "null"
           ]
         },
+        "fx_unrealised_gain": {
+          "description": "Account an unrealised exchange gain on a receivable or payable still open in a foreign currency at the close is booked on: a balance-sheet account where the chart defers it, an income account where it goes to the result. Named together with fx_unrealised_loss; a close that finds such a gain in a pack naming neither is refused.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "fx_unrealised_loss": {
+          "description": "The same for an unrealised exchange loss.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "retained_earnings_loss": {
           "type": [
             "string",

@@ -234,6 +234,10 @@ code,parent,type,reconcilable,name,sequence
 47,,liability_current,false,Comptes transitoires ou d'attente,2330
 471,47,liability_current,false,Comptes d'attente,2340
 471000,471,liability_current,false,Compte d'attente,2350
+476,47,asset_current,false,Différences de conversion — Actif,2352
+476000,476,asset_current,false,Différences de conversion — Actif,2354
+477,47,liability_current,false,Différences de conversion — Passif,2356
+477000,477,liability_current,false,Différences de conversion — Passif,2358
 478,47,liability_current,false,Autres comptes transitoires,2360
 48,,liability_current,false,Comptes de régularisation,2370
 486,48,asset_prepayments,false,Charges constatées d'avance,2380
