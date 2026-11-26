@@ -98,6 +98,12 @@ export interface CreateDocumentArgs {
   number?: string | undefined;
   supplier_reference?: string | undefined;
   currency_code?: string | undefined;
+  /**
+   * Units of the document's currency for one unit of the company's. Left out
+   * on a document in another currency, the database proposes the rate of its
+   * day (`exchange_rate_on()`), and the answer says which one it took.
+   */
+  exchange_rate?: string | number | undefined;
   journal_id?: string | undefined;
   payment_reference?: string | undefined;
   /** Your own reference. Creating twice under one reference creates once. */
@@ -163,7 +169,14 @@ export async function createDocument(
     return { ...((await getDocument(backend, { document_id: id })) as Row), replayed: true };
   }
 
-  const currency = args.currency_code ?? (await companyCurrency(backend, args.company_id));
+  const home = await companyCurrency(backend, args.company_id);
+  const currency = args.currency_code ?? home;
+  // A rate given to a schema that does not take it would be dropped without a
+  // word: refused there by name.
+  if (args.exchange_rate !== undefined && !(await backendSupports(backend, 'exchange_rate_on'))) {
+    const installed = (await (backend as SocleBackend).schemaVersion()) ?? 'an older version';
+    throw schemaTooOldFor('exchange_rate_on', installed, 'the exchange rate of a new document');
+  }
   const header: Row = {
     company_id: args.company_id,
     doc_type: args.doc_type,
@@ -174,6 +187,7 @@ export async function createDocument(
     number: args.number ?? null,
     supplier_reference: args.supplier_reference ?? null,
     currency_code: currency,
+    ...(args.exchange_rate === undefined ? {} : { exchange_rate: String(args.exchange_rate) }),
     journal_id: args.journal_id ?? null,
     payment_reference: args.payment_reference ?? null,
     client_ref: args.client_ref ?? null,
@@ -194,7 +208,36 @@ export async function createDocument(
     await backend.rpc<string>('create_document', { p_document: header, p_lines: resolved }),
     'the document could not be created',
   );
-  return getDocument(backend, { document_id: id });
+  const created = (await getDocument(backend, { document_id: id })) as Row;
+  if (args.exchange_rate !== undefined || currency === home) return created;
+  return { ...created, ...(await proposedRate(backend, created['document'] as Row)) };
+}
+
+/**
+ * The rate the database proposed to a new document in another currency, read
+ * again from the one reader for the day it was booked on: its value, the day
+ * it is of, its source and its origin (the company's own rate, or the
+ * installation's). Said only when it is the rate the document holds; a
+ * schema without the reader proposes nothing and says nothing.
+ */
+async function proposedRate(backend: Backend, document: Row): Promise<Row> {
+  if (!(await backendSupports(backend, 'exchange_rate_on'))) return {};
+  const [used] = await backend.rpc<Row>('exchange_rate_on', {
+    p_company_id: document['company_id'],
+    p_currency_code: document['currency_code'],
+    p_on: document['accounting_date'] ?? document['document_date'],
+    p_required: false,
+  });
+  if (used === undefined || Number(used['rate']) !== Number(document['exchange_rate'])) return {};
+  // The rate as the document holds it, a decimal string, like every figure.
+  return {
+    exchange_rate_used: {
+      rate: document['exchange_rate'],
+      rate_date: used['rate_date'],
+      source: used['source'],
+      origin: used['origin'],
+    },
+  };
 }
 
 /** A line, with every code turned into an id and every gap the product fills. */

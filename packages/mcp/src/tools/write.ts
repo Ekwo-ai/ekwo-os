@@ -409,6 +409,10 @@ export const CreateDocumentInput = z.object({
   number: z.string().min(1).optional().describe('Your own number. Left out, posting takes the entry number.'),
   supplier_reference: z.string().min(1).optional().describe("The supplier's own invoice number, on a purchase."),
   currency_code: z.string().length(3).optional(),
+  exchange_rate: z
+    .union([z.string(), z.number()])
+    .optional()
+    .describe("Units of the document's currency for one unit of the company's, when they differ. Left out, the database takes the company's own rate of the accounting day, otherwise the installation's last rate on or before it, and the answer says which (exchange_rate_used: rate, rate_date, source, origin). A rate given always wins, and a stored rate never changes."),
   journal_id: uuid.optional(),
   payment_reference: z.string().min(1).optional(),
   client_ref: z.string().min(1).max(200).optional().describe('Your own reference for this creation. Calling again with the same one returns what was created the first time (`replayed: true`) instead of creating a second — use it whenever a call might be repeated after a timeout.'),

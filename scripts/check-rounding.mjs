@@ -62,6 +62,10 @@ const ALLOWED = new Map([
     'supabase/migrations/20261123203000_an_amount_holds_the_decimals_of_its_currency.sql',
     'the same view, dropped and recreated with its definition unchanged so that the amount columns under it could lose their scale: the same widening of the same percentage',
   ],
+  [
+    'supabase/migrations/20261126180000_a_rate_is_read_on_or_before_its_day.sql',
+    'an exchange rate, not an amount: a cross rate rounded to the eight decimals currency_rates.rate and documents.exchange_rate hold, numeric(18, 8), so that the rate a close reads is the rate a document stores',
+  ],
 ]);
 
 /** `-- …` comments stripped, so a call quoted in a comment is not a finding. */

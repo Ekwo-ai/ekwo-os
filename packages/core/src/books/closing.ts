@@ -110,7 +110,7 @@ export async function setClosingRate(backend: Backend, args: ClosingRateArgs): P
   }
   return {
     closing_rate: rate,
-    note: 'A close reads the rate of the last day of the year, that day exactly, for every currency still open; currency_revaluation shows what it would move.',
+    note: "A close reads, for every currency still open, the company's rate of the last day of the year, that day exactly, and otherwise the installation's last rate on or before it; currency_revaluation shows which, and what it would move.",
   };
 }
 
@@ -122,8 +122,11 @@ export interface CurrencyRevaluationArgs {
 
 /**
  * What a close on `at` would revalue: `currency_revaluation()`, position by
- * account, counterparty and currency, and the currencies still open with no
- * closing rate for that day, which would refuse the close. Writes nothing.
+ * account, counterparty and currency, each with its closing rate and the day
+ * and source of that rate (`exchange_rate_on()`: the company's own of the
+ * day, otherwise the installation's on or before it), and the currencies
+ * still open with no closing rate, which would refuse the close. Writes
+ * nothing.
  */
 export async function currencyRevaluation(backend: Backend, args: CurrencyRevaluationArgs): Promise<unknown> {
   const positions = await backend.rpc<Row>('currency_revaluation', { p_company_id: args.company_id, p_at: args.at });
@@ -134,7 +137,7 @@ export async function currencyRevaluation(backend: Backend, args: CurrencyRevalu
     missing_rates: missing,
     note:
       missing.length > 0
-        ? `No closing rate on ${args.at} for ${missing.join(', ')}: close_fiscal_year refuses the year until one is set with set_closing_rate.`
+        ? `No closing rate on ${args.at} for ${missing.join(', ')}, neither the company's of that day nor an installation rate of the days just before: close_fiscal_year refuses the year until one is set with set_closing_rate.`
         : 'close_fiscal_year books each difference on the last day of the year, on the accounts the country pack names, and reverses it the next day. A position is the open part of the receivables and payables in that currency, or the balance of a bank account kept in it.',
   };
 }

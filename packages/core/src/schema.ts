@@ -317,6 +317,19 @@ export const SCHEMA_FEATURES = {
     columns: ['currency_rates.company_id'],
     functions: ['currency_revaluation'],
   },
+  /**
+   * The one reader of `currency_rates` for a figure: the company's own rate of
+   * a day, otherwise the installation's rate on or before it, converted to the
+   * company's currency (`20261126180000_a_rate_is_read_on_or_before_its_day`).
+   * `create_document()` takes `exchange_rate` in its header from the same
+   * migration. Below it, a document's rate given by hand is refused by name
+   * rather than dropped, and no rate is proposed.
+   */
+  exchange_rate_on: {
+    since: '0.28.0',
+    columns: [],
+    functions: ['exchange_rate_on'],
+  },
 } as const satisfies Record<string, { since: string; columns: readonly string[]; functions: readonly string[] }>;
 
 export type SchemaFeature = keyof typeof SCHEMA_FEATURES;

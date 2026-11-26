@@ -140,6 +140,9 @@ export const DOCUMENT = [
   'accounting_date::text',
   'due_date::text',
   'currency_code',
+  // Units of the document's currency for one unit of the company's: the rate
+  // it is booked at, kept once written.
+  'exchange_rate::text',
   'language',
   'amount_untaxed::text',
   'amount_tax::text',

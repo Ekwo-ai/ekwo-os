@@ -537,7 +537,7 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
     {
       title: 'Foreign-currency positions at a closing day',
       description:
-        'What close_fiscal_year would revalue on a closing day: every receivable and payable still open in a currency other than the company\'s — for the part no matching dated on or before that day settled — and every bank account kept in one, by account, counterparty and currency, with the amount in the currency, the amount the ledger carries it at, the closing rate recorded for that day, the amount at that rate and the difference. missing_rates lists the currencies with no closing rate that day, which would refuse the close until set_closing_rate records one. It writes nothing.',
+        'What close_fiscal_year would revalue on a closing day: every receivable and payable still open in a currency other than the company\'s — for the part no matching dated on or before that day settled — and every bank account kept in one, by account, counterparty and currency, with the amount in the currency, the amount the ledger carries it at, the closing rate — the company\'s own rate of that day, otherwise the installation\'s last rate on or before it — with the day and source of that rate (closing_rate_date, closing_rate_source), the amount at that rate and the difference. missing_rates lists the currencies with neither, which would refuse the close until set_closing_rate records one. It writes nothing.',
       inputSchema: read.CurrencyRevaluationInput.shape,
       annotations: { readOnlyHint: true, openWorldHint: false },
     },

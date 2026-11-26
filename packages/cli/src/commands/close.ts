@@ -241,6 +241,16 @@ async function closeYear(asked: string | undefined, args: ParsedArgs, deps: Book
     if (preview.positions.length > 0) {
       const currencies = [...new Set(preview.positions.map((p) => text(p['currency_code'])))].sort();
       pairs([['open in a foreign currency', `${preview.positions.length} position(s) in ${currencies.join(', ')}`]]);
+      // The rate each currency closes at, and the day and source it is of:
+      // the company's own, or the installation's on or before the last day.
+      const rates = new Map<string, Row>();
+      for (const p of preview.positions) if (p['closing_rate'] !== null) rates.set(text(p['currency_code']), p);
+      pairs(
+        [...rates].map(([currency, p]): [string, string] => [
+          `${currency} closes at`,
+          `${text(p['closing_rate'])}, rate of ${text(p['closing_rate_date'])}${p['closing_rate_source'] ? ` (${text(p['closing_rate_source'])})` : ''}`,
+        ]),
+      );
       if (preview.missing_rates.length > 0) {
         warn(
           `No closing rate on ${text(year['end_date'])} for ${preview.missing_rates.join(', ')}: the close will be refused. ekwo close rate <currency> <rate> --on ${text(year['end_date'])} records one.`,

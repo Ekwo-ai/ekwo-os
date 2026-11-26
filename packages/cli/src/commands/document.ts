@@ -66,11 +66,11 @@ import { dim, heading, line, note, pairs, step, table, warn } from '../ui.js';
 type Row = Record<string, unknown>;
 
 const NEW_FLAGS = [
-  ...CREATE_FLAGS, 'contact', 'line', 'type', 'date', 'due', 'accounting-date', 'number', 'supplier-ref', 'currency', 'payment-ref',
+  ...CREATE_FLAGS, 'contact', 'line', 'type', 'date', 'due', 'accounting-date', 'number', 'supplier-ref', 'currency', 'rate', 'payment-ref',
 ] as const;
 const NEW_FIELDS = [
   'doc_type', 'contact_id', 'contact', 'document_date', 'due_date', 'accounting_date', 'number', 'supplier_reference',
-  'currency_code', 'journal_id', 'payment_reference', 'client_ref', 'lines',
+  'currency_code', 'exchange_rate', 'journal_id', 'payment_reference', 'client_ref', 'lines',
 ] as const;
 const LINE_ADD_FLAGS = [
   ...BOOKS_FLAGS, 'stdin', 'name', 'description', 'qty', 'unit', 'price', 'amount', 'discount', 'product', 'account', 'tax',
@@ -184,6 +184,7 @@ async function docNew(args: ParsedArgs, deps: BooksDeps): Promise<number> {
     number: stringFlag(args, 'number') ?? input['number'],
     supplier_reference: stringFlag(args, 'supplier-ref') ?? input['supplier_reference'],
     currency_code: stringFlag(args, 'currency') ?? input['currency_code'],
+    exchange_rate: stringFlag(args, 'rate') ?? input['exchange_rate'],
     journal_id: input['journal_id'],
     payment_reference: stringFlag(args, 'payment-ref') ?? input['payment_reference'],
     client_ref: stringFlag(args, 'ref') ?? input['client_ref'],
@@ -197,6 +198,15 @@ async function docNew(args: ParsedArgs, deps: BooksDeps): Promise<number> {
   if (result['replayed'] === true) note(dim(`already created under the reference ${text(fields.client_ref)}; nothing was written twice`));
   if (date === undefined) note(dim(`dated today, ${documentDate}: no --date was given`));
   printDocument(result);
+  // The rate the database proposed, where nobody gave one: its day and source.
+  const used = result['exchange_rate_used'] as Row | undefined;
+  if (used !== undefined) {
+    note(
+      dim(
+        `booked at ${text(used['rate'])} ${text((result['document'] as Row)['currency_code'])} for one unit of the company's currency: the ${text(used['origin'])} rate of ${text(used['rate_date'])}${used['source'] ? `, ${text(used['source'])}` : ''}. --rate gives another.`,
+      ),
+    );
+  }
   line();
   note(dim('A draft books nothing. `ekwo post <document>` does, and `--dry-run` shows the entry first.'));
   return 0;

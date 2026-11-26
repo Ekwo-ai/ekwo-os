@@ -661,13 +661,15 @@ describe('an invoice in another currency, settled through the server', () => {
         contact_id: String(contact['id']),
         document_date: '2026-09-01',
         number: 'FAC-2026-USD',
+        currency_code: 'USD',
+        exchange_rate: '1.1',
         lines: [{ name: 'Conseil', unit_price: '1000.00', account_code: '704000', tax_code: 'BE-S-EXP' }],
       }),
     );
+    // A rate given is the rate stored, and nothing is said to be proposed.
+    expect(record(created['document'])['exchange_rate']).toBe('1.10000000');
+    expect(created['exchange_rate_used']).toBeUndefined();
     const documentUsd = String(record(created['document'])['id']);
-    await db.query(`update documents set currency_code = 'USD', exchange_rate = 1.1 where id = $1`, [
-      documentUsd,
-    ]);
     await writeTools.postDocument(backend, { document_id: documentUsd });
 
     const paid = record(
@@ -699,5 +701,48 @@ describe('an invoice in another currency, settled through the server', () => {
 
     const document = record(await readTools.getDocument(backend, { document_id: documentUsd }));
     expect(record(document['document'])['amount_residual']).toBe('0.00');
+  });
+
+  it('proposes the installation rate on or before the day when none is given, and says which', async () => {
+    const contact = String(
+      record(
+        record(
+          await writeTools.createContact(backend, {
+            company_id: fx.companyId,
+            name: 'Client Fetched',
+            contact_type: 'customer',
+            country: 'US',
+          }),
+        )['contact'],
+      )['id'],
+    );
+    // The installation quotes against the company's own currency; the
+    // document's day is a Sunday, read on the Friday's rate.
+    await db.query(`update instance set reference_currency = (select currency_code from companies where id = $1) where id = 1`, [
+      fx.companyId,
+    ]);
+    await db.query(`insert into currency_rates (currency_code, rate_date, rate, source) values ('USD', date '2026-10-02', 1.0921, 'ecb')`);
+    try {
+      const created = record(
+        await writeTools.createDocument(backend, {
+          company_id: fx.companyId,
+          doc_type: 'sale_invoice',
+          contact_id: contact,
+          document_date: '2026-10-04',
+          currency_code: 'USD',
+          lines: [{ name: 'Conseil', unit_price: '500.00', account_code: '704000', tax_code: 'BE-S-EXP' }],
+        }),
+      );
+      expect(record(created['document'])['exchange_rate']).toBe('1.09210000');
+      expect(created['exchange_rate_used']).toEqual({
+        rate: '1.09210000',
+        rate_date: '2026-10-02',
+        source: 'ecb',
+        origin: 'instance',
+      });
+    } finally {
+      await db.query(`delete from currency_rates where company_id is null`);
+      await db.query(`update instance set reference_currency = null where id = 1`);
+    }
   });
 });

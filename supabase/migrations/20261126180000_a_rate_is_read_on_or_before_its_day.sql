@@ -15,9 +15,9 @@
 --      rate it chose, which always wins; otherwise
 --   2. the installation's rows of the last day on or before it that quotes
 --      both legs (`origin` 'instance'): the currency's quote divided by the
---      company currency's quote, both of that same day, in `numeric` and
+--      company currency's quote, both of that same day, in `numeric`,
 --      rounded to the eight decimals `currency_rates.rate` and
---      `documents.exchange_rate` keep. A leg in the reference currency itself
+--      `documents.exchange_rate` keep (numeric(18, 8)): a rate, not an amount. A leg in the reference currency itself
 --      is 1. Nothing is carried forward into the table: an earlier day is read
 --      where it is.
 -- A day further back than `p_max_age_days` is not taken: the function refuses
@@ -155,7 +155,7 @@ end;
 $$;
 
 comment on function ekwo.exchange_rate_on(uuid, char, date, integer, boolean) is
-  'The rate of a currency for a company on a day, in units of that currency for one unit of the company''s (the convention of documents.exchange_rate), with the day it is of, its source and its origin: the company''s own row of currency_rates for that day (origin company), otherwise the installation''s rows of the last day on or before it, no more than p_max_age_days earlier, that quote both the currency and the company''s currency against instance.reference_currency, divided in numeric and rounded to 8 decimals (origin instance). Five days by default: the longest closure of the first source''s calendar, plus the day before its release. No rate: exchange_rate_missing, or no row when p_required is false. Security invoker: the caller reads what row level security lets it read. The one reader of currency_rates for a figure; create_document() and currency_revaluation() call it.';
+  'The rate of a currency for a company on a day, in units of that currency for one unit of the company''s (the convention of documents.exchange_rate), with the day it is of, its source and its origin: the company''s own row of currency_rates for that day (origin company), otherwise the installation''s rows of the last day on or before it, no more than p_max_age_days earlier, that quote both the currency and the company''s currency against instance.reference_currency, divided in numeric and rounded to the 8 decimals a stored rate keeps (origin instance). Five days by default: the longest closure of the first source''s calendar, plus the day before its release. No rate: exchange_rate_missing, or no row when p_required is false. Security invoker: the caller reads what row level security lets it read. The one reader of currency_rates for a figure; create_document() and currency_revaluation() call it.';
 
 revoke execute on function ekwo.exchange_rate_on(uuid, char, date, integer, boolean) from public, anon;
 grant execute on function ekwo.exchange_rate_on(uuid, char, date, integer, boolean) to authenticated, service_role;

@@ -206,7 +206,10 @@ ${bold('Connecting')} ${dim('(every command)')}
   ${cyan('doc')}         new | line add <document> — a draft and its lines; list | show
               <document> — what exists, and what is still owed. One object: a
               sale invoice, a bill, a quote or a credit note, with --type. A
-              draft books nothing. pdf <document> — the PDF of a sale invoice
+              draft books nothing. In another currency (--currency), --rate
+              <units for one of the company's> is the rate it is booked at;
+              left out, the company's rate of its day, otherwise the
+              installation's on or before it (ekwo rates fetch). pdf <document> — the PDF of a sale invoice
               or credit note, from the books, in its company's colour. approve
               <document> — approve a draft, as it stands, for an agent to post
               where agents post in review. accept <document> [--by <who>
