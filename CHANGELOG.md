@@ -104,9 +104,31 @@ somewhere has already run it.
   (`reference_currency_not_quoted`). A day fetched again changes nothing, a
   rate already recorded is kept unless `--overwrite` (the audit trail keeps
   the old one), and a day not published writes nothing. The first source is
-  the euro foreign exchange reference rates of the European Central Bank. No
-  reader uses these rows yet. See `docs/exchange-rates.md`; migration
-  `20261126160000`, additive, no change to the oldest schema a client reads.
+  the euro foreign exchange reference rates of the European Central Bank.
+  `exchange_rate_on()`, below, reads them. See `docs/exchange-rates.md`;
+  migration `20261126160000`, additive, no change to the oldest schema a
+  client reads.
+- **A new document and the close read the fetched rate, through one
+  function.** `exchange_rate_on(company, currency, day)` answers the
+  company's own rate of that day, otherwise the installation's rate of the
+  last day on or before it that quotes both the currency and the company's,
+  divided in `numeric` through the reference currency and rounded to the
+  eight decimals a stored rate keeps, with the day, the source and the
+  origin of the rate. Further back than five days — the longest closure of
+  the first source's calendar, plus the day before its release; a parameter
+  — it refuses by name, `exchange_rate_missing`. `create_document()` takes
+  `exchange_rate`: a rate given is stored as it is; a document in another
+  currency given none takes the function's rate of its accounting day, and
+  `ekwo doc new` and the MCP tool `create_document` say which
+  (`exchange_rate_used`, and `--rate` / `exchange_rate` to give one). A rate
+  stored on a document never changes. `currency_revaluation()` takes its
+  closing rate from the function and adds `closing_rate_date` and
+  `closing_rate_source`; with none, the close still refuses,
+  `fx_closing_rate_missing`. An installation that names no reference
+  currency behaves exactly as before. Declared as `exchange_rate_on` in
+  `SCHEMA_FEATURES` (0.28.0), no floor raised; a rate given to an older
+  schema is refused by name, `schema_too_old_for`. Decision 0100, migration
+  `20261126180000`, additive.
 - **A contact says where it is below its country.** `contacts.territory_code`
   is read before the country when a tax names a territory — the contact is
   the buyer on a sale, the seller on a purchase — and no route a person takes

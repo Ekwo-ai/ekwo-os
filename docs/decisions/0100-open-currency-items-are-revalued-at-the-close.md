@@ -40,11 +40,17 @@ that company's rate of the day, in units of the currency for one unit of the
 company's currency — the convention of `documents.exchange_rate`; a row
 without one is the instance-wide rate, in units for one unit of the instance
 reference currency, exactly as before. The column fixes the base of the row,
-so the two are never read against each other: the close reads only the
-company's own row of the last day, exactly, and a currency still open without
-one refuses the close, `fx_closing_rate_missing`. The instance-wide rows are
-not read, for the reasons [0097](0097-a-group-translates-at-its-own-rates.md)
-gives. A third table of rates beside `currency_rates` and the group's
+so the two are never read against each other. The close reads its rate
+through `exchange_rate_on()`, the one reader of the table: the company's own
+row of the last day, exactly, which always wins; otherwise the installation's
+rate of the last day on or before it, no more than five days back, converted
+from the instance reference currency to the company's through two rows of
+the same day. The function and the date and source of each rate are shown by
+`currency_revaluation()`. A currency still open with neither refuses the
+close, `fx_closing_rate_missing`. An installation that names no reference
+currency reads no instance-wide row, so the base the reasons of
+[0097](0097-a-group-translates-at-its-own-rates.md) found unnamed is never
+guessed. A third table of rates beside `currency_rates` and the group's
 `consolidation.rates` was considered and rejected: it would hold the same
 notion — a currency, a day, a rate, a source — under another name.
 
@@ -86,10 +92,13 @@ the two new entries together, and the next close starts again.
   table.
 - A reader of the instance-wide rates through the API names them with
   `company_id=is.null`: a caller who reads a company's ledger also sees that
-  company's own rows. No reader in this repository reads the table.
+  company's own rows. In this repository, `exchange_rate_on()` is the one
+  reader of the table for a figure; a new document in another currency takes
+  its rate from it too (`docs/exchange-rates.md`).
 
 ## See also
 
 - `supabase/migrations/20261126143200_open_currency_items_are_revalued_at_the_close.sql`
-- `tests/closing_currency_revaluation.test.ts`
+- `supabase/migrations/20261126180000_a_rate_is_read_on_or_before_its_day.sql`
+- `tests/closing_currency_revaluation.test.ts`, `tests/exchange_rate_on.test.ts`
 - [0021](0021-cash-basis-vat-and-realised-exchange-differences.md) — Cash-basis VAT waits; exchange differences are realised

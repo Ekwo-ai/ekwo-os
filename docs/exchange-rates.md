@@ -58,12 +58,55 @@ command never reads or writes those rows.
 
 ## Who reads these rows
 
-Today, nothing computes a figure from the instance-wide rows. A document
-stores the rate it was booked at (`documents.exchange_rate`) and keeps it: no
-fetch changes a booked document. A close reads the company's own row of the
-last day, exactly (decision 0100). No reader takes "the last rate on or before
-a day" from this table yet; proposing the fetched rate to a new document, or
-as a company's closing rate, is a reader still to write.
+One function, `exchange_rate_on(company, currency, day)`, reads a rate for a
+figure; the command line, the MCP server and the close all call it. It
+answers in the convention of `documents.exchange_rate` — units of the
+currency for one unit of the company's — with the day the rate is of, its
+`source` and its `origin`:
+
+1. **The company's own rate of that day** (`origin` `company`), the row that
+   names it, set with `ekwo close rate`: the rate the company chose wins.
+2. Otherwise **the installation's rate of the last day on or before it**
+   (`origin` `instance`) that quotes both the currency and the company's
+   currency. The quote of the currency is divided by the quote of the
+   company's currency, both of that same day, in Postgres `numeric`, and
+   rounded to the eight decimals a stored rate keeps; a leg in the reference
+   currency itself is 1. A company kept in the reference currency reads the
+   rows as they are.
+
+The earlier day is read where it is: nothing is carried forward into the
+table. **A rate more than five days older than the day is not taken**: the
+function refuses by name, `exchange_rate_missing`, and says what to do —
+give the rate, record the company's rate of that day, or fetch. Five days is
+the longest closure of the first source's calendar — Good Friday to Easter
+Monday, or 23 to 26 December when Christmas is a Monday, four days on the
+last working day's rate — plus the next working day before its rate is
+released. A longer gap is a series nobody fetched, which is said rather than
+papered over. The bound is a parameter, `p_max_age_days`, for a reader with
+another source or another tolerance.
+
+An installation that has not named its reference currency reads no
+instance-wide row, and behaves as it did before this command existed.
+
+**A new document in another currency.** A rate given — `ekwo doc new
+--rate`, `exchange_rate` of the MCP tool `create_document` or of
+`create_document()` — is stored as it is. None given, the document takes the
+function's rate of its accounting date (its document date when it has none,
+the day it is booked on), and the answer says which: `exchange_rate_used`,
+with the rate, its day, its source and its origin. Without a rate close
+enough the creation is refused, `exchange_rate_missing`; on an installation
+that names no reference currency, the document is created at 1 unless the
+company has its own rate of that day, as before. **A rate stored on a
+document never changes**: no fetch, no `--overwrite` and no later rate moves
+a document that exists.
+
+**The close.** A currency still open at the end of a year is revalued at the
+company's own rate of the last day, otherwise at the installation's rate on
+or before it, through the same function. `currency_revaluation()` (and the
+MCP tool of the same name, and `ekwo close year` before it asks) shows the
+rate of each currency with `closing_rate_date` and `closing_rate_source`.
+With no rate at all, the close is refused as before,
+`fx_closing_rate_missing` (decision 0100).
 
 ## The sources
 
