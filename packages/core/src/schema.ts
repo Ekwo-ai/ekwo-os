@@ -304,6 +304,18 @@ export const SCHEMA_FEATURES = {
     ],
     functions: ['bank_identifier_problem'],
   },
+  /**
+   * What is still open in a foreign currency, revalued at the close at the
+   * rate the company records for the last day of the year, and reversed the
+   * next day (`20261126143200_open_currency_items_are_revalued_at_the_close`,
+   * decision 0100). Below it, setting a closing rate and reading the
+   * positions are refused by name, and a close revalues nothing.
+   */
+  currency_revaluation: {
+    since: '0.28.0',
+    columns: ['closing_rates.rate'],
+    functions: ['currency_revaluation'],
+  },
 } as const satisfies Record<string, { since: string; columns: readonly string[]; functions: readonly string[] }>;
 
 export type SchemaFeature = keyof typeof SCHEMA_FEATURES;

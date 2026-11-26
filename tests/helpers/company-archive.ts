@@ -117,6 +117,16 @@ export async function furnish(db: PGlite, pack: Pack, name: string, tag: string)
     [companyId, replayed.contacts.get(golden.contacts[0]!.ref), golden.fiscalYear.start, tag],
   );
 
+  // The rate the company would close another currency at on the last day of
+  // its year, which travels with it.
+  await db.query(
+    `insert into closing_rates (company_id, currency_code, rate_date, rate, source)
+     select c.id, (select k.code from currencies k where k.code <> c.currency_code order by k.code limit 1),
+            $2::date, 1.25, $3
+       from companies c where c.id = $1`,
+    [companyId, golden.fiscalYear.end, tag],
+  );
+
   // The bank, a statement and two lines of it.
   const journal = await one<{ id: string; default_account_id: string | null }>(
     db,

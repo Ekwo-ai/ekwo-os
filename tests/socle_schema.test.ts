@@ -62,6 +62,7 @@ const WORDS_OF_A_PACK = '20261029010000_a_pack_names_the_words_of_its_invoices.s
  * country model is taken.
  */
 const OTHER_COMPREHENSIVE_INCOME = '20261121070000_other_comprehensive_income_closes_apart.sql';
+const FX_UNREALISED = '20261126143200_open_currency_items_are_revalued_at_the_close.sql';
 
 /**
  * A file after the move that adds a column the pack seeds write, beside a
@@ -108,12 +109,12 @@ describe('an installation before the move: the socle in public, ekwo created and
     const fromTheMove = (await migrationFiles()).filter((file) => file >= THE_MOVE);
     // Today's seeds are loaded all the same, and the pack seeds write
     // `country_defaults.invoice_labels`, the columns of other comprehensive
-    // income, `territory_required` and `number_shape`, which files after the move add to
+    // income, `territory_required`, `number_shape` and the unrealised exchange accounts, which files after the move add to
     // `ekwo`: they are added here to the socle in `public`, as nothing else.
     const migrations = join(repoRoot, 'supabase', 'migrations');
     const columns = (
       await Promise.all(
-        [OTHER_COMPREHENSIVE_INCOME, TERRITORY_REQUIRED, NUMBER_SHAPE].map((file) => readFile(join(migrations, file), 'utf8')),
+        [OTHER_COMPREHENSIVE_INCOME, TERRITORY_REQUIRED, NUMBER_SHAPE, FX_UNREALISED].map((file) => readFile(join(migrations, file), 'utf8')),
       )
     ).flatMap((sql) => sql.match(/^alter table ekwo\.country_defaults[\s\S]*?;$/gm) ?? []);
     const beforeSeeds = [await readFile(join(migrations, WORDS_OF_A_PACK), 'utf8'), ...columns]

@@ -240,7 +240,8 @@ describe('the compiled packs against the seeds they replace', () => {
     // line DG, and the amortisation of the development costs of line CX.
     // Then the three a French FEC taken over used and the chart lacked: the
     // capital called and paid (1013), the income tax withheld from pay under
-    // its 442 head (4421), and the research tax credit under 699.
+    // its 442 head (4421), and the research tax credit under 699. Then the two
+    // translation-difference accounts a close revalues against, 476 and 477.
     expect(added('account_templates').map((r) => `${r['country']}/${r['code']}`)).toEqual([
       'BE/411900',
       'BE/451900',
@@ -251,6 +252,10 @@ describe('the compiled packs against the seeds they replace', () => {
       'FR/442100',
       'FR/445860',
       'FR/445870',
+      'FR/476',
+      'FR/476000',
+      'FR/477',
+      'FR/477000',
       'FR/699',
       'FR/699100',
     ]);

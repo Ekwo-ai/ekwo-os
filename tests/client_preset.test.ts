@@ -1046,6 +1046,8 @@ describe('a client writes nothing else — by the function', () => {
       },
       'ekwo.close_fiscal_year': { sql: `select close_fiscal_year($1)`, params: [mine.fiscalYearId] },
       'ekwo.reopen_fiscal_year': { sql: `select reopen_fiscal_year($1)`, params: [mine.fiscalYearId] },
+      // The revaluation of a close, refused outside the close that calls it.
+      'ekwo.revalue_currency_positions': { sql: `select revalue_currency_positions($1)`, params: [mine.fiscalYearId] },
       'ekwo.close_fiscal_year_finally': {
         sql: `select close_fiscal_year_finally($1)`,
         params: [mine.fiscalYearId],

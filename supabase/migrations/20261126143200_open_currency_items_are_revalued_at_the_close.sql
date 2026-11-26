@@ -94,6 +94,8 @@ comment on column ekwo.closing_rates.rate_date is
 comment on column ekwo.closing_rates.source is
   'Where the rate comes from — a central bank, a published series — so that a revaluation can be traced to it.';
 
+create index closing_rates_currency_idx on ekwo.closing_rates (currency_code);
+
 create trigger closing_rates_set_updated_at
   before update on ekwo.closing_rates
   for each row execute function ekwo.set_updated_at();
@@ -142,6 +144,8 @@ comment on column ekwo.currency_revaluations.difference is
   'What the revaluation moved, in the company''s currency, the sum of the differences of its positions: a gain positive, a loss negative.';
 
 create index currency_revaluations_company_idx on ekwo.currency_revaluations (company_id);
+create index currency_revaluations_revaluation_entry_idx on ekwo.currency_revaluations (revaluation_entry_id);
+create index currency_revaluations_reversal_entry_idx on ekwo.currency_revaluations (reversal_entry_id);
 
 alter table ekwo.currency_revaluations enable row level security;
 

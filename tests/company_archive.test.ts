@@ -342,6 +342,10 @@ describe.each(filers.map((pack) => [pack.slug, pack] as const))(
           // tests/vat_schemes.test.ts exercises both.
           'ekwo.company_vat_schemes',
           'ekwo.declaration_instalments',
+          // A revaluation is written by a close that finds something open in
+          // a foreign currency, which no scenario holds;
+          // tests/closing_currency_revaluation.test.ts exercises it.
+          'ekwo.currency_revaluations',
           ...(empty.includes('ekwo.company_filing_periods') ? ['ekwo.company_filing_periods'] : []),
         ].sort(),
       );
