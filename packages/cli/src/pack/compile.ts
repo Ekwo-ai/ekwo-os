@@ -84,6 +84,7 @@ export function compilePack(pack: Pack): string {
   const out: string[] = [];
 
   out.push(...header(pack));
+  out.push(...reference(pack));
   out.push(...manifestRow(pack, country));
   out.push(...charts(pack, country));
   out.push(...accounts(pack, country));
@@ -1277,6 +1278,49 @@ function manifestRow(pack: Pack, country: string): string[] {
 function citation(source: string | PackSource): string[] {
   if (typeof source === 'string') return [`--   ${source}`];
   return [`--   ${source.title} (${source.publisher})`, `--     ${source.url}`];
+}
+
+/**
+ * `reference` of the manifest: the currency and the territories this country
+ * brings, written before anything of the pack names them.
+ *
+ * The same statements as `00_currencies.sql` and `00_territories.sql`, with
+ * the same conflict rules: a currency is inserted once and left alone, a
+ * territory is written again so that a correction reaches an installation
+ * that exists. A pack row is outside the common system of VAT — the Member
+ * States and their territories stay in the seed file. Nothing is written for a
+ * pack that carries no `reference`, which is every pack whose rows are there.
+ */
+function reference(pack: Pack): string[] {
+  const { currency, territories = [] } = pack.manifest.reference ?? {};
+  const out: string[] = [];
+  if (currency !== undefined) {
+    out.push(
+      '',
+      'insert into currencies (code, name, symbol, decimal_places) values',
+      `  (${text(currency.code)}, ${text(currency.name)}, ${text(currency.symbol)}, ${number(currency.decimal_places)})`,
+      'on conflict (code) do nothing;',
+    );
+  }
+  if (territories.length > 0) {
+    out.push(
+      '',
+      'insert into territories (code, code_source, name, parent_code, eu_vat_scope, eu_vat_from, eu_vat_to, vat_prefix, legal_reference) values',
+      territories
+        .map(
+          (row) =>
+            `  (${text(row.code)}, ${text(row.code_source)}, ${text(row.name)}, ${text(row.parent_code ?? null)}, ` +
+            `'none', null, null, null,\n   ${text(row.legal_reference)})`,
+        )
+        .join(',\n'),
+      'on conflict (code) do update set',
+      '  code_source     = excluded.code_source,',
+      '  name            = excluded.name,',
+      '  parent_code     = excluded.parent_code,',
+      '  legal_reference = excluded.legal_reference;',
+    );
+  }
+  return out;
 }
 
 function capitalise(text: string): string {

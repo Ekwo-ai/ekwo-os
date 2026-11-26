@@ -32,6 +32,7 @@ import {
   readTerritories,
   territoryOf,
   territoryWithin,
+  type PackReference,
   type Territory,
 } from './territories.js';
 
@@ -1176,6 +1177,8 @@ export interface Manifest {
   classifications?: { attribute: string; name: string; pattern: string; legal_reference: string; source?: string }[];
   /** Zones the country belongs to, e.g. `european-union`; each has a page under docs/zones/. */
   zones?: string[];
+  /** The currency and the territories its own seed writes, where no seed file of the framework does. */
+  reference?: PackReference;
   languages?: string[];
   journals: { code: string; type: string; name: string; sequence?: number }[];
   charts?: {
@@ -1708,6 +1711,7 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
   }
 
   issues.push(...crossReferences(manifest, charts, taxes));
+  issues.push(...ownReference(manifest));
   // The three code lists a tax tells the same fact in: its treatment, its
   // EN 16931 category and its VATEX reason. Nothing in the ledger reads the
   // last two, so nothing else would ever notice them disagreeing. Two of the
@@ -1715,7 +1719,11 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
   // read from `territories` first — and, where a tax names the territory it
   // applies in, from that territory rather than from the pack's country, which
   // is what makes a territory of limited scope expressible at all.
-  const territories = await readTerritories(repoRootDir());
+  // A row another pack carries is written by that pack's seed, which may be
+  // applied after this one: only the seed file's rows and this pack's own count.
+  const territories = (await readTerritories(repoRootDir())).filter(
+    (territory) => territory.pack === undefined || territory.pack === manifest.country,
+  );
   const packRegime = await vatRegime(manifest);
   issues.push(...territoryReferences(taxes, territories));
   issues.push(...sellerTerritory(manifest, taxes, territories));
@@ -1956,6 +1964,14 @@ function sourceRegister(
       path: `pack.json not_taxed.${entry.treatment}`,
       source: entry.source,
       kind: 'rule' as const,
+    })),
+    ...(manifest.reference?.currency
+      ? [{ path: 'pack.json reference.currency', source: manifest.reference.currency.source, kind: 'other' as const }]
+      : []),
+    ...(manifest.reference?.territories ?? []).map((row) => ({
+      path: `pack.json reference.territories.${row.code}`,
+      source: row.source ?? null,
+      kind: 'other' as const,
     })),
     ...(manifest.classifications ?? []).map((entry) => ({
       path: `pack.json classifications.${entry.attribute}`,
@@ -4440,6 +4456,43 @@ function reportReferences(report: PackReport | null, taxes: PackTax[]): Issue[] 
   return issues;
 }
 
+/**
+ * The rows `reference` writes, held to the country of the pack.
+ *
+ * Its currency is the one its companies keep their books in, and its
+ * territories are the country and what lies inside it, each parent listed
+ * before its children: the seed writes them in this order, and `parent_code`
+ * is a foreign key. Whether a code is also written elsewhere is a question
+ * about every pack at once, which `referenceIssues` answers.
+ */
+function ownReference(manifest: Manifest): Issue[] {
+  const issues: Issue[] = [];
+  const currency = manifest.reference?.currency;
+  if (currency !== undefined && currency.code !== manifest.defaults.currency) {
+    issues.push({
+      path: 'pack.json reference.currency',
+      message: `writes ${currency.code}, and the pack keeps its books in ${manifest.defaults.currency}: it carries its own currency or none`,
+    });
+  }
+  const listed = new Set<string>();
+  for (const row of manifest.reference?.territories ?? []) {
+    const parent = row.parent_code ?? null;
+    const fits =
+      row.code === manifest.country ? parent === null : parent !== null && (parent === manifest.country || listed.has(parent));
+    if (!fits) {
+      issues.push({
+        path: `pack.json reference.territories ${row.code}`,
+        message:
+          `is not ${manifest.country} itself, with no parent, nor inside it, with ${manifest.country} or a ` +
+          'territory listed before it as its parent. A pack writes its own territories; one several packs ' +
+          'name is a row of supabase/seed/00_territories.sql',
+      });
+    }
+    listed.add(row.code);
+  }
+  return issues;
+}
+
 /** What no schema can check: a code has to name something this pack carries. */
 /**
  * Every territory a tax names, held against the reference table.
@@ -4478,8 +4531,8 @@ function territoryReferences(taxes: PackTax[], territories: Territory[]): Issue[
         path: `taxes.json ${tax.code}`,
         message:
           `${field} names ${code}, which territories carries no row for. A territory a tax names ` +
-          'is a row of supabase/seed/00_territories.sql, so that a reader can look it up and a ' +
-          'second pack cannot spell it differently',
+          'is a row of supabase/seed/00_territories.sql or of reference.territories of this pack, so ' +
+          'that a reader can look it up and a second pack cannot spell it differently',
       });
     }
   }
@@ -4527,7 +4580,7 @@ function supplyVsSeller(manifest: Manifest, taxes: PackTax[], territories: Terri
       message:
         `applies_when.supply_vs_seller is read at the level of the seller's territory inside ` +
         `${country}, and territories carries no territory inside ${country}. Add the rows the ` +
-        'tax is levied in to supabase/seed/00_territories.sql first',
+        'tax is levied in to reference.territories of pack.json first',
     });
   }
   return issues;
@@ -4553,7 +4606,7 @@ function territoryRequired(manifest: Manifest, territories: Territory[]): Issue[
       path: 'pack.json defaults.territory_required',
       message:
         `a company of ${country} would have to name a territory inside ${country}, and territories ` +
-        'carries none. Add them to supabase/seed/00_territories.sql first',
+        'carries none. Add them to reference.territories of pack.json first',
     },
   ];
 }

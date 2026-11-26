@@ -3275,3 +3275,11 @@ on conflict (code) do update set
   eu_vat_to       = excluded.eu_vat_to,
   vat_prefix      = excluded.vat_prefix,
   legal_reference = excluded.legal_reference;
+
+-- ---------------------------------------------------------------------------
+-- A new country's territories are not added here: they go under `reference`
+-- of its packs/<cc>/pack.json and its own seed writes them. This file takes
+-- a territory several packs name, and `ekwo pack check` holds it to the number
+-- below, raised with each such row.
+-- ---------------------------------------------------------------------------
+-- Closed at 322 rows.

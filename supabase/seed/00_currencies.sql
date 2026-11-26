@@ -225,3 +225,11 @@ on conflict (code) do nothing;
 insert into currencies (code, name, symbol, decimal_places) values
   ('SBD', 'Solomon Islands dollar', 'SI$', 2)
 on conflict (code) do nothing;
+
+-- ---------------------------------------------------------------------------
+-- A new country's currency is not added here: it goes under `reference` of
+-- its packs/<cc>/pack.json and its own seed writes it. This file takes a
+-- currency several packs share, and `ekwo pack check` holds it to the number
+-- below, raised with each such row.
+-- ---------------------------------------------------------------------------
+-- Closed at 124 rows.

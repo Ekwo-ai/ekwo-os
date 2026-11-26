@@ -111,9 +111,111 @@
         "$ref": "#/$defs/not_taxed"
       },
       "description": "Operations the country's law leaves untaxed in the hands of a buyer established there, each with the article that says so. A pack whose taxes include a rated purchase VAT, GST or sales tax holds a purchase tax for a service bought from a supplier abroad, or names its treatment here; `ekwo pack check` refuses a pack that does neither, and a pack that names here a treatment one of its taxes carries."
+    },
+    "reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "currency": {
+          "$ref": "#/$defs/reference_currency"
+        },
+        "territories": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/reference_territory"
+          }
+        }
+      },
+      "description": "The rows of the two reference tables this country brings, written at the top of its own seed: its currency, when no other pack shares it, and its own territory with the ones inside it. A country added since these were closed carries them here; the rows of supabase/seed/00_currencies.sql and 00_territories.sql stay where they are, and those files take only what several packs share."
     }
   },
   "$defs": {
+    "reference_currency": {
+      "type": "object",
+      "required": [
+        "code",
+        "name",
+        "symbol",
+        "decimal_places",
+        "source"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$",
+          "description": "ISO 4217 alphabetic code; the same as defaults.currency."
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The name in English, as currencies.name holds it."
+        },
+        "symbol": {
+          "type": "string",
+          "minLength": 1
+        },
+        "decimal_places": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4,
+          "description": "The minor unit of ISO 4217 list one."
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Key of the entry of certification.sources the code and the decimals were read from."
+        }
+      }
+    },
+    "reference_territory": {
+      "type": "object",
+      "required": [
+        "code",
+        "code_source",
+        "name",
+        "legal_reference"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "$ref": "#/$defs/territory"
+        },
+        "code_source": {
+          "enum": [
+            "iso_3166_1",
+            "iso_3166_2"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "In English, and the name the source uses."
+        },
+        "parent_code": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/territory"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Null on the country itself; the country, or a territory listed before this one, on a territory inside it."
+        },
+        "legal_reference": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The text that puts this territory where it is, as territories.legal_reference holds it."
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Key of the entry of certification.sources the row was read from."
+        }
+      }
+    },
     "classification": {
       "type": "object",
       "required": [

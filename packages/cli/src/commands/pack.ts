@@ -41,9 +41,11 @@ import {
   packsDir,
   readFrameworkPack,
   readPack,
+  repoRootDir,
   seedOutputDir,
   type PackExemption,
 } from '../pack/read.js';
+import { referenceIssues } from '../pack/territories.js';
 import { setResult } from '../output.js';
 import { bold, dim, fail, heading, line, note, pairs, skipped, step, warn, yellow } from '../ui.js';
 
@@ -304,6 +306,13 @@ export async function packCommand(args: ParsedArgs, deps: CommandDeps = {}): Pro
     } else {
       step(where);
     }
+  }
+
+  // The two reference seed files are closed: a country brings its currency and
+  // its territories in its own pack. See `referenceIssues`.
+  for (const issue of await referenceIssues(repoRootDir())) {
+    stale += 1;
+    fail(issue);
   }
 
   // `--links` opens what the register points at. It is asked for by hand and it
