@@ -1,7 +1,7 @@
 /**
  * `ekwo pack` — the country packs, in this repository and in an installation.
  *
- *   ekwo pack build <cc>|--all   compile packs/<cc> into supabase/seed/, and the lists of packs
+ *   ekwo pack build <cc>|--all   compile packs/<cc> into supabase/seed/, the shared seeds, and the lists of packs
  *   ekwo pack check <cc>|--all   recompile in memory and refuse a stale seed or list
  *   ekwo pack check --links      … and open the source register's URLs
  *   ekwo pack list               what this checkout carries
@@ -294,7 +294,10 @@ export async function packCommand(args: ParsedArgs, deps: CommandDeps = {}): Pro
     files.push({ file: seed.file, pack: 'reference.json', state: seed.state });
     if (seed.state === 'stale') {
       stale += 1;
-      fail(`${seed.file} is not the output of packs/*/reference.json`);
+      fail(
+        `${seed.file} is not the output of packs/*/reference.json — it is generated: ` +
+          'declare the row in packs/<cc>/reference.json',
+      );
     } else if (seed.state === 'written') {
       step(`${seed.file} — from packs/*/reference.json`);
     } else if (action === 'build') {
@@ -783,9 +786,12 @@ function usage(): string {
   return `${bold('ekwo pack')} — compile a country pack into a seed, and move a company onto it.
 
   ekwo pack build <cc>     Write supabase/seed/<n>_pack_<cc>.sql from packs/<cc>,
+                           the shared seeds 00_currencies.sql and
+                           00_territories.sql from every packs/*/reference.json,
                            and the lists of packs outside packs/ — the seeds of
                            supabase/config.toml and of the README, CODEOWNERS,
-                           the table of docs/packs.md.
+                           the table of docs/packs.md, the index of
+                           docs/international.md.
   ekwo pack build --all    Every pack of this checkout.
   ekwo pack check --all    Refuse a seed that is not the output of its pack, and
                            a list that is not what packs/ says.

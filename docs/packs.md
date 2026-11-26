@@ -24,6 +24,8 @@ packs/be/
 ├── corporate_tax.json the section of the corporate income tax module, where the country has one
 ├── turnover_tax.json  the regimes where a tax on turnover replaces VAT, where the country has one
 ├── vat_schemes.json  the VAT schemes: which forms each files, ceilings, instalments
+├── reference.json     the country's rows of the shared tables: its currency, its territories
+├── README.md          what the pack says, and `## What the core could not say`
 ├── golden/
 │   ├── scenario.json  one year of books: documents, payments, the periods filed
 │   ├── vat_return.json    what the declaration comes to, period by period
@@ -40,8 +42,21 @@ packs/be/
 packs/generic/         a pack with no country: statements and an analysis by account type
 ├── pack.json
 ├── statements.json
-└── analysis.json      the aggregates a company is read on when its country pack defines none
+├── analysis.json      the aggregates a company is read on when its country pack defines none
+└── reference.json     the currencies of no single country: the euro, the CFA francs…
 ```
+
+`reference.json` is the pack's share of the two tables every country reads,
+`currencies` and `territories`. `ekwo pack build` writes
+`supabase/seed/00_currencies.sql` and `supabase/seed/00_territories.sql` from
+the reference files of every pack, so those two seeds are never edited by hand:
+`ekwo pack check` refuses either one when it is not their exact output, as it
+refuses a stale country seed. A currency is declared by the pack of the country
+its ISO 4217 code begins with, or by `packs/generic/` for a monetary union; a
+territory by the pack of the country it lies in, following `parent_code`. A
+code declared twice, or in another folder than that rule names, is refused, and
+so is a pack whose own country or `defaults.currency` has no row. The rule is
+written once, in `packages/cli/src/pack/reference.ts`.
 
 ## A country has charts, not a chart
 
@@ -654,7 +669,9 @@ worth knowing while you work: **changing any file of a pack makes the committed
 seed stale**, including a file the compiler never reads, such as
 `i18n/README.md`. `ekwo pack build` again and commit the result.
 
-The generated files under `golden/` are the deliberate exception —
+`reference.json` is outside it: its rows are written into the two shared seeds
+and never into the pack's own, so it says nothing about the pack the checksum
+fingerprints. The generated files under `golden/` are the other exception —
 `vat_return.json`, `statements.json`, `trial_balance.json` and, where the pack
 has an analysis section, `analysis.json` are outside the checksum, and `golden/scenario.json` is inside it. A scenario is a decision
 about what a country's books look like, and moving it moves the pack; the
@@ -673,10 +690,12 @@ Checking
   · 21_pack_ci.sql
           golden: 12 documents, 4 payments, 4 period(s) of Exercice 2026
   …
+✗ 00_territories.sql is not the output of packs/*/reference.json — it is generated: declare the row in packs/<cc>/reference.json
 ✗ supabase/config.toml (generated:seeds) is not what packs/ says
   · README.md (generated:seeds)
   · README.md (generated:countries)
   · docs/packs.md (generated:packs)
+  · docs/international.md (generated:core-gaps)
   · .github/CODEOWNERS (generated:packs)
 
   Run `ekwo pack build --all` and commit the result.
