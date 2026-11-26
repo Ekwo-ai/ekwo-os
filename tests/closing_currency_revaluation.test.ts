@@ -269,6 +269,73 @@ describe('a receivable still open in a foreign currency at the close', () => {
   });
 });
 
+describe('one table of rates, in two bases', () => {
+  it('reads a company only its own rate, never the instance-wide one of the same day', async () => {
+    const pack = withRoles;
+    const fx = await company(pack, 'Own rate');
+    const other = await company(pack, 'Other rate');
+    const customer = await newContact(db, fx.companyId, { name: 'Overseas', country: null });
+    await sale(fx, pack, customer, '2026-03-01', 1000, 900);
+    // The instance-wide rate of the closing day is in another base: the close
+    // does not take it for the company's.
+    await db.query(
+      `insert into currency_rates (currency_code, rate_date, rate, source) values ($1, date '2026-12-31', 1.1, 'Instance')`,
+      [foreignOf(pack)],
+    );
+    expect(await refusal(close(fx))).toMatch(/^fx_closing_rate_missing: /);
+
+    // Another company's rate of the same currency and day is its own, beside
+    // the instance's, and neither company sees the other's.
+    await closingRate(other, pack, '2026-12-31', 1.4);
+    await closingRate(fx, pack, '2026-12-31', 1.25);
+    const seen = await asUser(db, fx.ownerId, () =>
+      rows<{ company_id: string | null; rate: number }>(
+        db,
+        `select company_id, rate::float8 as rate from currency_rates where currency_code = $1 and rate_date = date '2026-12-31'
+          order by company_id nulls first`,
+        [foreignOf(pack)],
+      ),
+    );
+    expect(seen).toEqual([
+      { company_id: null, rate: 1.1 },
+      { company_id: fx.companyId, rate: 1.25 },
+    ]);
+    expect(Number((await close(fx))['unrealised_exchange_difference'])).toBe(-100);
+  });
+
+  it('keeps one rate per currency and day for each, and the instance-wide rates out of a member’s reach', async () => {
+    const pack = withRoles;
+    const fx = await company(pack, 'One per day');
+    await closingRate(fx, pack, '2026-12-31', 1.25);
+    expect(await refusal(closingRate(fx, pack, '2026-12-31', 1.3))).toMatch(/currency_rates_company_currency_day_key/);
+
+    await db.query(
+      `insert into currency_rates (currency_code, rate_date, rate) values ($1, date '2026-12-31', 1.1)`,
+      [foreignOf(pack)],
+    );
+    expect(
+      await refusal(
+        db.query(`insert into currency_rates (currency_code, rate_date, rate) values ($1, date '2026-12-31', 1.2)`, [
+          foreignOf(pack),
+        ]),
+      ),
+    ).toMatch(/currency_rates_company_currency_day_key/);
+
+    // A member writes the company's rows, never the instance's.
+    await expect(
+      asUser(db, fx.ownerId, () =>
+        db.query(`insert into currency_rates (currency_code, rate_date, rate) values ($1, date '2026-12-30', 1.2)`, [
+          foreignOf(pack),
+        ]),
+      ),
+    ).rejects.toThrow(/row-level security/);
+    const changed = await asUser(db, fx.ownerId, () =>
+      db.query(`update currency_rates set rate = 9 where company_id is null`),
+    );
+    expect(changed.affectedRows ?? 0).toBe(0);
+  });
+});
+
 describe('a payable still open in a foreign currency', () => {
   it('books an unrealised gain when the currency fell', async () => {
     const pack = withRoles;
