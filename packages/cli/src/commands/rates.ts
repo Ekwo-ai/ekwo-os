@@ -92,6 +92,10 @@ export async function ratesCommand(args: ParsedArgs, deps: RatesDeps = {}): Prom
 
     const quotes = await toReference(db, source, published.rates, reference, published.date);
     const result = await db.transaction(async (tx) => {
+      // Operating, not installing: the audit trail skips what the
+      // installation writes to set itself up, and a rate replaced here has to
+      // be kept there. For this transaction only.
+      await tx.query(`select set_config('ekwo.installing', '', true)`);
       if (toRecord) await tx.query('update instance set reference_currency = $1 where id = 1', [reference]);
       return record(tx, source, published.date, quotes, overwrite);
     });
