@@ -11,6 +11,7 @@ import { agedCommand, balanceCommand, journalCommand, ledgerCommand } from './co
 import { ecslCommand, vatCommand } from './commands/declarations.js';
 import { statementCommand } from './commands/statement.js';
 import { closeCommand, reopenCommand } from './commands/close.js';
+import { ratesCommand } from './commands/rates.js';
 import { companyCommand } from './commands/company.js';
 import { contactCommand } from './commands/contact.js';
 import { crmCommand } from './commands/crm.js';
@@ -71,6 +72,7 @@ export const COMMANDS = [
   'register',
   'unregister',
   'demo',
+  'rates',
   'login',
   'logout',
   'use',
@@ -142,6 +144,12 @@ ${bold('Commands')}
               everything works the same without it.
   ${cyan('unregister')}  Opt back out. Clears the address and the date.
   ${cyan('demo')}        Load the sample company. Fictional data; ask for it explicitly.
+  ${cyan('rates')}       fetch [--source ecb] [--date <YYYY-MM-DD>] [--overwrite]
+              [--reference-currency <code>] — the rates a published series gives
+              for a day, written as the installation's rates against its
+              reference currency (named once, with --reference-currency). A
+              rate already recorded for the day is kept unless --overwrite; a
+              day not published writes nothing. Run it daily from cron or CI.
 
   ${cyan('login')}       Sign in to an instance as yourself and keep the session, in your
               own configuration directory and never in a repository.
@@ -683,6 +691,8 @@ export async function run(argv: string[], deps: RunDeps = {}): Promise<number> {
         return await registerCommand(args, deps);
       case 'unregister':
         return await unregisterCommand(args, deps);
+      case 'rates':
+        return await ratesCommand(args, deps);
       case 'demo':
         return await demoCommand(args, deps);
       case 'login':
