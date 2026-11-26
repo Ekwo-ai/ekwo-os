@@ -100,6 +100,7 @@ export function compilePack(pack: Pack): string {
   out.push(...documentRules(pack, country));
   out.push(...finalClose(pack, country));
   out.push(...otherComprehensiveIncome(pack, country));
+  out.push(...fxUnrealised(pack, country));
   out.push(...territoryRequired(pack, country));
   out.push(...numberShape(pack, country));
   out.push(...taxPayee(pack, country));
@@ -1009,6 +1010,31 @@ function otherComprehensiveIncome(pack: Pack, country: string): string[] {
     `  other_comprehensive_income_closes_to       = ${text(rule.closes_to)},`,
     `  other_comprehensive_income_legal_reference = ${text(rule.legal_reference)},`,
     `  other_comprehensive_income_source_key      = ${text(rule.source ?? null)}`,
+    ` where country = ${text(country)};`,
+  ];
+}
+
+/**
+ * Where the revaluation of a receivable or payable still open in a foreign
+ * currency lands at the close — `defaults.roles.fx_unrealised_gain` and
+ * `fx_unrealised_loss`, into the two `country_defaults` columns that
+ * `20261126143200` added.
+ *
+ * Written only when the pack names them, like `final_close`: a pack that names
+ * neither keeps a seed that runs on a schema from before the columns, and a
+ * close in its country refuses a difference by name rather than booking it on
+ * an account the chart did not choose.
+ */
+function fxUnrealised(pack: Pack, country: string): string[] {
+  const { roles } = pack.manifest.defaults;
+  const gain = roles['fx_unrealised_gain'] ?? null;
+  const loss = roles['fx_unrealised_loss'] ?? null;
+  if (gain === null && loss === null) return [];
+  return [
+    '',
+    'update country_defaults set',
+    `  fx_unrealised_gain_code = ${text(gain)},`,
+    `  fx_unrealised_loss_code = ${text(loss)}`,
     ` where country = ${text(country)};`,
   ];
 }

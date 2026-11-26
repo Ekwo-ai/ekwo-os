@@ -4925,6 +4925,19 @@ function closingRules(manifest: Manifest, journals: Set<string>): Issue[] {
     }
   }
 
+  // The revaluation of what is still open in a foreign currency books a gain
+  // and a loss on two accounts a chart chooses together: a pack names both or
+  // neither, and a close refuses a difference whose account is missing.
+  const unrealised = ['fx_unrealised_gain', 'fx_unrealised_loss'];
+  const namedUnrealised = unrealised.filter((role) => roles[role] !== undefined && roles[role] !== null);
+  if (namedUnrealised.length === 1) {
+    const missing = unrealised.find((role) => !namedUnrealised.includes(role))!;
+    issues.push({
+      path: `defaults.roles.${missing}`,
+      message: `a pack that names defaults.roles.${namedUnrealised[0]} has to name ${missing} too`,
+    });
+  }
+
   const opening = manifest.defaults.journal_roles?.['opening'];
   if (opening === undefined) {
     issues.push({
