@@ -87,8 +87,11 @@ somewhere has already run it.
   `unrealised_exchange_difference` and the two entries, and
   `reopen_fiscal_year()` takes them back. France (476, 477, pack 1.26.0, with
   lines CM and ED of the 2050) and the seventeen OHADA members (478, 479) name
-  their accounts; the other packs do not yet. Decision 0100, migration
-  `20261126143200`, additive.
+  their accounts; the other packs do not yet. `ekwo close rate <currency>
+  <rate> --on <day>` and the MCP tools `set_closing_rate` and
+  `currency_revaluation` record a rate and show the positions; `ekwo close
+  year` lists them before asking. Decision 0100, migration `20261126143200`,
+  additive.
 - **A contact says where it is below its country.** `contacts.territory_code`
   is read before the country when a tax names a territory — the contact is
   the buyer on a sale, the seller on a purchase — and no route a person takes

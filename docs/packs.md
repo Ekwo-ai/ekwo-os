@@ -3061,6 +3061,13 @@ makes the credit a claim on the administration in the pack's README, since a
 role carries no citation of its own. Add `fx_gain` and `fx_loss` if any company of your country will
 ever invoice in another currency: a matching that realises a difference is
 refused by name when they are missing, and only then.
+Add `fx_unrealised_gain` and `fx_unrealised_loss` too, both or neither: the
+close of a year revalues what is still open in a foreign currency at the
+closing rate, and books a receivable's or a payable's difference there — on
+the translation-difference accounts of a chart that defers it to the balance
+sheet, on the exchange accounts of one that puts it in the result. A close
+that finds such a difference in a pack naming neither is refused by name
+(decision 0100), and the README says where the two come from.
 
 Every code has to exist in **every** chart your pack ships. `readPack` refuses
 the pack before the compiler writes any SQL, and it names the chart the code is
