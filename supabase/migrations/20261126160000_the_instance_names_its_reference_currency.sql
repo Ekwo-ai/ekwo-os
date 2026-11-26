@@ -26,3 +26,6 @@ comment on column ekwo.currency_rates.rate is
   'Units of currency_code for one unit of the base the row is in: with company_id set, that company''s currency; without, instance.reference_currency.';
 comment on column ekwo.currency_rates.source is
   'Where the rate comes from: the name of a published series (ecb, written by `ekwo rates fetch`), or free text for a rate typed by hand.';
+
+-- Every foreign key has its index, even on a table of one row.
+create index instance_reference_currency_idx on ekwo.instance (reference_currency);

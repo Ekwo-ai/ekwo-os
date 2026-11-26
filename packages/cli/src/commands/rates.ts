@@ -28,7 +28,7 @@
 import { boolFlag, rejectUnknownFlags, stringFlag, UsageError, type ParsedArgs } from '../args.js';
 import { CONNECTION_FLAGS, openDatabase, type CommandDeps } from '../context.js';
 import { setResult } from '../output.js';
-import { RATE_SOURCES, type RateSource } from '../rates/sources.js';
+import { RATE_SOURCES, type RateSource } from '../fx-sources/index.js';
 import { first, scalar, type SqlClient } from '../sql.js';
 import { dim, heading, note, skipped, step, warn } from '../ui.js';
 

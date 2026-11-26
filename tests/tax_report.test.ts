@@ -391,7 +391,16 @@ describe('no country lives in the core any more', () => {
     for (const pkg of ['cli', 'mcp', 'core']) {
       const dir = join(repoRoot, 'packages', pkg, 'src');
       for (const file of await filesUnder(dir, '.ts')) {
-        const match = pattern.exec(code(await readFile(file, 'utf8'), '//'));
+        let text = code(await readFile(file, 'utf8'), '//');
+        // A source of exchange rates is a published series, and the currency
+        // it quotes against is a fact of that series, as the country of a
+        // format is a fact of the format: the European Central Bank quotes
+        // against the euro whatever the installation. Its module states it
+        // once, on its `base:` line, and nowhere else.
+        if (file.includes(join('cli', 'src', 'fx-sources'))) {
+          text = text.replace(/^\s*base: '[A-Z]{3}',$/gm, '');
+        }
+        const match = pattern.exec(text);
         if (match !== null) guilty.push(`${pkg}/${file.split('/').at(-1)}: ${match[0]}`);
       }
     }

@@ -26,7 +26,7 @@
  * the base.
  */
 
-import type { PublishedRates, RateSource } from './sources.js';
+import type { PublishedRates, RateSource } from './index.js';
 
 const FEED = 'https://www.ecb.europa.eu/stats/eurofxref';
 export const ECB_DAILY = `${FEED}/eurofxref-daily.xml`;

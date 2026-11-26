@@ -82,7 +82,7 @@ is strongly discouraged"; information from its website may be reproduced if
 row it gives says `ecb`. Without `--date` the command reads the latest day;
 with one, the 90-day file, and the whole history for an older day.
 
-A source is one module of `packages/cli/src/rates/` behind one interface — a
+A source is one module of `packages/cli/src/fx-sources/` behind one interface — a
 name, a base, and `fetch(date)` returning the day's quotes — and one line in
 `RATE_SOURCES`. A national central bank or a commercial provider is added the
 same way, and the command does not change.

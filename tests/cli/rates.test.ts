@@ -11,7 +11,7 @@
 import type { PGlite } from '@electric-sql/pglite';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { run, type OutputDocument, type SqlClient } from '../../packages/cli/src/index.js';
-import { ECB_90_DAYS, ECB_DAILY, ECB_HISTORY, ecb, parseEcbXml } from '../../packages/cli/src/rates/ecb.js';
+import { ECB_90_DAYS, ECB_DAILY, ECB_HISTORY, ecb, parseEcbXml } from '../../packages/cli/src/fx-sources/ecb.js';
 import { freshDatabase } from '../helpers/db.js';
 import { adapt, type Queryable } from './helpers.js';
 

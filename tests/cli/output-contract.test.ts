@@ -38,7 +38,7 @@ import {
 import { runStdio } from '../../packages/mcp/src/index.js';
 import { ask, askSecret, confirm } from '../../packages/cli/src/prompt.js';
 import { table } from '../../packages/cli/src/ui.js';
-import { ECB_DAILY, ecb } from '../../packages/cli/src/rates/ecb.js';
+import { ECB_DAILY, ecb } from '../../packages/cli/src/fx-sources/ecb.js';
 import { asUser, expectError, freshDatabase, repoRoot } from '../helpers/db.js';
 import { amountValue, newCompany, newContact, newDocument, newUser } from '../helpers/factory.js';
 import { roleOf, somePack } from '../helpers/packs.js';
