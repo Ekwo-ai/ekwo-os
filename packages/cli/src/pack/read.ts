@@ -2594,10 +2594,18 @@ function languageCoverage(
  */
 const GOLDEN_EXPECTATIONS = /^golden\/(?!scenario\.json$)/;
 
+/**
+ * `reference.json` is not in it either. Its rows are written into the two
+ * seeds every country shares, `00_currencies.sql` and `00_territories.sql`
+ * (see `pack/reference.ts`), and never into this pack's own seed, so it says
+ * nothing about the pack `country_packs.checksum` fingerprints.
+ */
+const REFERENCE_ROWS = /^reference\.json$/;
+
 async function checksum(dir: string): Promise<string> {
   const hash = createHash('sha256');
   for (const file of await filesUnder(dir)) {
-    if (GOLDEN_EXPECTATIONS.test(file)) continue;
+    if (GOLDEN_EXPECTATIONS.test(file) || REFERENCE_ROWS.test(file)) continue;
     hash.update(file);
     hash.update('\0');
     hash.update(await readFile(join(dir, file)));

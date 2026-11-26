@@ -1,0 +1,40 @@
+{
+  "territories": [
+    {
+      "code": "DE",
+      "code_source": "iso_3166_1",
+      "name": "Germany",
+      "parent_code": null,
+      "eu_vat_scope": "full",
+      "eu_vat_from": "1958-01-01",
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Treaty establishing the European Economic Community, Rome, 25 March 1957, in force 1 January 1958"
+    },
+    {
+      "code": "DE-HELIGOLAND",
+      "code_source": "named",
+      "name": "Island of Heligoland",
+      "parent_code": "DE",
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": true,
+      "legal_reference": "Directive 2006/112/EC, article 6(2)(a); for the national tax, Umsatzsteuergesetz, § 1 Absatz 2 Satz 1: the Inland of German VAT is the territory of the Federal Republic except the island of Heligoland"
+    },
+    {
+      "code": "DE-BUSINGEN",
+      "code_source": "named",
+      "name": "Territory of Büsingen",
+      "parent_code": "DE",
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": true,
+      "legal_reference": "Directive 2006/112/EC, article 6(2)(b); for the national tax, Umsatzsteuergesetz, § 1 Absatz 2 Satz 1: the Inland of German VAT is the territory of the Federal Republic except the territory of Büsingen"
+    }
+  ]
+}

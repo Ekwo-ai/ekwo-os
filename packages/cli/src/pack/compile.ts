@@ -1261,12 +1261,12 @@ function byCode(a: { code: string }, b: { code: string }): number {
   return a.code < b.code ? -1 : a.code > b.code ? 1 : 0;
 }
 
-function text(value: string | null | undefined): string {
+export function text(value: string | null | undefined): string {
   if (value === null || value === undefined) return 'null';
   return `'${value.replace(/'/g, "''")}'`;
 }
 
-function date(value: string | null | undefined): string {
+export function date(value: string | null | undefined): string {
   return value === null || value === undefined ? 'null' : `date '${value}'`;
 }
 
@@ -1300,7 +1300,7 @@ function enumeration(value: string | null, type: string): string {
   return value === null ? 'null' : `${text(value)}::${type}`;
 }
 
-function bool(value: boolean): string {
+export function bool(value: boolean): string {
   return value ? 'true' : 'false';
 }
 

@@ -1,0 +1,27 @@
+{
+  "currencies": [
+    {
+      "comment": [
+        "Tajikistani somoni, ISO 4217 list one, two decimals (packs/tj/)."
+      ],
+      "code": "TJS",
+      "name": "Tajikistani somoni",
+      "symbol": "сомонӣ",
+      "decimal_places": 2
+    }
+  ],
+  "territories": [
+    {
+      "code": "TJ",
+      "code_source": "iso_3166_1",
+      "name": "Tajikistan",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Tajikistan levies a value added tax of its own under the Tax Code of 23 December 2021, No. 1844: article 264 sets the standard rate at 14 per cent from 1 January 2024 to 31 December 2026 and at 13 per cent from 1 January 2027 (article 397(4)), with reduced rates of 7 and 5 per cent, article 254 applies the zero rate to the export of goods, articles 251 and 252 exempt the supplies they list, and the tax period is the calendar month (article 273)."
+    }
+  ]
+}

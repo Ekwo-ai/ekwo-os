@@ -1,0 +1,40 @@
+{
+  "currencies": [
+    {
+      "code": "NOK",
+      "name": "Norwegian krone",
+      "symbol": "kr",
+      "decimal_places": 2
+    }
+  ],
+  "territories": [
+    {
+      "comment": [
+        "The row — Saudi Arabia",
+        "",
+        "A State outside the common system of VAT the way the United Arab Emirates",
+        "or Singapore are: the Kingdom levies a value added tax of its own under the",
+        "VAT Law of Royal Decree No. M/113, whose article 2(2) sets the basic rate at",
+        "15 % of the value of a supply or an import since Royal Order No. A/638",
+        "amended it, and no Union instrument reaches it. The Common VAT Agreement of",
+        "the States of the Gulf Cooperation Council is a framework treaty and not a",
+        "second common system: its intra-GCC mechanism is not in force, article 79(6)",
+        "of the Kingdom's Implementing Regulations treating every other Member State",
+        "as a country outside Council Territory until an Electronic Services System",
+        "is announced. `vat_prefix` is null: a Saudi VAT registration number is",
+        "fifteen digits beginning and ending with 3 and carries no country prefix of",
+        "this table's kind."
+      ],
+      "code": "NO",
+      "code_source": "iso_3166_1",
+      "name": "Norway",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Norway is a member of the European Economic Area (EEA/EØS) under the EEA Agreement of 2 May 1992, which gives it access to the internal market, but value added tax is a matter the EEA Agreement does not cover (it is outside annexes I to XXII listing the Union acquis extended to the EEA): Norway levies its own merverdiavgift under the Lov om merverdiavgift (LOV-2009-06-19-58), unrelated to the Directive and administered by Skatteetaten, with no intra-Community acquisition or supply of any kind between Norway and a Member State."
+    }
+  ]
+}

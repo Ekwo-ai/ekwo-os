@@ -1,0 +1,34 @@
+{
+  "currencies": [
+    {
+      "code": "PKR",
+      "name": "Pakistani rupee",
+      "symbol": "₨",
+      "decimal_places": 2
+    }
+  ],
+  "territories": [
+    {
+      "comment": [
+        "Pakistan — outside the common system of VAT",
+        "",
+        "A State outside the common system of VAT the way India is: the Federation",
+        "levies a sales tax on goods under the Sales Tax Act, 1990, section 3(1) of",
+        "which sets the rate at eighteen per cent of the value of a taxable supply,",
+        "and the provinces and the Islamabad Capital Territory each levy a separate",
+        "sales tax on services under their own statutes, administered by their own",
+        "authorities. No regional instrument harmonises either."
+      ],
+      "code": "PK",
+      "code_source": "iso_3166_1",
+      "name": "Pakistan",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Pakistan levies a federal sales tax on goods under the Sales Tax Act, 1990, section 3(1), at eighteen per cent of the value of a taxable supply, and a sales tax on services under each provincial statute and the Islamabad Capital Territory (Tax on Services) Ordinance, 2001."
+    }
+  ]
+}

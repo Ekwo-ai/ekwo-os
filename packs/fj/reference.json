@@ -1,0 +1,27 @@
+{
+  "currencies": [
+    {
+      "comment": [
+        "Fijian dollar, ISO 4217 list one, two decimals (packs/fj/)."
+      ],
+      "code": "FJD",
+      "name": "Fijian dollar",
+      "symbol": "FJ$",
+      "decimal_places": 2
+    }
+  ],
+  "territories": [
+    {
+      "code": "FJ",
+      "code_source": "iso_3166_1",
+      "name": "Fiji",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Fiji levies a value added tax of its own under the Value Added Tax Act 1991: the Fiji Revenue and Customs Service sets the rate at 12.5 per cent from 1 August 2025, the Second Schedule zero-rates exports and the other supplies it lists, the First Schedule exempts the supplies it lists, and a registered person files a monthly, quarterly or annual return with the Service."
+    }
+  ]
+}

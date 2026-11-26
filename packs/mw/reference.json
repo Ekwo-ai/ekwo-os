@@ -1,0 +1,27 @@
+{
+  "currencies": [
+    {
+      "comment": [
+        "Malawian kwacha, two decimals, packs/mw/."
+      ],
+      "code": "MWK",
+      "name": "Malawian kwacha",
+      "symbol": "MK",
+      "decimal_places": 2
+    }
+  ],
+  "territories": [
+    {
+      "code": "MW",
+      "code_source": "iso_3166_1",
+      "name": "Malawi",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Malawi levies a value added tax of its own under the Value Added Tax Act (Chapter 42:02): section 7 imposes it on supplies made in Malawi, on imports and on imported services, section 9 sets the rate (raised from 16.5 to 17.5 per cent from 30 December 2025 by the Value Added Tax (Amendment) Act, 2025), section 21 and the Second Schedule zero-rate exports, and section 34 has the taxable person file the return by the 25th of the month following."
+    }
+  ]
+}

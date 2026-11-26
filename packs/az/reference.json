@@ -1,0 +1,34 @@
+{
+  "currencies": [
+    {
+      "code": "AZN",
+      "name": "Azerbaijani manat",
+      "symbol": "₼",
+      "decimal_places": 2
+    }
+  ],
+  "territories": [
+    {
+      "comment": [
+        "Azerbaijan — outside the common system of VAT",
+        "",
+        "Directive 2006/112/EC, article 5(2): the common system of VAT applies in",
+        "the territory of the Community as defined by the Treaties, and Azerbaijan",
+        "is not a Member State. It levies its own value added tax, Əlavə Dəyər",
+        "Vergisi (ƏDV), under the Tax Code of the Republic of Azerbaijan, article",
+        "161, at a standard rate of 18%, with a zero rate in article 165 and",
+        "exemptions in article 164."
+      ],
+      "code": "AZ",
+      "code_source": "iso_3166_1",
+      "name": "Azerbaijan",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2) — the common system of VAT applies in the territory of the Community as defined by the Treaties; Azerbaijan is not a Member State. Azerbaijan levies its own value added tax, Əlavə Dəyər Vergisi (ƏDV), under the Tax Code of the Republic of Azerbaijan, article 161, at a standard rate of 18%, with a zero rate in article 165 and exemptions in article 164, unrelated to the Union's common system."
+    }
+  ]
+}

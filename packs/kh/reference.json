@@ -1,0 +1,27 @@
+{
+  "currencies": [
+    {
+      "comment": [
+        "Cambodian riel, ISO 4217 list one, no minor unit (packs/kh/)."
+      ],
+      "code": "KHR",
+      "name": "Cambodian riel",
+      "symbol": "៛",
+      "decimal_places": 0
+    }
+  ],
+  "territories": [
+    {
+      "code": "KH",
+      "code_source": "iso_3166_1",
+      "name": "Cambodia",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Cambodia levies a value added tax of its own, under the Law on Taxation of 16 May 2023 and Sub-Decree No. 49 ANKr.BK of 11 March 2024 on the Value Added Tax: article 30(2) of the sub-decree reads the rate as 10 per cent, article 29(1) keeps sales at 0 per cent and exempt supplies apart in the records, and the General Department of Taxation sets the due dates of the monthly return."
+    }
+  ]
+}

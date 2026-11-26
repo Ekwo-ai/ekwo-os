@@ -1,0 +1,35 @@
+{
+  "currencies": [
+    {
+      "code": "ETB",
+      "name": "Ethiopian birr",
+      "symbol": "Br",
+      "decimal_places": 2
+    }
+  ],
+  "territories": [
+    {
+      "comment": [
+        "The row — Ethiopia",
+        "",
+        "A third country to the common system of VAT of Directive 2006/112/EC,",
+        "article 5(2), which applies only in the territory of the Community as the",
+        "Treaties define it. Ethiopia levies its own value added tax under Value",
+        "Added Tax Proclamation No. 1341/2024, unrelated to the Union's common",
+        "system. `vat_prefix` is null: an Ethiopian taxpayer is identified by the",
+        "Taxpayer Identification Number (TIN) the Ministry of Revenues assigns, which",
+        "carries no ISO country prefix comparable to an EU VAT number."
+      ],
+      "code": "ET",
+      "code_source": "iso_3166_1",
+      "name": "Ethiopia",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and Ethiopia is a third country to it. Ethiopia levies a value added tax of its own under Value Added Tax Proclamation No. 1341/2024 (21 August 2024), article 8(2), at fifteen per cent (15 %) and a rate of zero per cent (0 %) on zero-rated supplies such as exports."
+    }
+  ]
+}

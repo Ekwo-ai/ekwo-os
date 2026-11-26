@@ -1,0 +1,88 @@
+{
+  "territories": [
+    {
+      "code": "FR",
+      "code_source": "iso_3166_1",
+      "name": "France",
+      "parent_code": null,
+      "eu_vat_scope": "full",
+      "eu_vat_from": "1958-01-01",
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Treaty establishing the European Economic Community, Rome, 25 March 1957, in force 1 January 1958"
+    },
+    {
+      "code": "GP",
+      "code_source": "iso_3166_1",
+      "name": "Guadeloupe",
+      "parent_code": "FR",
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 6(1)(c), which names the French territories referred to in articles 349 and 355(1) of the Treaty on the Functioning of the European Union"
+    },
+    {
+      "code": "GF",
+      "code_source": "iso_3166_1",
+      "name": "French Guiana",
+      "parent_code": "FR",
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 6(1)(c)"
+    },
+    {
+      "code": "MQ",
+      "code_source": "iso_3166_1",
+      "name": "Martinique",
+      "parent_code": "FR",
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 6(1)(c)"
+    },
+    {
+      "code": "RE",
+      "code_source": "iso_3166_1",
+      "name": "Réunion",
+      "parent_code": "FR",
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 6(1)(c)"
+    },
+    {
+      "code": "YT",
+      "code_source": "iso_3166_1",
+      "name": "Mayotte",
+      "parent_code": "FR",
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 6(1)(c)"
+    },
+    {
+      "code": "MF",
+      "code_source": "iso_3166_1",
+      "name": "Saint-Martin (French part)",
+      "parent_code": "FR",
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 6(1)(c)"
+    }
+  ]
+}

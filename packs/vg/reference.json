@@ -1,0 +1,25 @@
+{
+  "territories": [
+    {
+      "comment": [
+        "The row — British Virgin Islands",
+        "",
+        "A British Overseas Territory, a third country to the common system of VAT of",
+        "Directive 2006/112/EC, article 5(2), which applies only in the territory of",
+        "the Community as the Treaties define it. The Virgin Islands levy no value",
+        "added tax, goods and services tax or general sales tax. `vat_prefix` is",
+        "null: no VAT identifier exists to carry a prefix."
+      ],
+      "code": "VG",
+      "code_source": "iso_3166_1",
+      "name": "British Virgin Islands",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. The Virgin Islands, a British Overseas Territory, levy no value added tax, goods and services tax or general sales tax: the Inland Revenue Department (gov.vg) lists payroll tax, stamp duty, hotel accommodation tax and land and house tax among the taxes it administers, and no tax on sales. Income tax is set at a zero rate; what the territory charges instead is payroll tax, stamp duty and customs import duty, none of them a tax on transactions of the kind a VAT is."
+    }
+  ]
+}

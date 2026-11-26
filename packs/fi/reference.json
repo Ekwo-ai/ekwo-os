@@ -1,0 +1,28 @@
+{
+  "territories": [
+    {
+      "code": "FI",
+      "code_source": "iso_3166_1",
+      "name": "Finland",
+      "parent_code": null,
+      "eu_vat_scope": "full",
+      "eu_vat_from": "1995-01-01",
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Treaty of Accession 1994, in force 1 January 1995"
+    },
+    {
+      "code": "AX",
+      "code_source": "iso_3166_1",
+      "name": "Åland Islands",
+      "parent_code": "FI",
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 6(1)(d); Act of Accession 1994, protocol no 2 on the Åland Islands"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "currencies": [
+    {
+      "code": "DZD",
+      "name": "Algerian dinar",
+      "symbol": "د.ج",
+      "decimal_places": 2
+    }
+  ],
+  "territories": [
+    {
+      "comment": [
+        "The row — Algeria",
+        "",
+        "A State outside the common system of VAT the way Saudi Arabia or the United",
+        "Arab Emirates are: Algeria levies a value added tax of its own under the",
+        "code des taxes sur le chiffre d'affaires (CTCA), unrelated to Directive",
+        "2006/112/EC. `vat_prefix` is null: an Algerian numéro d'identification",
+        "fiscale (NIF) carries no country prefix of this table's kind and is never",
+        "validated against VIES, a register of the common system Algeria is not",
+        "part of."
+      ],
+      "code": "DZ",
+      "code_source": "iso_3166_1",
+      "name": "Algeria",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Algeria levies a value added tax of its own under the code des taxes sur le chiffre d'affaires, whose article 21 sets the normal rate at 19 % and article 23 the reduced rate at 9 % (Direction générale des impôts, consolidated text distributed by the Direction générale des douanes)."
+    }
+  ]
+}

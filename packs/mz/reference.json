@@ -1,0 +1,36 @@
+{
+  "currencies": [
+    {
+      "code": "MZN",
+      "name": "Mozambican metical",
+      "symbol": "MT",
+      "decimal_places": 2
+    }
+  ],
+  "territories": [
+    {
+      "comment": [
+        "The row — Mozambique",
+        "",
+        "A third country to the common system of VAT of Directive 2006/112/EC,",
+        "article 5(2), which applies only in the territory of the Community as the",
+        "Treaties define it. Mozambique levies its own Imposto sobre o Valor",
+        "Acrescentado under Lei n.º 32/2007, de 31 de Dezembro, unrelated to the",
+        "Union's common system. `vat_prefix` is null: a Mozambican taxpayer is",
+        "identified by the Número Único de Identificação Tributária (NUIT), which the",
+        "Autoridade Tributária assigns and which carries no ISO country prefix",
+        "comparable to an EU VAT number."
+      ],
+      "code": "MZ",
+      "code_source": "iso_3166_1",
+      "name": "Mozambique",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and Mozambique is a third country to it. Mozambique levies a value added tax of its own, the Imposto sobre o Valor Acrescentado, under Lei n.º 32/2007, de 31 de Dezembro (Código do IVA), article 17, at a standard rate of sixteen per cent (16 %) and, under article 17-A, a reduced rate of five per cent (5 %)."
+    }
+  ]
+}

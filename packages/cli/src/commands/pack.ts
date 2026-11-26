@@ -34,6 +34,7 @@ import {
 import { describeFiling } from '../pack/filing.js';
 import { describePack, type PackDescription } from '../pack/describe.js';
 import { packLists } from '../pack/lists.js';
+import { referenceSeeds } from '../pack/reference.js';
 import {
   GENERIC_PACK,
   declaredSeedSequences,
@@ -281,6 +282,25 @@ export async function packCommand(args: ParsedArgs, deps: CommandDeps = {}): Pro
             'and no brick of packages/formats/ reads it yet',
         );
       }
+    }
+  }
+
+  // The two reference tables every country shares, `currencies` and
+  // `territories`, are written from the `reference.json` of every pack, so
+  // they too are built and checked whichever pack was asked for, and a hand
+  // edit to either seed is refused like a hand edit to a country seed. See
+  // `pack/reference.ts`.
+  for (const seed of await referenceSeeds(action === 'build')) {
+    files.push({ file: seed.file, pack: 'reference.json', state: seed.state });
+    if (seed.state === 'stale') {
+      stale += 1;
+      fail(`${seed.file} is not the output of packs/*/reference.json`);
+    } else if (seed.state === 'written') {
+      step(`${seed.file} — from packs/*/reference.json`);
+    } else if (action === 'build') {
+      note(dim(`${seed.file} — already the output of packs/*/reference.json`));
+    } else {
+      step(seed.file);
     }
   }
 

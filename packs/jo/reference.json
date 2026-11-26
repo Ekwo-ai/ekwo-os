@@ -1,0 +1,27 @@
+{
+  "currencies": [
+    {
+      "comment": [
+        "Jordanian dinar, three decimals (the fils), packs/jo/."
+      ],
+      "code": "JOD",
+      "name": "Jordanian dinar",
+      "symbol": "JD",
+      "decimal_places": 3
+    }
+  ],
+  "territories": [
+    {
+      "code": "JO",
+      "code_source": "iso_3166_1",
+      "name": "Jordan",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Jordan levies a general sales tax of its own under the General Sales Tax Law No. 6 of 1994 as amended: article 6 sets the general rate at sixteen per cent, article 7 zero-rates exports and the supplies of the second schedule and exempts those of the third, article 16 has a registered person file a two-month return, and the Income and Sales Tax Department takes it."
+    }
+  ]
+}

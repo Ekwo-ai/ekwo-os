@@ -1,0 +1,24 @@
+{
+  "currencies": [
+    {
+      "code": "CHF",
+      "name": "Swiss franc",
+      "symbol": "CHF",
+      "decimal_places": 2
+    }
+  ],
+  "territories": [
+    {
+      "code": "CH",
+      "code_source": "iso_3166_1",
+      "name": "Switzerland",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2): a State outside the territory of the Community as defined by the Treaties is a third country for every rule the Directive carries, and Switzerland has never acceded to the Union or to its common system of VAT. It levies its own federal value added tax under the Bundesgesetz uber die Mehrwertsteuer (MWSTG) of 12 June 2009 (SR 641.20), administered by the Eidgenossische Steuerverwaltung (ESTV) and unrelated to the Directive; vat_prefix is null because a Swiss UID/MWST number (CHE-xxx.xxx.xxx) is never validated against VIES, which is a register of the common system Switzerland is not part of."
+    }
+  ]
+}

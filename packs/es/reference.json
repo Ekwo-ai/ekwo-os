@@ -1,0 +1,52 @@
+{
+  "territories": [
+    {
+      "code": "ES",
+      "code_source": "iso_3166_1",
+      "name": "Spain",
+      "parent_code": null,
+      "eu_vat_scope": "full",
+      "eu_vat_from": "1986-01-01",
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Treaty of Accession 1985, in force 1 January 1986"
+    },
+    {
+      "code": "ES-CN",
+      "code_source": "iso_3166_2",
+      "name": "Canary Islands",
+      "parent_code": "ES",
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": true,
+      "legal_reference": "Directive 2006/112/EC, article 6(1)(b); for the national tax, Ley 37/1992, del Impuesto sobre el Valor Añadido, artículo 3, apartados Uno y Dos: Canarias is excluded from the territory where Spanish VAT applies, and levies IGIC instead"
+    },
+    {
+      "code": "ES-CE",
+      "code_source": "iso_3166_2",
+      "name": "Ceuta",
+      "parent_code": "ES",
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": true,
+      "legal_reference": "Directive 2006/112/EC, article 6(2)(c); for the national tax, Ley 37/1992, del Impuesto sobre el Valor Añadido, artículo 3, apartados Uno y Dos: Ceuta is excluded from the territory where Spanish VAT applies, and levies IPSI instead"
+    },
+    {
+      "code": "ES-ML",
+      "code_source": "iso_3166_2",
+      "name": "Melilla",
+      "parent_code": "ES",
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": true,
+      "legal_reference": "Directive 2006/112/EC, article 6(2)(d); for the national tax, Ley 37/1992, del Impuesto sobre el Valor Añadido, artículo 3, apartados Uno y Dos: Melilla is excluded from the territory where Spanish VAT applies, and levies IPSI instead"
+    }
+  ]
+}

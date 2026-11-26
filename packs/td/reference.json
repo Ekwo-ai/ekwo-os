@@ -1,0 +1,16 @@
+{
+  "territories": [
+    {
+      "code": "TD",
+      "code_source": "iso_3166_1",
+      "name": "Chad",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Chad levies a value added tax of its own under its Code général des impôts, whose article 238 sets its rates (provincial and communal additional centimes are levied on top of them), harmonised within the Central African Economic and Monetary Community by Directive n° 11/22-CEMAC-UEAC-010A-CM-38 of 10 November 2022."
+    }
+  ]
+}

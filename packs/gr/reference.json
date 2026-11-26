@@ -1,0 +1,28 @@
+{
+  "territories": [
+    {
+      "code": "GR",
+      "code_source": "iso_3166_1",
+      "name": "Greece",
+      "parent_code": null,
+      "eu_vat_scope": "full",
+      "eu_vat_from": "1981-01-01",
+      "eu_vat_to": null,
+      "vat_prefix": "EL",
+      "outside_parent_tax": false,
+      "legal_reference": "Treaty of Accession 1979, in force 1 January 1981; the prefix EL is the one the VIES register publishes for Greek VAT identification numbers"
+    },
+    {
+      "code": "GR-69",
+      "code_source": "iso_3166_2",
+      "name": "Mount Athos",
+      "parent_code": "GR",
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 6(1)(a)"
+    }
+  ]
+}

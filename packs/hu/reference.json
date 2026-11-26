@@ -1,0 +1,24 @@
+{
+  "currencies": [
+    {
+      "code": "HUF",
+      "name": "Hungarian forint",
+      "symbol": "Ft",
+      "decimal_places": 2
+    }
+  ],
+  "territories": [
+    {
+      "code": "HU",
+      "code_source": "iso_3166_1",
+      "name": "Hungary",
+      "parent_code": null,
+      "eu_vat_scope": "full",
+      "eu_vat_from": "2004-05-01",
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Treaty of Accession 2003, in force 1 May 2004"
+    }
+  ]
+}

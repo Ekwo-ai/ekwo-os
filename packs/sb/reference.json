@@ -1,0 +1,27 @@
+{
+  "currencies": [
+    {
+      "comment": [
+        "Solomon Islands dollar, ISO 4217 list one, two decimals (packs/sb/)."
+      ],
+      "code": "SBD",
+      "name": "Solomon Islands dollar",
+      "symbol": "SI$",
+      "decimal_places": 2
+    }
+  ],
+  "territories": [
+    {
+      "code": "SB",
+      "code_source": "iso_3166_1",
+      "name": "Solomon Islands",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Solomon Islands levies no value added tax: the Inland Revenue Division administers a goods tax under the Goods Tax Act (Cap. 122), at 10 per cent on prescribed locally manufactured goods and 15 per cent on imported goods, and a sales tax under the Sales Tax Act (Cap. 125) on the goods and services of its Schedule One, and a registered person files a monthly return for each, form GT4 and form ST4, within 30 days of the end of the month."
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "currencies": [
+    {
+      "code": "ISK",
+      "name": "Icelandic krona",
+      "symbol": "kr",
+      "decimal_places": 0
+    }
+  ],
+  "territories": [
+    {
+      "code": "IS",
+      "code_source": "iso_3166_1",
+      "name": "Iceland",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2): a State outside the territory of the Community as defined by the Treaties is a third country for every rule the Directive carries. Iceland is a member of the European Free Trade Association and of the European Economic Area (Agreement on the European Economic Area, Porto, 2 May 1992, in force 1 January 1994), which extends the internal market's four freedoms and, through it, the Union's accounting directives, but Annex IX of the EEA Agreement does not carry the common system of VAT: Iceland has never acceded to the Union and levies its own virðisaukaskattur (VSK) under lög um virðisaukaskatt nr. 50/1988, administered by Skatturinn (Ríkisskattstjóri) and unrelated to Directive 2006/112/EC. vat_prefix is null because an Icelandic VSK number is never validated against VIES, which is a register of the common system Iceland is not part of."
+    }
+  ]
+}

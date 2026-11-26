@@ -1,0 +1,27 @@
+{
+  "currencies": [
+    {
+      "comment": [
+        "Lao kip, no minor unit in use (as the dong and the won), packs/la/."
+      ],
+      "code": "LAK",
+      "name": "Lao kip",
+      "symbol": "₭",
+      "decimal_places": 0
+    }
+  ],
+  "territories": [
+    {
+      "code": "LA",
+      "code_source": "iso_3166_1",
+      "name": "Lao People's Democratic Republic",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. The Lao People's Democratic Republic levies a value added tax of its own under the Law on Value Added Tax No. 48/NA of 2018: article 17 sets it at 10 per cent and zero-rates the export of goods, article 12 exempts the operations it lists, and article 30 has the taxpayer file the return by the 15th of the month following."
+    }
+  ]
+}

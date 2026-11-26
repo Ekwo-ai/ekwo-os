@@ -1,0 +1,16 @@
+{
+  "territories": [
+    {
+      "code": "BJ",
+      "code_source": "iso_3166_1",
+      "name": "Benin",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Benin levies a value added tax of its own under its Code général des impôts (loi n° 2021-15 du 23 décembre 2021), whose article 241 sets its rate, harmonised within the West African Economic and Monetary Union by Directive n° 02/98/CM/UEMOA as amended by Directive n° 02/2009/CM/UEMOA."
+    }
+  ]
+}

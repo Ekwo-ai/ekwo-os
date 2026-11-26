@@ -1,0 +1,70 @@
+{
+  "currencies": [
+    {
+      "code": "GBP",
+      "name": "Pound sterling",
+      "symbol": "£",
+      "decimal_places": 2
+    }
+  ],
+  "territories": [
+    {
+      "comment": [
+        "The United Kingdom, and Northern Ireland",
+        "",
+        "Two rows, not one, and the second is not a column on the first.",
+        "",
+        "Northern Ireland is a territory of the United Kingdom, which is not a Member",
+        "State, and it is inside the common system of VAT for supplies of goods and",
+        "outside it for supplies of services. Its numbers carry `XI`, a prefix the",
+        "United Kingdom's own `GB` numbers do not share, and VIES validates them",
+        "separately. Everything a reader asks of a territory it asks of that one:",
+        "what its prefix is, whether a supply to it is intra-Community, which State",
+        "it belongs to. A boolean on the `GB` row — `vat_territory_of_eu_for_goods` —",
+        "would answer none of them: it would make the United Kingdom itself partly",
+        "inside the system, which is exactly wrong, and it would leave `XI` with",
+        "nothing to resolve to when it arrives in a VAT number.",
+        "",
+        "So: a row, with `parent_code` saying whose territory it is, and the middle",
+        "value of `eu_vat_scope` saying how much of the system reaches it. The date",
+        "is 1 January 2021, the day after the transition ended, which is the first",
+        "day `XI` meant anything: before it, Northern Ireland was inside the system",
+        "because the whole United Kingdom was."
+      ],
+      "code": "GB",
+      "code_source": "iso_3166_1",
+      "name": "United Kingdom",
+      "parent_code": null,
+      "eu_vat_scope": "full",
+      "eu_vat_from": "1973-01-01",
+      "eu_vat_to": "2020-12-31",
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Treaty of Accession 1972, in force 1 January 1973. The United Kingdom ceased to be a Member State on 31 January 2020 and remained inside the common system of VAT until 31 December 2020, because articles 126 and 127 of the Withdrawal Agreement kept Union law applying through the transition period. This column records the VAT date."
+    },
+    {
+      "code": "XI",
+      "code_source": "eu",
+      "name": "Northern Ireland",
+      "parent_code": "GB",
+      "eu_vat_scope": "goods",
+      "eu_vat_from": "2021-01-01",
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Protocol on Ireland/Northern Ireland to the Withdrawal Agreement, article 8 and annex 3, as amended by the Windsor Framework: the Union's VAT rules on goods apply in Northern Ireland and its rules on services do not. The prefix XI is the one the VIES register publishes for it."
+    },
+    {
+      "code": "IM",
+      "code_source": "iso_3166_1",
+      "name": "Isle of Man",
+      "parent_code": "GB",
+      "eu_vat_scope": "full",
+      "eu_vat_from": "1973-01-01",
+      "eu_vat_to": "2020-12-31",
+      "vat_prefix": "GB",
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 7(1): transactions originating in or intended for the Isle of Man were treated as transactions originating in or intended for the United Kingdom, which left the common system on 31 December 2020"
+    }
+  ]
+}

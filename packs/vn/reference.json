@@ -1,0 +1,34 @@
+{
+  "currencies": [
+    {
+      "code": "VND",
+      "name": "Vietnamese dong",
+      "symbol": "₫",
+      "decimal_places": 0
+    }
+  ],
+  "territories": [
+    {
+      "comment": [
+        "The rows — Vietnam",
+        "",
+        "A value added tax of its own (thuế giá trị gia tăng), charged by the",
+        "supplier and deducted by a registered buyer under the phương pháp khấu",
+        "trừ, declared on one return, under no Union instrument. `vat_prefix` is",
+        "null: a Vietnamese enterprise is addressed by its mã số thuế (tax",
+        "identification number), which carries no country prefix of this table's",
+        "kind."
+      ],
+      "code": "VN",
+      "code_source": "iso_3166_1",
+      "name": "Vietnam",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Vietnam levies a value added tax of its own under Luật Thuế giá trị gia tăng số 48/2024/QH15 (in force 1 July 2025), whose Điều 9 sets the rates."
+    }
+  ]
+}

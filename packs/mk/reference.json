@@ -1,0 +1,32 @@
+{
+  "currencies": [
+    {
+      "code": "MKD",
+      "name": "Macedonian denar",
+      "symbol": "ден.",
+      "decimal_places": 2
+    }
+  ],
+  "territories": [
+    {
+      "comment": [
+        "North Macedonia is outside the common system of VAT: Directive 2006/112/EC",
+        "binds the Member States of the European Union, and North Macedonia is a",
+        "candidate for accession, not a member -- article 5(2) of the Directive.",
+        "The country levies a value added tax of its own, Данок на додадена",
+        "вредност, under the Law on Value Added Tax (consolidated text), articles",
+        "28 to 30-б, which set the rates."
+      ],
+      "code": "MK",
+      "code_source": "iso_3166_1",
+      "name": "North Macedonia",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries, candidate for accession or not. North Macedonia levies a value added tax of its own, Данок на додадена вредност, under the Law on Value Added Tax (consolidated text), articles 28 to 30-б, which set the standard rate of 18% and the reduced rates of 10% and 5%."
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "currencies": [
+    {
+      "code": "SGD",
+      "name": "Singapore dollar",
+      "symbol": "$",
+      "decimal_places": 2
+    }
+  ],
+  "territories": [
+    {
+      "comment": [
+        "The rows — Singapore",
+        "",
+        "The first territory of Asia. Singapore levies a goods and services tax,",
+        "which is a value added tax under another name: charged by the supplier,",
+        "credited to a registered buyer, declared on one form, GST F5. No Union",
+        "instrument reaches it. `vat_prefix` is null because a Singapore GST",
+        "registration number is the entity's UEN or an M-prefixed number, neither of",
+        "which carries a country prefix."
+      ],
+      "code": "SG",
+      "code_source": "iso_3166_1",
+      "name": "Singapore",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Singapore levies a goods and services tax of its own under the Goods and Services Tax Act 1993, whose section 16 sets the rate at 9 % from 1 January 2024."
+    }
+  ]
+}

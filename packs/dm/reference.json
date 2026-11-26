@@ -1,0 +1,16 @@
+{
+  "territories": [
+    {
+      "code": "DM",
+      "code_source": "iso_3166_1",
+      "name": "Dominica",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Dominica levies a value added tax of its own under the Value Added Tax Act, 2005 (Act 7 of 2005), administered by the Inland Revenue Division: section 9 imposes it on the taxable supply in Dominica of goods or services by a taxable person and on goods and services imported, at 15 per cent, with a rate of 10 per cent for accommodation and for the dive activity of a dive package, a zero rate for the supplies of Schedule I and exemption for those of Schedule II."
+    }
+  ]
+}

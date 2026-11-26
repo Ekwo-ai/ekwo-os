@@ -1,0 +1,52 @@
+{
+  "territories": [
+    {
+      "code": "IT",
+      "code_source": "iso_3166_1",
+      "name": "Italy",
+      "parent_code": null,
+      "eu_vat_scope": "full",
+      "eu_vat_from": "1958-01-01",
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Treaty establishing the European Economic Community, Rome, 25 March 1957, in force 1 January 1958"
+    },
+    {
+      "code": "IT-CAMPIONE",
+      "code_source": "named",
+      "name": "Campione d'Italia",
+      "parent_code": "IT",
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": true,
+      "legal_reference": "Directive 2006/112/EC, article 6(1)(f) since 1 January 2020 and article 6(2)(f) before it, the municipality having entered the customs territory of the Union under Directive (EU) 2019/475 without entering its VAT territory; for the national tax, Testo unico delle disposizioni legislative in materia di imposta sul valore aggiunto (decreto legislativo 19 gennaio 2026, n. 10), allegato, articolo 2, comma 1, lettera a), in force since 31 January 2026 and carrying over article 7, comma 1, lettera a) of DPR 26 ottobre 1972, n. 633, which it repealed: the territory of the State for Italian VAT excludes the municipality of Campione d'Italia"
+    },
+    {
+      "code": "IT-LUGANO",
+      "code_source": "named",
+      "name": "Italian waters of Lake Lugano",
+      "parent_code": "IT",
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": true,
+      "legal_reference": "Directive 2006/112/EC, article 6(1)(g) since 1 January 2020 and article 6(2)(g) before it, under Directive (EU) 2019/475; for the national tax, Testo unico delle disposizioni legislative in materia di imposta sul valore aggiunto (decreto legislativo 19 gennaio 2026, n. 10), allegato, articolo 2, comma 1, lettera a), in force since 31 January 2026 and carrying over article 7, comma 1, lettera a) of DPR 26 ottobre 1972, n. 633, which it repealed: the territory of the State for Italian VAT excludes the national waters of Lake Lugano"
+    },
+    {
+      "code": "IT-LIVIGNO",
+      "code_source": "named",
+      "name": "Livigno",
+      "parent_code": "IT",
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": true,
+      "legal_reference": "Directive 2006/112/EC, article 6(2)(e); for the national tax, Testo unico delle disposizioni legislative in materia di imposta sul valore aggiunto (decreto legislativo 19 gennaio 2026, n. 10), allegato, articolo 2, comma 1, lettera a), in force since 31 January 2026 and carrying over article 7, comma 1, lettera a) of DPR 26 ottobre 1972, n. 633, which it repealed: the territory of the State for Italian VAT excludes the municipality of Livigno"
+    }
+  ]
+}

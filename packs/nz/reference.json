@@ -1,0 +1,33 @@
+{
+  "currencies": [
+    {
+      "code": "NZD",
+      "name": "New Zealand dollar",
+      "symbol": "$",
+      "decimal_places": 2
+    }
+  ],
+  "territories": [
+    {
+      "comment": [
+        "The rows — New Zealand",
+        "",
+        "The second territory of Oceania, read beside Australia's row above: a goods",
+        "and services tax of its own, charged by the supplier, credited to a",
+        "registered buyer, declared on one form, under no Union instrument. NZBN, the",
+        "registration a New Zealand business is addressed by, carries no country",
+        "prefix, so `vat_prefix` is null here too."
+      ],
+      "code": "NZ",
+      "code_source": "iso_3166_1",
+      "name": "New Zealand",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. New Zealand levies a goods and services tax of its own under the Goods and Services Tax Act 1985, whose section 8(1) charges it, currently at 15 % of the value of a taxable supply since 1 October 2010 (Inland Revenue, GST guide IR375). The exact subsection that fixes the rate figure itself was not read against the operative text of the Act in this session — legislation.govt.nz refused every automated request made of it — so packs/nz/README.md carries the fuller caveat; this row states only what packs/nz/pack.json also states with that caveat attached."
+    }
+  ]
+}

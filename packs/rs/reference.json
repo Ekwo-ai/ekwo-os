@@ -1,0 +1,36 @@
+{
+  "currencies": [
+    {
+      "code": "RSD",
+      "name": "Serbian dinar",
+      "symbol": "дин.",
+      "decimal_places": 2
+    }
+  ],
+  "territories": [
+    {
+      "comment": [
+        "Serbia — a candidate country, outside the common system of VAT",
+        "",
+        "Directive 2006/112/EC, article 5(2): the common system of VAT applies in",
+        "the territory of the Community as defined by the Treaties, and a State",
+        "outside it is a third country for every rule the Directive carries.",
+        "Serbia is a candidate for accession (European Council decision of 1 March",
+        "2012) and negotiates under the acquis, but has not acceded and levies its",
+        "own value added tax — Zakon o porezu na dodatu vrednost (\"Službeni glasnik",
+        "RS\", broj 84/2004 and later amendments), article 23, at a standard rate of",
+        "20% and a reduced rate of 10%."
+      ],
+      "code": "RS",
+      "code_source": "iso_3166_1",
+      "name": "Serbia",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2) — the common system of VAT applies in the territory of the Community as defined by the Treaties; Serbia is a candidate country (European Council, 1 March 2012) and not a Member State. Serbia levies its own value added tax, Porez na dodatu vrednost, under the Zakon o porezu na dodatu vrednost (\"Službeni glasnik RS\", broj 84/2004 and later amendments), article 23, at a standard rate of 20% since 1 October 2012 (Sl. glasnik RS 93/2012) and a reduced (\"posebna\") rate of 10%."
+    }
+  ]
+}

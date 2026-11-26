@@ -1,0 +1,34 @@
+{
+  "currencies": [
+    {
+      "code": "CNY",
+      "name": "Chinese yuan",
+      "symbol": "¥",
+      "decimal_places": 2
+    }
+  ],
+  "territories": [
+    {
+      "comment": [
+        "The row — China",
+        "",
+        "A State of East Asia levies a value added tax of its own, and the common",
+        "system of VAT of Directive 2006/112/EC does not reach it: what this table",
+        "says of it is what it says of Japan and Korea. China levies 增值税 under",
+        "the Value-Added Tax Law of the People's Republic of China, adopted on",
+        "25 December 2024 and in force since 1 January 2026, whose article 10 sets",
+        "the rates at 13 %, 9 % and 6 %, and zero on exports."
+      ],
+      "code": "CN",
+      "code_source": "iso_3166_1",
+      "name": "China",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. China levies a value added tax of its own under the Value-Added Tax Law of the People's Republic of China (中华人民共和国增值税法, in force since 1 January 2026), whose article 10 sets the rates at 13 %, 9 % and 6 %, and zero on exports."
+    }
+  ]
+}

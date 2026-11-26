@@ -1,0 +1,31 @@
+{
+  "currencies": [
+    {
+      "code": "AMD",
+      "name": "Armenian dram",
+      "symbol": "֏",
+      "decimal_places": 2
+    }
+  ],
+  "territories": [
+    {
+      "comment": [
+        "Armenia (AM). Not a Member State of the European Union; a member of the",
+        "Eurasian Economic Union. Armenia levies its own value added tax under the",
+        "Tax Code (Law HO-165-N of 4 October 2016), articles 60 and 63-65, at a",
+        "standard rate of 20% with a zero rate for exports (article 65) and a list",
+        "of exempt transactions (article 64)."
+      ],
+      "code": "AM",
+      "code_source": "iso_3166_1",
+      "name": "Armenia",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2) — the common system of VAT applies in the territory of the Community as defined by the Treaties; Armenia is a member of the Eurasian Economic Union, not of the European Union. Armenia levies its own value added tax under the Tax Code (Law HO-165-N of 4 October 2016), article 63, at a standard rate of 20%, with a zero rate for exports and international transport (article 65) and exemptions (article 64)."
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "currencies": [
+    {
+      "comment": [
+        "Tongan paʻanga, ISO 4217 list one, two decimals (packs/to/)."
+      ],
+      "code": "TOP",
+      "name": "Tongan paʻanga",
+      "symbol": "T$",
+      "decimal_places": 2
+    }
+  ],
+  "territories": [
+    {
+      "code": "TO",
+      "code_source": "iso_3166_1",
+      "name": "Tonga",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Tonga levies a consumption tax of its own under the Consumption Tax Act 2003: the Ministry of Revenue and Customs administers it at a rate of 15 per cent, exports and the other supplies of the Orders made under section 5(3)(a) are zero-rated, health, education, financial services, public transport and residential land leases are exempt, and a registered person files a return, form CT206, for each month within 28 days after its end."
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "territories": [
+    {
+      "code": "NL",
+      "code_source": "iso_3166_1",
+      "name": "Netherlands",
+      "parent_code": null,
+      "eu_vat_scope": "full",
+      "eu_vat_from": "1958-01-01",
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Treaty establishing the European Economic Community, Rome, 25 March 1957, in force 1 January 1958"
+    }
+  ]
+}

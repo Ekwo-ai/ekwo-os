@@ -1,0 +1,24 @@
+{
+  "currencies": [
+    {
+      "code": "PEN",
+      "name": "Peruvian sol",
+      "symbol": "S/",
+      "decimal_places": 2
+    }
+  ],
+  "territories": [
+    {
+      "code": "PE",
+      "code_source": "iso_3166_1",
+      "name": "Peru",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Peru levies a value added tax of its own, the Impuesto General a las Ventas, under the Texto Único Ordenado approved by Decreto Supremo N.° 055-99-EF, whose article 17 sets its rate."
+    }
+  ]
+}

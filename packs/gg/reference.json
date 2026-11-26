@@ -1,0 +1,16 @@
+{
+  "territories": [
+    {
+      "code": "GG",
+      "code_source": "iso_3166_1",
+      "name": "Guernsey",
+      "parent_code": "GB",
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 6(1)(e), which names the Channel Islands"
+    }
+  ]
+}

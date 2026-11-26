@@ -1,0 +1,24 @@
+{
+  "currencies": [
+    {
+      "code": "ZWG",
+      "name": "Zimbabwe Gold",
+      "symbol": "ZiG",
+      "decimal_places": 2
+    }
+  ],
+  "territories": [
+    {
+      "code": "ZW",
+      "code_source": "iso_3166_1",
+      "name": "Zimbabwe",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. The Republic of Zimbabwe levies its own value added tax under the Value Added Tax Act [Chapter 23:12], administered by the Zimbabwe Revenue Authority, at the rate the Finance Act [Chapter 23:04] fixes — fifteen comma five per centum from 1 January 2026 (Finance Act, 2025, section 34) — on supplies by registered operators, on imported goods and on imported services."
+    }
+  ]
+}

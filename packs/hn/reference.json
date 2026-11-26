@@ -1,0 +1,36 @@
+{
+  "currencies": [
+    {
+      "code": "HNL",
+      "name": "Honduran lempira",
+      "symbol": "L",
+      "decimal_places": 2
+    }
+  ],
+  "territories": [
+    {
+      "comment": [
+        "The row — Honduras",
+        "",
+        "A third country to the common system of VAT of Directive 2006/112/EC,",
+        "article 5(2), which applies only in the territory of the Community as the",
+        "Treaties define it. Honduras levies its own Impuesto Sobre Ventas (ISV)",
+        "under Decreto-Ley Número 24 of 20 December 1963 and its reforms, unrelated",
+        "to the Union's common system. `vat_prefix` is null: a Honduran taxpayer is",
+        "identified by the Registro Tributario Nacional (RTN), which the Servicio de",
+        "Administración de Rentas (SAR) assigns and which carries no ISO country",
+        "prefix comparable to an EU VAT number."
+      ],
+      "code": "HN",
+      "code_source": "iso_3166_1",
+      "name": "Honduras",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and Honduras is a third country to it. Honduras levies a sales tax of its own, the Impuesto Sobre Ventas (ISV), under Decreto-Ley Número 24 of 20 December 1963 (Ley del Impuesto Sobre Ventas) and its reforms, at a general rate of 15% and a rate of 18% on alcoholic drinks, beer, cigarettes and business-class air tickets since 1 January 2014 (Decreto Número 278-2013, article 16). No EU VAT number prefix applies; taxpayers are identified by the Registro Tributario Nacional (RTN)."
+    }
+  ]
+}

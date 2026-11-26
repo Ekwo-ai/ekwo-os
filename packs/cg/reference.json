@@ -1,0 +1,16 @@
+{
+  "territories": [
+    {
+      "code": "CG",
+      "code_source": "iso_3166_1",
+      "name": "Congo",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. The Congo levies a value added tax of its own under loi n° 12-97 du 12 mai 1997, outside its Code général des impôts, whose article 17 sets its rate (article 37 keeps additional centimes on top of it), harmonised within the Central African Economic and Monetary Community by Directive n° 11/22-CEMAC-UEAC-010A-CM-38 of 10 November 2022."
+    }
+  ]
+}

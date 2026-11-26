@@ -187,12 +187,19 @@ A new country is a folder and one command:
    `packs/` says, exactly as it refuses a stale seed. Two branches that each
    add a country conflict on those lines; resolve by running the build again.
 
-The only edits a pack may still need outside its folder are rows of reference
-data the pack cannot carry — a country outside the common system of VAT adds
-itself to `supabase/seed/00_territories.sql`, a new currency goes into
-`supabase/seed/00_currencies.sql`, an OHADA member State adds its code to
-`packs/ohada/manifest.json` — and, if you are going to own the pack, your
-handle on its CODEOWNERS line, which the next build keeps.
+A pack's rows of the two tables every country shares are in its own folder
+too: its currency and its territories are declared in
+`packs/<cc>/reference.json`, and `ekwo pack build` writes
+`supabase/seed/00_currencies.sql` and `supabase/seed/00_territories.sql` from
+the reference files of every pack. Those two seeds are generated like the
+lists above, and a hand edit to either is refused by the same check. What the
+core cannot do for your country yet goes in your pack's README, under
+`## What the core could not say`, and the index of
+[`docs/international.md`](docs/international.md) is generated from it.
+
+The only edits a pack may still need outside its folder are an OHADA member
+State adding its code to `packs/ohada/manifest.json` and, if you are going to
+own the pack, your handle on its CODEOWNERS line, which the next build keeps.
 
 If a régime cannot be expressed as rows, that is a design discussion worth
 having in an issue before any SQL is written. It is a gap in the core, not a

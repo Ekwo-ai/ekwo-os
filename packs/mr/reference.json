@@ -1,0 +1,27 @@
+{
+  "currencies": [
+    {
+      "comment": [
+        "Mauritanian ouguiya (MRU, since 2018, one tenth of the former MRO), ISO 4217 list one, two decimals (packs/mr/)."
+      ],
+      "code": "MRU",
+      "name": "Mauritanian ouguiya",
+      "symbol": "UM",
+      "decimal_places": 2
+    }
+  ],
+  "territories": [
+    {
+      "code": "MR",
+      "code_source": "iso_3166_1",
+      "name": "Mauritania",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Mauritania levies a value-added tax of its own under the Code général des impôts (law no. 2019-018 of 29 April 2019): article 230 sets it at sixteen percent with a zero rate for exports, article 215 lists the exempt operations, and article 250 has the taxpayer file the return by the fifteenth of the month that follows."
+    }
+  ]
+}

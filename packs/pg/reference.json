@@ -1,0 +1,27 @@
+{
+  "currencies": [
+    {
+      "comment": [
+        "Papua New Guinean kina, ISO 4217 list one, two decimals (packs/pg/)."
+      ],
+      "code": "PGK",
+      "name": "Papua New Guinean kina",
+      "symbol": "K",
+      "decimal_places": 2
+    }
+  ],
+  "territories": [
+    {
+      "code": "PG",
+      "code_source": "iso_3166_1",
+      "name": "Papua New Guinea",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Papua New Guinea levies a goods and services tax of its own under the Goods and Services Tax Act 2003: the Internal Revenue Commission administers it at a rate of 10 per cent, exports and the other supplies of the return notes are zero-rated, health, education, gambling and financial services are exempt, and a registered person files a monthly return, form G1, by the 21st day of the following month."
+    }
+  ]
+}

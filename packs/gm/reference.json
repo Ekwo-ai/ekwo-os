@@ -1,0 +1,35 @@
+{
+  "currencies": [
+    {
+      "code": "GMD",
+      "name": "Gambian dalasi",
+      "symbol": "D",
+      "decimal_places": 2
+    }
+  ],
+  "territories": [
+    {
+      "comment": [
+        "The row — The Gambia",
+        "",
+        "A third country to the common system of VAT of Directive 2006/112/EC,",
+        "article 5(2), which applies only in the territory of the Community as the",
+        "Treaties define it. The Gambia levies its own value added tax under the",
+        "Income and Value Added Tax Act, 2012, unrelated to the Union's common",
+        "system. `vat_prefix` is null: a Gambian taxpayer is identified by the",
+        "Taxpayer Identification Number (TIN) the Gambia Revenue Authority assigns,",
+        "which carries no ISO country prefix."
+      ],
+      "code": "GM",
+      "code_source": "iso_3166_1",
+      "name": "The Gambia",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and The Gambia is a third country to it. The Gambia levies a value added tax of its own under the Income and Value Added Tax Act, 2012, administered by the Gambia Revenue Authority, at a standard rate of fifteen per cent (15 %), with a rate of zero per cent (0 %) on exports of goods and services and a list of exempt supplies."
+    }
+  ]
+}

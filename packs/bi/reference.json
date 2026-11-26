@@ -1,0 +1,27 @@
+{
+  "currencies": [
+    {
+      "comment": [
+        "Burundi franc, no minor unit in use (ISO 4217 lists zero decimals), packs/bi/."
+      ],
+      "code": "BIF",
+      "name": "Burundi franc",
+      "symbol": "FBu",
+      "decimal_places": 0
+    }
+  ],
+  "territories": [
+    {
+      "code": "BI",
+      "code_source": "iso_3166_1",
+      "name": "Burundi",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Burundi levies a value added tax of its own under Loi n°1/12 du 29 juillet 2013 portant révision de la loi n°1/02 du 17 février 2009, as amended by Loi n°1/10 du 16 novembre 2020: article 19 sets it at 18 per cent with an intermediate rate of 10 per cent and a zero rate for exports, article 10 exempts the operations it lists, and article 52 has the taxpayer file the return by the 15th of the month following."
+    }
+  ]
+}

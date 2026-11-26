@@ -1,0 +1,27 @@
+{
+  "currencies": [
+    {
+      "comment": [
+        "Vanuatu vatu, ISO 4217 list one, no decimals (packs/vu/)."
+      ],
+      "code": "VUV",
+      "name": "Vanuatu vatu",
+      "symbol": "VT",
+      "decimal_places": 0
+    }
+  ],
+  "territories": [
+    {
+      "code": "VU",
+      "code_source": "iso_3166_1",
+      "name": "Vanuatu",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Vanuatu levies a value added tax of its own under the Value Added Tax Act [Cap. 247]: the Department of Customs and Inland Revenue administers it at 15 per cent, the Act zero-rates exports and the other supplies of its Schedule 3 and exempts those of its Schedule 1, and a registered person files a monthly or, under eight million vatu of supplies, a three-monthly return."
+    }
+  ]
+}

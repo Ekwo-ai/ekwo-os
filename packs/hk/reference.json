@@ -1,0 +1,37 @@
+{
+  "currencies": [
+    {
+      "code": "HKD",
+      "name": "Hong Kong dollar",
+      "symbol": "HK$",
+      "decimal_places": 2
+    }
+  ],
+  "territories": [
+    {
+      "comment": [
+        "The rows — Hong Kong",
+        "",
+        "Not a State outside the common system of VAT the way Australia or the",
+        "United States are: Hong Kong Special Administrative Region of the People's",
+        "Republic of China levies no value added tax, no goods and services tax and",
+        "no general sales tax of its own either, at any level of government, and",
+        "never has. `vat_prefix` is null for the reason it is null on the United",
+        "States row: there is no VAT identification number to prefix. A business is",
+        "addressed, where it is addressed at all, by its Business Registration",
+        "Number under the Business Registration Ordinance (Cap. 310), which is not a",
+        "VAT number and carries no country prefix of this table's kind."
+      ],
+      "code": "HK",
+      "code_source": "iso_3166_1",
+      "name": "Hong Kong",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Hong Kong Special Administrative Region has never levied a value added tax, a goods and services tax or a general sales tax: Inland Revenue Department guidance on Hong Kong's tax system and the 2006 public consultation on a proposed goods and services tax, which was withdrawn, both record the absence rather than a rate. What Hong Kong charges instead is profits tax on the territorial basis of the Inland Revenue Ordinance (Cap. 112), section 14 — a tax on a year's net profit, and not on a transaction."
+    }
+  ]
+}

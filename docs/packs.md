@@ -917,8 +917,9 @@ the column takes its codes.
 
 Which side of that line a pack is on is never written in code: it is the row of
 `territories` for the pack's country (`eu_vat_scope`) on the day of the pack's
-`released_at`. `ekwo pack check` reads it from
-`supabase/seed/00_territories.sql`, the file the database is seeded from.
+`released_at`. `ekwo pack check` reads it from the `reference.json` of the
+packs, the files `supabase/seed/00_territories.sql` — the file the database is
+seeded from — is generated from.
 
 A few decisions behind the table are worth knowing before filling a column in:
 
@@ -1307,7 +1308,8 @@ foreign keys. It refuses a `jurisdiction` the table does not carry for the same
 reason, now that there is a table to check it against, and it refuses a
 `seller_in` outside the pack's own country, because a pack is keyed on the
 country its companies file under. A pack outside the common system, or one that conditions a tax on a territory
-below the country, therefore adds rows to
+below the country, therefore declares those rows in its own
+`reference.json`, and `ekwo pack build` writes them into
 [`supabase/seed/00_territories.sql`](../supabase/seed/00_territories.sql).
 
 **The regime a tax is held to follows the territory too.** Whether the VATEX
@@ -2996,16 +2998,17 @@ texts, and the citation is cheaper to write while the tab is open than to
 reconstruct from a rate you no longer remember reading.
 
 **If your country is outside the common system of VAT, there is one more thing
-to do before step 1**, and it is the only edit a pack ever makes outside its own
-folder. `ekwo pack check` decides whether the VATEX list of EN 16931 reaches
+to do before step 1**, in your own folder. `ekwo pack check` decides whether the VATEX list of EN 16931 reaches
 your taxes by looking your country up in `territories`, and a country the table
 carries no row for is held to the European Union's table — so an exempt sale with no
 `exemption_code` would be refused and you would be told to write a code that
-names an article of a Directive your seller is not bound by. Add a row to
-`supabase/seed/00_territories.sql`: your ISO code, `eu_vat_scope` `none`, no
-window, no `vat_prefix`, and a `legal_reference` saying why the common system
-does not reach you. `tests/territories.test.ts` refuses a pack whose country the
-table does not carry, so the check is enforced from both sides.
+names an article of a Directive your seller is not bound by. Add a row to the
+`territories` of `packs/<cc>/reference.json`: your ISO code, `eu_vat_scope`
+`none`, no window, no `vat_prefix`, and a `legal_reference` saying why the
+common system does not reach you. `ekwo pack build` writes it into
+`supabase/seed/00_territories.sql`; `ekwo pack check` refuses a pack whose
+country no `reference.json` declares, and `tests/territories.test.ts` refuses
+it against the database, so the check is enforced from both sides.
 
 ### 1. Copy a pack and give it its identity
 
@@ -3386,26 +3389,34 @@ Adding a country touches **two** places, and nothing else:
    files, and `expectations.json` where the pack states what only it can state.
 
 Everything else the pull request changes is written by `ekwo pack build`: the
-seed under `supabase/seed/`, and the generated blocks of
-`supabase/config.toml`, `README.md`, `.github/CODEOWNERS` and this page. A
-contributor runs the command and commits its output, exactly as for the seed.
+seed under `supabase/seed/`, the two reference seeds `00_currencies.sql` and
+`00_territories.sql`, the generated blocks of `supabase/config.toml`,
+`README.md`, `.github/CODEOWNERS` and this page, and the index of
+[`international.md`](international.md). A contributor runs the command and
+commits its output, exactly as for the seed.
 
-A pack whose currency no pack used before adds its row — the ISO 4217 code,
-its name, its symbol and its decimals — to `supabase/seed/00_currencies.sql`.
-A member State of OHADA finds all three already written: its code in `members`
-in `packs/ohada/manifest.json`, which is how it receives the chart the members
-share, its currency and its territory — so it touches its own folder and
-nothing else. [`packs/ohada/README.md`](../packs/ohada/README.md) is that
-path.
+A pack whose currency no pack used before declares its row — the ISO 4217
+code, its name, its symbol and its decimals — in the `currencies` of
+`packs/<cc>/reference.json`. A currency belongs to the pack of the country its
+ISO 4217 code begins with (`GHS` to `packs/gh/`), and the currency of a
+monetary union, whose code begins with no country of a pack (`EUR`, `XOF`), to
+`packs/generic/reference.json`; a pack that keeps its books in a currency
+already declared declares nothing and names it in `defaults.currency`.
+`ekwo pack check` refuses a code declared twice or in another folder than that
+rule names. A member State of OHADA finds its currency already written, and
+adds its code to `members` in `packs/ohada/manifest.json`, which is how it
+receives the chart the members share.
+[`packs/ohada/README.md`](../packs/ohada/README.md) is that path.
 
-A country **outside the common system of VAT** adds a third, and exactly one
-row of it: `supabase/seed/00_territories.sql`, for the reason step 0 gives. It
+A country **outside the common system of VAT** declares its own row in the
+`territories` of `packs/<cc>/reference.json`, for the reason step 0 gives. It
 is framework reference data and not a country literal in the core — the table
-exists precisely so that no function holds a list of countries — and it is
-still a file outside `packs/`, so a pull request that adds one says so.
+exists precisely so that no function holds a list of countries — and it lives
+in the country's folder, so two countries added side by side never touch the
+same file.
 
-A pack that **conditions a tax on a territory below the country** adds rows to
-the same file, one per territory it names — and one per territory its golden
+A pack that **conditions a tax on a territory below the country** declares rows
+in the same file, one per territory it names — and one per territory its golden
 scenario delivers to, because `documents.supply_territory_code` is a foreign
 key as well. Once a pack conditions a tax on one territory of a country, every
 territory of the same level in that country is a place its documents can

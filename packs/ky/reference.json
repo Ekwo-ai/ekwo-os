@@ -1,0 +1,24 @@
+{
+  "currencies": [
+    {
+      "code": "KYD",
+      "name": "Cayman Islands dollar",
+      "symbol": "CI$",
+      "decimal_places": 2
+    }
+  ],
+  "territories": [
+    {
+      "code": "KY",
+      "code_source": "iso_3166_1",
+      "name": "Cayman Islands",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State or territory outside it is a third country for every rule the Directive carries. The Cayman Islands, a British Overseas Territory, levy no value added tax, goods and services tax or general sales tax, and no direct tax: the Tax Information Authority records that the Cayman Islands does not have direct taxes, and the 2026-2027 budget proposed no new taxes. What the territory charges instead is import duty under the Customs Tariff Act (2026 Revision), section 3, and stamp duty."
+    }
+  ]
+}

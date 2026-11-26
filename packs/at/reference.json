@@ -1,0 +1,16 @@
+{
+  "territories": [
+    {
+      "code": "AT",
+      "code_source": "iso_3166_1",
+      "name": "Austria",
+      "parent_code": null,
+      "eu_vat_scope": "full",
+      "eu_vat_from": "1995-01-01",
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Treaty of Accession 1994, in force 1 January 1995"
+    }
+  ]
+}

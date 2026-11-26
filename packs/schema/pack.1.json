@@ -5029,6 +5029,184 @@
           }
         }
       }
+    },
+    "reference": {
+      "type": "object",
+      "title": "reference.json",
+      "description": "What this pack adds to the two reference tables every country shares, `currencies` and `territories`. `ekwo pack build` writes `supabase/seed/00_currencies.sql` and `supabase/seed/00_territories.sql` from the reference.json of every pack, so a country adds its currency and its territories in its own folder and never edits a shared seed. A currency is declared by the pack of the country its ISO 4217 code begins with, or by `packs/generic/` when no pack has that country (EUR, the CFA francs); a territory by the pack of the country it belongs to, following `parent_code`. A code declared twice is refused.",
+      "additionalProperties": false,
+      "properties": {
+        "comment": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Prose that opens this pack's rows in each generated seed.",
+          "properties": {
+            "currencies": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Prose that explains the rows, one string per line, printed as SQL comments above them in the generated seed. Not data: nothing reads it but a person."
+            },
+            "territories": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Prose that explains the rows, one string per line, printed as SQL comments above them in the generated seed. Not data: nothing reads it but a person."
+            }
+          }
+        },
+        "currencies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/reference_currency"
+          }
+        },
+        "territories": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/reference_territory"
+          }
+        }
+      }
+    },
+    "reference_currency": {
+      "type": "object",
+      "title": "reference.json: currency",
+      "description": "One row of `currencies`: ISO 4217 list one. Inserted once and never overwritten, so an installation keeps a symbol it changed.",
+      "required": [
+        "code",
+        "name",
+        "symbol",
+        "decimal_places"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "comment": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Prose that explains the rows, one string per line, printed as SQL comments above them in the generated seed. Not data: nothing reads it but a person."
+        },
+        "code": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$",
+          "description": "The ISO 4217 alphabetic code."
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "symbol": {
+          "type": "string",
+          "minLength": 1
+        },
+        "decimal_places": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4,
+          "description": "The minor unit of ISO 4217 list one: the decimals every amount in this currency is written and rounded at."
+        }
+      }
+    },
+    "reference_territory": {
+      "type": "object",
+      "title": "reference.json: territory",
+      "description": "One row of `territories`, every column written again on conflict, so re-applying the seed is how a correction reaches an installation. The meaning of each column is in `supabase/migrations/20260915181000_territories.sql`.",
+      "required": [
+        "code",
+        "code_source",
+        "name",
+        "parent_code",
+        "eu_vat_scope",
+        "eu_vat_from",
+        "eu_vat_to",
+        "vat_prefix",
+        "outside_parent_tax",
+        "legal_reference"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "comment": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Prose that explains the rows, one string per line, printed as SQL comments above them in the generated seed. Not data: nothing reads it but a person."
+        },
+        "code": {
+          "$ref": "#/$defs/territory"
+        },
+        "code_source": {
+          "enum": [
+            "iso_3166_1",
+            "iso_3166_2",
+            "eu",
+            "named"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_code": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/territory"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "eu_vat_scope": {
+          "enum": [
+            "full",
+            "goods",
+            "none"
+          ]
+        },
+        "eu_vat_from": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/date"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "eu_vat_to": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/date"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "vat_prefix": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Z]{2}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "outside_parent_tax": {
+          "type": "boolean"
+        },
+        "legal_reference": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
     }
   }
 }

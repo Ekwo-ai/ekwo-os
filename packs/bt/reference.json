@@ -1,0 +1,27 @@
+{
+  "currencies": [
+    {
+      "comment": [
+        "Bhutanese ngultrum, ISO 4217 list one, two decimals (packs/bt/)."
+      ],
+      "code": "BTN",
+      "name": "Bhutanese ngultrum",
+      "symbol": "Nu.",
+      "decimal_places": 2
+    }
+  ],
+  "territories": [
+    {
+      "code": "BT",
+      "code_source": "iso_3166_1",
+      "name": "Bhutan",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Bhutan levies a goods and services tax of its own under the Goods and Services Tax Act of Bhutan 2020, in force from 1 January 2026: Schedule I sets it at 5 per cent, Schedule V zero-rates the supplies it lists, Schedule IV exempts the supplies it lists, and section 38 has the taxable person file the return within thirty days after the end of each tax period."
+    }
+  ]
+}

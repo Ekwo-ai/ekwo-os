@@ -1,0 +1,34 @@
+{
+  "currencies": [
+    {
+      "code": "AUD",
+      "name": "Australian dollar",
+      "symbol": "$",
+      "decimal_places": 2
+    }
+  ],
+  "territories": [
+    {
+      "comment": [
+        "The rows — Australia",
+        "",
+        "The first territory of Oceania. Australia levies a goods and services tax,",
+        "which is a value added tax under another name: charged by the supplier,",
+        "credited to a registered buyer, declared on one form. No Union instrument",
+        "reaches it, so what this table says of it is what it says of the United",
+        "States. `vat_prefix` is null because an Australian registration is an",
+        "Australian Business Number, which carries no country prefix."
+      ],
+      "code": "AU",
+      "code_source": "iso_3166_1",
+      "name": "Australia",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. Australia levies a goods and services tax of its own under the A New Tax System (Goods and Services Tax) Act 1999, whose section 9-70 sets it at 10 % of the value of a taxable supply."
+    }
+  ]
+}

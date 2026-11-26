@@ -1,0 +1,16 @@
+{
+  "territories": [
+    {
+      "code": "HR",
+      "code_source": "iso_3166_1",
+      "name": "Croatia",
+      "parent_code": null,
+      "eu_vat_scope": "full",
+      "eu_vat_from": "2013-07-01",
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Treaty of Accession 2011, in force 1 July 2013"
+    }
+  ]
+}

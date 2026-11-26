@@ -1,0 +1,24 @@
+{
+  "currencies": [
+    {
+      "code": "BSD",
+      "name": "Bahamian dollar",
+      "symbol": "B$",
+      "decimal_places": 2
+    }
+  ],
+  "territories": [
+    {
+      "code": "BS",
+      "code_source": "iso_3166_1",
+      "name": "Bahamas",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. The Commonwealth of The Bahamas levies its own value added tax under the Value Added Tax Act, 2014 (Ch. 370A), administered by the Department of Inland Revenue, at a standard rate of ten per cent (section 6(1)) on taxable supplies by registrants and on taxable importations, with a zero rate (First Schedule), a reduced rate of five per cent from 1 April 2025 (Fourth Schedule) and exempt supplies (Second Schedule)."
+    }
+  ]
+}

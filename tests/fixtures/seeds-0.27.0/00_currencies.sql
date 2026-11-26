@@ -1,0 +1,227 @@
+-- Ekwo OS — currencies. ISO 4217, the handful a European ledger meets, and the
+-- five the seventeen member States of OHADA keep their books in.
+--
+-- The code and the decimals are those of ISO 4217 list one, as SIX
+-- Financial Information publishes it on behalf of the maintenance agency
+-- (https://www.six-group.com/dam/download/financial-information/data-center/iso-currrency/lists/list-one.xml,
+-- edition of 17 September 2026). Both CFA francs, the Comorian franc and the
+-- Guinean franc have no minor unit there; the Congolese franc has two.
+
+insert into currencies (code, name, symbol, decimal_places) values
+  ('EUR', 'Euro',                 E'€', 2),
+  ('USD', 'US dollar',            '$',       2),
+  ('GBP', 'Pound sterling',       E'£', 2),
+  ('CHF', 'Swiss franc',          'CHF',     2),
+  ('SEK', 'Swedish krona',        'kr',      2),
+  ('DKK', 'Danish krone',         'kr',      2),
+  ('NOK', 'Norwegian krone',      'kr',      2),
+  ('PLN', 'Polish zloty',         E'z\u0142', 2),
+  ('CZK', 'Czech koruna',         E'Kč', 2),
+  ('RON', 'Romanian leu',         'lei',     2),
+  ('CAD', 'Canadian dollar',      '$',       2),
+  ('JPY', 'Japanese yen',         E'¥', 0),
+  ('XOF', 'CFA franc BCEAO',      'F CFA',   0),
+  ('MXN', 'Mexican peso',         '$',       2),
+  ('COP', 'Colombian peso',       '$',       2),
+  ('XAF', 'CFA franc BEAC',       'F CFA',   0),
+  ('KMF', 'Comorian franc',       'CF',      0),
+  ('GNF', 'Guinean franc',        'FG',      0),
+  ('CDF', 'Congolese franc',      'FC',      2),
+  ('AUD', 'Australian dollar',    '$',       2),
+  ('SGD', 'Singapore dollar',     '$',       2),
+  ('NZD', 'New Zealand dollar',   '$',       2),
+  ('HKD', 'Hong Kong dollar',     E'HK$',    2),
+  ('TWD', 'New Taiwan dollar',    E'NT$',    2),
+  ('KRW', 'South Korean won',     E'₩',      0),
+  ('AED', 'UAE dirham',           E'د.إ', 2),
+  ('THB', 'Thai baht',            E'฿', 2),
+  ('VND', 'Vietnamese dong',      E'₫', 0),
+  ('SAR', 'Saudi riyal',          E'ر.س', 2),
+  ('HUF', 'Hungarian forint',     'Ft',      2),
+  ('ISK', 'Icelandic krona',      'kr',      0),
+  ('TRY', 'Turkish lira',         E'₺', 2),
+  ('EGP', 'Egyptian pound',       E'ج.م', 2),
+  ('TND', 'Tunisian dinar',       E'د.ت', 3),
+  ('DZD', 'Algerian dinar',       E'د.ج', 2),
+  ('MAD', 'Moroccan dirham',      E'د.م.', 2),
+  ('ZAR', 'South African rand',   'R',       2),
+  ('KES', 'Kenyan shilling',      E'KSh',    2),
+  ('IDR', 'Indonesian rupiah',    'Rp',      0),
+  ('MYR', 'Malaysian ringgit',    'RM',      2),
+  ('ILS', 'Israeli new shekel',   E'₪', 2),
+  ('PHP', 'Philippine peso',      E'₱', 2),
+  ('ARS', 'Argentine peso',       '$',       2),
+  ('NGN', 'Nigerian naira',       E'₦', 2),
+  ('CLP', 'Chilean peso',         '$',       0),
+  ('PEN', 'Peruvian sol',         'S/',      2),
+  ('UAH', 'Ukrainian hryvnia',    E'₴', 2),
+  ('UYU', 'Uruguayan peso',       E'$U', 2),
+  ('BOB', 'Bolivian boliviano',   'Bs',      2),
+  ('PYG', 'Paraguayan guaraní',   E'₲', 0),
+  ('CNY', 'Chinese yuan',         E'¥', 2),
+  ('DOP', 'Dominican peso',       'RD$',     2),
+  ('INR', 'Indian rupee',         E'₹', 2),
+  ('GTQ', 'Guatemalan quetzal',   'Q',       2),
+  ('CRC', 'Costa Rican colón',    E'₡', 2),
+  ('GEL', 'Georgian lari',        E'₾', 2),
+  ('MDL', 'Moldovan leu',         'L',       2),
+  ('BAM', 'Convertible mark',     'KM',      2),
+  ('RSD', 'Serbian dinar',        E'дин.', 2),
+  ('MKD', 'Macedonian denar',     E'ден.', 2),
+  ('ALL', 'Albanian lek',         'L',       2),
+  ('GHS', 'Ghanaian cedi',        E'GH₵', 2),
+  ('TZS', 'Tanzanian shilling',   'TSh',     2),
+  ('BHD', 'Bahraini dinar',       E'.د.ب', 3),
+  ('OMR', 'Omani rial',           E'ر.ع.', 3),
+  ('UGX', 'Uganda shilling',      'USh',     0),
+  ('RWF', 'Rwandan franc',        E'FRw', 0),
+  ('KZT', 'Kazakhstani tenge',    E'₸', 2),
+  ('PKR', 'Pakistani rupee', E'₨', 2),
+  ('BDT', 'Bangladeshi taka', E'৳', 2),
+  ('LKR', 'Sri Lankan rupee', E'Rs', 2),
+  ('AMD', 'Armenian dram',        E'֏', 2),
+  ('AZN', 'Azerbaijani manat',    E'₼', 2),
+  ('HNL', 'Honduran lempira', 'L', 2),
+  ('NIO', 'Nicaraguan córdoba', 'C$', 2),
+  ('ETB', 'Ethiopian birr', 'Br', 2),
+  ('MUR', 'Mauritian rupee', 'Rs', 2),
+  ('MZN', 'Mozambican metical', 'MT', 2),
+  ('AOA', 'Angolan kwanza', 'Kz', 2),
+  ('ZMW', 'Zambian kwacha', 'K', 2),
+  ('BMD', 'Bermudian dollar', '$', 2),
+  ('KYD', 'Cayman Islands dollar', 'CI$', 2),
+  ('QAR', 'Qatari riyal', 'QR', 2),
+  ('KWD', 'Kuwaiti dinar', E'د.ك', 3),
+  ('BND', 'Brunei dollar', 'B$', 2),
+  ('MOP', 'Macanese pataca', E'MOP$', 2),
+  ('ZWG', 'Zimbabwe Gold', 'ZiG', 2),
+  ('XCD', 'East Caribbean dollar', 'EC$', 2),
+  ('BSD', 'Bahamian dollar', 'B$', 2),
+  ('GYD', 'Guyanese dollar', 'G$', 2),
+  ('JMD', 'Jamaican dollar', 'J$', 2),
+  ('KGS', 'Kyrgyzstani som', E'сом', 2),
+  ('SRD', 'Surinamese dollar', 'Sr$', 2),
+  ('TTD', 'Trinidad and Tobago dollar', 'TT$', 2),
+  ('BBD', 'Barbadian dollar', 'Bds$', 2),
+  ('BWP', 'Botswana pula', 'P', 2),
+  ('NAD', 'Namibia dollar', 'N$', 2),
+  ('SZL', 'Swazi lilangeni', 'E', 2),
+  ('LSL', 'Lesotho loti', 'L', 2),
+  ('GMD', 'Gambian dalasi', 'D', 2),
+  ('SLE', 'Sierra Leonean leone', 'Le', 2)
+on conflict (code) do nothing;
+
+-- Brazilian real, ISO 4217 list one, two decimals (packs/br/).
+insert into currencies (code, name, symbol, decimal_places) values
+  ('BRL', 'Brazilian real', 'R$', 2)
+on conflict (code) do nothing;
+
+-- Mongolian tugrik, ISO 4217 list one, two decimals (packs/mn/).
+insert into currencies (code, name, symbol, decimal_places) values
+  ('MNT', 'Mongolian tugrik', E'₮', 2)
+on conflict (code) do nothing;
+
+-- Tajikistani somoni, ISO 4217 list one, two decimals (packs/tj/).
+insert into currencies (code, name, symbol, decimal_places) values
+  ('TJS', 'Tajikistani somoni', E'сомонӣ', 2)
+on conflict (code) do nothing;
+
+-- Turkmen manat, ISO 4217 list one, two decimals (packs/tm/).
+insert into currencies (code, name, symbol, decimal_places) values
+  ('TMT', 'Turkmen manat', 'm', 2)
+on conflict (code) do nothing;
+
+-- Uzbekistani som, ISO 4217 list one, two decimals (packs/uz/).
+insert into currencies (code, name, symbol, decimal_places) values
+  ('UZS', 'Uzbekistani som', E'so''m', 2)
+on conflict (code) do nothing;
+
+-- Bhutanese ngultrum, ISO 4217 list one, two decimals (packs/bt/).
+insert into currencies (code, name, symbol, decimal_places) values
+  ('BTN', 'Bhutanese ngultrum', 'Nu.', 2)
+on conflict (code) do nothing;
+
+-- Cambodian riel, ISO 4217 list one, no minor unit (packs/kh/).
+insert into currencies (code, name, symbol, decimal_places) values
+  ('KHR', 'Cambodian riel', E'៛', 0)
+on conflict (code) do nothing;
+
+-- Lao kip, no minor unit in use (as the dong and the won), packs/la/.
+insert into currencies (code, name, symbol, decimal_places) values
+  ('LAK', 'Lao kip', E'₭', 0)
+on conflict (code) do nothing;
+
+-- Nepalese rupee, ISO 4217 list one, two decimals (packs/np/).
+insert into currencies (code, name, symbol, decimal_places) values
+  ('NPR', 'Nepalese rupee', 'Rs', 2)
+on conflict (code) do nothing;
+
+-- Burundi franc, no minor unit in use (ISO 4217 lists zero decimals), packs/bi/.
+insert into currencies (code, name, symbol, decimal_places) values
+  ('BIF', 'Burundi franc', 'FBu', 0)
+on conflict (code) do nothing;
+
+-- Cape Verdean escudo, packs/cv/.
+insert into currencies (code, name, symbol, decimal_places) values
+  ('CVE', 'Cape Verdean escudo', 'Esc', 2)
+on conflict (code) do nothing;
+
+-- Djibouti franc, no minor unit in use (ISO 4217 lists zero decimals), packs/dj/.
+insert into currencies (code, name, symbol, decimal_places) values
+  ('DJF', 'Djibouti franc', 'Fdj', 0)
+on conflict (code) do nothing;
+
+-- Malagasy ariary, ISO 4217 list one, two decimals (packs/mg/).
+insert into currencies (code, name, symbol, decimal_places) values
+  ('MGA', 'Malagasy ariary', 'Ar', 2)
+on conflict (code) do nothing;
+
+-- Mauritanian ouguiya (MRU, since 2018, one tenth of the former MRO), ISO 4217 list one, two decimals (packs/mr/).
+insert into currencies (code, name, symbol, decimal_places) values
+  ('MRU', 'Mauritanian ouguiya', 'UM', 2)
+on conflict (code) do nothing;
+
+-- Malawian kwacha, two decimals, packs/mw/.
+insert into currencies (code, name, symbol, decimal_places) values
+  ('MWK', 'Malawian kwacha', 'MK', 2)
+on conflict (code) do nothing;
+
+-- Seychelles rupee, ISO 4217 list one, two decimals (packs/sc/).
+insert into currencies (code, name, symbol, decimal_places) values
+  ('SCR', 'Seychelles rupee', 'SR', 2)
+on conflict (code) do nothing;
+
+-- Jordanian dinar, three decimals (the fils), packs/jo/.
+insert into currencies (code, name, symbol, decimal_places) values
+  ('JOD', 'Jordanian dinar', 'JD', 3)
+on conflict (code) do nothing;
+
+-- Fijian dollar, ISO 4217 list one, two decimals (packs/fj/).
+insert into currencies (code, name, symbol, decimal_places) values
+  ('FJD', 'Fijian dollar', 'FJ$', 2)
+on conflict (code) do nothing;
+
+-- Papua New Guinean kina, ISO 4217 list one, two decimals (packs/pg/).
+insert into currencies (code, name, symbol, decimal_places) values
+  ('PGK', 'Papua New Guinean kina', 'K', 2)
+on conflict (code) do nothing;
+
+-- Samoan tala, ISO 4217 list one, two decimals (packs/ws/).
+insert into currencies (code, name, symbol, decimal_places) values
+  ('WST', 'Samoan tala', 'WS$', 2)
+on conflict (code) do nothing;
+
+-- Tongan paʻanga, ISO 4217 list one, two decimals (packs/to/).
+insert into currencies (code, name, symbol, decimal_places) values
+  ('TOP', 'Tongan paʻanga', 'T$', 2)
+on conflict (code) do nothing;
+
+-- Vanuatu vatu, ISO 4217 list one, no decimals (packs/vu/).
+insert into currencies (code, name, symbol, decimal_places) values
+  ('VUV', 'Vanuatu vatu', 'VT', 0)
+on conflict (code) do nothing;
+
+-- Solomon Islands dollar, ISO 4217 list one, two decimals (packs/sb/).
+insert into currencies (code, name, symbol, decimal_places) values
+  ('SBD', 'Solomon Islands dollar', 'SI$', 2)
+on conflict (code) do nothing;

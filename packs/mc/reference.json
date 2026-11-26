@@ -1,0 +1,16 @@
+{
+  "territories": [
+    {
+      "code": "MC",
+      "code_source": "iso_3166_1",
+      "name": "Monaco",
+      "parent_code": "FR",
+      "eu_vat_scope": "full",
+      "eu_vat_from": "1958-01-01",
+      "eu_vat_to": null,
+      "vat_prefix": "FR",
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 7(1): transactions originating in or intended for the Principality of Monaco are treated as transactions originating in or intended for France"
+    }
+  ]
+}

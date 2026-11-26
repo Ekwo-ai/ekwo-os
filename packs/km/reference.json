@@ -1,0 +1,24 @@
+{
+  "currencies": [
+    {
+      "code": "KMF",
+      "name": "Comorian franc",
+      "symbol": "CF",
+      "decimal_places": 0
+    }
+  ],
+  "territories": [
+    {
+      "code": "KM",
+      "code_source": "iso_3166_1",
+      "name": "Comoros",
+      "parent_code": null,
+      "eu_vat_scope": "none",
+      "eu_vat_from": null,
+      "eu_vat_to": null,
+      "vat_prefix": null,
+      "outside_parent_tax": false,
+      "legal_reference": "Directive 2006/112/EC, article 5(2): the common system of VAT applies in the territory of the Community as defined by the Treaties, and a State outside it is a third country for every rule the Directive carries. The Comoros levy no value added tax: their Code général des impôts levies a taxe sur la consommation, defined at article 139, whose article 152 sets its rates. They belong to neither West African nor Central African monetary union."
+    }
+  ]
+}
