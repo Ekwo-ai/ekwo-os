@@ -94,6 +94,19 @@ somewhere has already run it.
   `currency_revaluation` record a rate and show the positions; `ekwo close
   year` lists them before asking. Decision 0100, migration `20261126143200`,
   additive.
+- **The installation's exchange rates from a published series.** `ekwo rates
+  fetch [--source ecb] [--date <day>] [--overwrite]` writes the rates a series
+  published for a day as instance-wide rows of `currency_rates`, `source`
+  saying which series. They are against the instance reference currency, now
+  named by `instance.reference_currency` (nullable, named once with
+  `--reference-currency`); a quote against the series' own base is converted
+  through it, and a reference the series does not quote is refused
+  (`reference_currency_not_quoted`). A day fetched again changes nothing, a
+  rate already recorded is kept unless `--overwrite` (the audit trail keeps
+  the old one), and a day not published writes nothing. The first source is
+  the euro foreign exchange reference rates of the European Central Bank. No
+  reader uses these rows yet. See `docs/exchange-rates.md`; migration
+  `20261126160000`, additive, no change to the oldest schema a client reads.
 - **A contact says where it is below its country.** `contacts.territory_code`
   is read before the country when a tax names a territory — the contact is
   the buyer on a sale, the seller on a purchase — and no route a person takes
