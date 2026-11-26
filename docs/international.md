@@ -88,7 +88,7 @@ it. How a professional reviews a pack is in
 | Opening balances and a year-end close | **Done** — `opening_balance()`, `close_fiscal_year()`, `reopen_fiscal_year()`, and the final close `close_fiscal_year_finally()`, required where the pack says so |
 | A tax engine beyond the European value added tax | **Done** — GST, sales and use taxes, withholding, non-recoverable and tax-inclusive taxes, taxes computed inside their own base, several taxes on one document |
 | Taxes due on collection | **Done**; cash accounting as a ledger is not |
-| Exchange differences | **Realised differences done**; revaluation of open items not yet |
+| Exchange differences | **Done** — realised at the matching; what is still open in a foreign currency revalued at the close, at the closing rate the company records, and reversed the next day ([decision 0100](decisions/0100-open-currency-items-are-revalued-at-the-close.md)). The accounts are roles of the pack: France and the OHADA members name them, another pack refuses a revaluation that moves something until it does |
 | A cash-flow statement | **Not yet** — the format accepts one, and no pack prescribes it yet |
 | Consolidation across companies | **Not yet** |
 | A pack proved against figures | **Done** — a golden year per pack, and a legal source on every tax and box |
@@ -187,7 +187,7 @@ In no promised order, and without dates:
 - **The European One-Stop Shop**, read from the same two facts the
   recapitulative statements use: the treatment of the tax and the country of
   the customer.
-- **Revaluation of open items, the cash-flow statement and consolidation**,
+- **The cash-flow statement and consolidation**,
   for groups and companies trading in several currencies.
 
 The criteria of the 1.0 release are in [`road-to-1.0.md`](road-to-1.0.md).

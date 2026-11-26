@@ -56,6 +56,7 @@ consequence.
 - [0019](0019-tax-postings-carry-the-account-and-the-box.md) — A tax posting carries the account and the box
 - [0020](0020-one-tax-engine-several-kinds-of-tax.md) — One tax engine, several kinds of tax
 - [0021](0021-cash-basis-vat-and-realised-exchange-differences.md) — Cash-basis VAT waits; exchange differences are realised
+- [0100](0100-open-currency-items-are-revalued-at-the-close.md) — What is still open in a foreign currency is revalued at the close, and reversed the next day
 - [0022](0022-a-price-that-holds-its-tax.md) — A price that holds its tax is converted per group
 - [0077](0077-a-tax-computed-inside-its-own-base.md) — A tax computed inside its own base is one key of the tax
 - [0099](0099-a-document-keeps-the-tax-its-source-states.md) — A document keeps the tax its source states, within a rounding

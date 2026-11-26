@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.28.0",
-  "migration": "20261126071412",
+  "migration": "20261126143200",
   "socle": {
     "schema": "ekwo",
     "tables": [
@@ -912,6 +912,43 @@
           {
             "name": "source_key",
             "type": "text"
+          }
+        ]
+      },
+      {
+        "name": "closing_rates",
+        "columns": [
+          {
+            "name": "company_id",
+            "type": "uuid"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone"
+          },
+          {
+            "name": "currency_code",
+            "type": "character(3)"
+          },
+          {
+            "name": "id",
+            "type": "uuid"
+          },
+          {
+            "name": "rate",
+            "type": "numeric(18,8)"
+          },
+          {
+            "name": "rate_date",
+            "type": "date"
+          },
+          {
+            "name": "source",
+            "type": "text"
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp with time zone"
           }
         ]
       },
@@ -1836,6 +1873,14 @@
             "type": "text"
           },
           {
+            "name": "fx_unrealised_gain_code",
+            "type": "text"
+          },
+          {
+            "name": "fx_unrealised_loss_code",
+            "type": "text"
+          },
+          {
             "name": "invoice_labels",
             "type": "jsonb"
           },
@@ -2133,6 +2178,39 @@
           {
             "name": "source",
             "type": "text"
+          }
+        ]
+      },
+      {
+        "name": "currency_revaluations",
+        "columns": [
+          {
+            "name": "company_id",
+            "type": "uuid"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp with time zone"
+          },
+          {
+            "name": "difference",
+            "type": "numeric"
+          },
+          {
+            "name": "fiscal_year_id",
+            "type": "uuid"
+          },
+          {
+            "name": "id",
+            "type": "uuid"
+          },
+          {
+            "name": "revaluation_entry_id",
+            "type": "uuid"
+          },
+          {
+            "name": "reversal_entry_id",
+            "type": "uuid"
           }
         ]
       },
@@ -5366,6 +5444,14 @@
         "arguments": ""
       },
       {
+        "name": "currency_revaluation",
+        "arguments": "p_company_id uuid, p_at date"
+      },
+      {
+        "name": "currency_revaluations_guard",
+        "arguments": ""
+      },
+      {
         "name": "currency_unit",
         "arguments": "p_rounding money_rounding"
       },
@@ -6190,6 +6276,10 @@
         "arguments": "p_company_id uuid, p_doc_type doc_type, p_product_id uuid, p_account_id uuid"
       },
       {
+        "name": "revalue_currency_positions",
+        "arguments": "p_fiscal_year_id uuid"
+      },
+      {
         "name": "reverse_entry",
         "arguments": "p_entry_id uuid, p_date date"
       },
@@ -6638,6 +6728,16 @@
         "command": "select"
       },
       {
+        "table": "closing_rates",
+        "name": "closing_rates_select",
+        "command": "select"
+      },
+      {
+        "table": "closing_rates",
+        "name": "closing_rates_write",
+        "command": "all"
+      },
+      {
         "table": "companies",
         "name": "companies_insert",
         "command": "insert"
@@ -6780,6 +6880,21 @@
       {
         "table": "currency_rates",
         "name": "currency_rates_select",
+        "command": "select"
+      },
+      {
+        "table": "currency_revaluations",
+        "name": "currency_revaluations_delete",
+        "command": "delete"
+      },
+      {
+        "table": "currency_revaluations",
+        "name": "currency_revaluations_insert",
+        "command": "insert"
+      },
+      {
+        "table": "currency_revaluations",
+        "name": "currency_revaluations_select",
         "command": "select"
       },
       {
@@ -7254,6 +7369,14 @@
         "name": "bank_transactions_set_updated_at"
       },
       {
+        "table": "closing_rates",
+        "name": "closing_rates_audit"
+      },
+      {
+        "table": "closing_rates",
+        "name": "closing_rates_set_updated_at"
+      },
+      {
         "table": "companies",
         "name": "companies_agent_posting_by_a_person"
       },
@@ -7456,6 +7579,14 @@
       {
         "table": "country_packs",
         "name": "country_packs_audit"
+      },
+      {
+        "table": "currency_revaluations",
+        "name": "currency_revaluations_audit"
+      },
+      {
+        "table": "currency_revaluations",
+        "name": "currency_revaluations_guard"
       },
       {
         "table": "declaration_instalments",
@@ -8582,6 +8713,22 @@
           ]
         },
         {
+          "name": "closing_rates",
+          "anon": [],
+          "authenticated": [
+            "delete",
+            "insert",
+            "select",
+            "update"
+          ],
+          "service_role": [
+            "delete",
+            "insert",
+            "select",
+            "update"
+          ]
+        },
+        {
           "name": "companies",
           "anon": [],
           "authenticated": [
@@ -8800,6 +8947,20 @@
             "select"
           ],
           "service_role": [
+            "select"
+          ]
+        },
+        {
+          "name": "currency_revaluations",
+          "anon": [],
+          "authenticated": [
+            "delete",
+            "insert",
+            "select"
+          ],
+          "service_role": [
+            "delete",
+            "insert",
             "select"
           ]
         },
@@ -10634,6 +10795,25 @@
         },
         {
           "name": "currency_of_company",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "currency_revaluation",
+          "arguments": "p_company_id uuid, p_at date",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "currency_revaluations_guard",
           "arguments": "",
           "trigger": true,
           "anon": [],
@@ -12753,6 +12933,17 @@
         {
           "name": "resolve_line_account",
           "arguments": "p_company_id uuid, p_doc_type doc_type, p_product_id uuid, p_account_id uuid",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "revalue_currency_positions",
+          "arguments": "p_fiscal_year_id uuid",
           "anon": [],
           "authenticated": [
             "execute"

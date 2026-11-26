@@ -194,6 +194,7 @@ bank charge that pays no item.
 | [`capabilities`](#capabilities) | Everything a member may be allowed to do, one row per code. Seeded by this migration for the core; a module adds its own with `area` set to the module code. |
 | [`chart_templates`](#chart_templates) | Charts of accounts a country offers, from the `charts` list of packs/<cc>/pack.json. One of them is the default `ekwo init` installs when nobody names one. |
 | [`classification_schemes`](#classification_schemes) | The classifications of goods and services a country uses on its documents, compiled from its pack: the attribute of a line or a product that holds the code, the name of the classification, the anchored pattern of its codes and the article that prescribes it. A code held under one of these names in document_lines.attributes or products.attributes must match the pattern (decision 0078). |
+| [`closing_rates`](#closing_rates) | The exchange rates a company states its open foreign-currency items at on a closing date: one row per currency and day. close_fiscal_year() reads the row of the last day of the year for every currency still open, and refuses one that is missing (fx_closing_rate_missing). |
 | [`companies`](#companies) | Legal entities kept in this instance. One instance may hold several. |
 | [`company_archive_registry`](#company_archive_registry) | What an archive of one company does with each table of the socle that belongs to a company: `exported`, or `excluded` with the reason. A table of a company that is not named here stops every export. Modules answer for their own tables through `<schema>.archive_tables()`. |
 | [`company_filing_periods`](#company_filing_periods) | How often this company files each declaration it is subject to: one row per form of tax_report_templates, and no row where nothing has been recorded. A company files its periodic return on one cadence and its recapitulative statement on another, and the second is not derivable from the first in any country read so far. |
@@ -211,6 +212,7 @@ bank charge that pays no item.
 | [`country_packs`](#country_packs) | Country packs loaded in this installation, with their version and certification. |
 | [`currencies`](#currencies) | ISO 4217 currencies known to this instance. |
 | [`currency_rates`](#currency_rates) | Dated exchange rates. A document stores the rate it used; this table is the history. |
+| [`currency_revaluations`](#currency_revaluations) | The revaluation close_fiscal_year() posted for a year — the entry on its last day and its mirror on the next — so that reopen_fiscal_year() takes both back. Written and deleted by those two functions only, under the setting ekwo.revaluing. |
 | [`declaration_instalments`](#declaration_instalments) | What a company paid on account of a declaration during its period: which instalment of the scheme's schedule, the day, the amount and the entry that carried it, where there is one. Several rows for one instalment are a payment made in parts. The annual return deducts them in the box whose reads is instalments_paid or instalments_due. |
 | [`document_line_analytics`](#document_line_analytics) | Analytic split of a document line, one row per value, share in percent. Copied onto the ledger line by post_document(); after posting the ledger split is the one read. |
 | [`document_lines`](#document_lines) | Lines of a document. A product line carries its base, its account and its tax (tax_id); the tax itself is written by the posting on the account the tax points to, and a line on such an account is refused (trigger document_lines_guard_tax_account). |
@@ -724,6 +726,27 @@ Constraints:
 - `CHECK ((pattern ~ '^\^.*\$$'::text))`
 - `PRIMARY KEY (country, attribute)`
 
+### `closing_rates`
+
+The exchange rates a company states its open foreign-currency items at on a closing date: one row per currency and day. close_fiscal_year() reads the row of the last day of the year for every currency still open, and refuses one that is missing (fx_closing_rate_missing).
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` | not null |
+| `company_id` | `uuid` | not null |
+| `currency_code` | `character(3)` | not null |
+| `rate_date` | `date` | not null — The day the rate is the closing rate of. A close reads this day exactly: a rate of another day is never taken for it. |
+| `rate` | `numeric(18,8)` | not null — Units of currency_code for one unit of the company's currency, as documents.exchange_rate holds a rate. The amount in the company's currency is the amount in currency_code divided by it. |
+| `source` | `text` | Where the rate comes from — a central bank, a published series — so that a revaluation can be traced to it. |
+| `created_at` | `timestamp with time zone` | not null |
+| `updated_at` | `timestamp with time zone` | not null |
+
+Constraints:
+
+- `CHECK ((rate > (0)::numeric))`
+- `PRIMARY KEY (id)`
+- `UNIQUE (company_id, currency_code, rate_date)`
+
 ### `companies`
 
 Legal entities kept in this instance. One instance may hold several.
@@ -1183,6 +1206,8 @@ Which template account plays which role, per country.
 | `other_comprehensive_income_source_key` | `text` | Key, in the pack's register of texts, of the text that article is in. |
 | `territory_required` | `boolean` | not null — True where a company of this country has to name the territory it is established in, among the territories within the country: the taxes of the pack are levied below the country, and none of them can be told to apply without it. From `defaults.territory_required` of the pack; false, the country being the answer, everywhere else. |
 | `number_shape` | `jsonb` | What the law of this country prescribes about the shape of a document number: max_length, characters (letters, digits, or one other character allowed) and never_restarts, each absent where the law says nothing of it. From documents.number_shape of the pack, cited by numbering_legal_reference; null where the law leaves the shape to the seller. |
+| `fx_unrealised_gain_code` | `text` | Account an unrealised exchange gain on a receivable or payable still open at the close is booked on, from defaults.roles.fx_unrealised_gain of the pack. Null until the pack names one, and then a close that finds such a gain is refused (no_fx_revaluation_accounts) rather than booked somewhere else. |
+| `fx_unrealised_loss_code` | `text` | The same for an unrealised loss. A pair, because a chart that defers the difference keeps the two on opposite sides of the balance sheet. |
 
 Constraints:
 
@@ -1269,6 +1294,25 @@ Constraints:
 - `CHECK ((rate > (0)::numeric))`
 - `PRIMARY KEY (id)`
 - `UNIQUE (currency_code, rate_date)`
+
+### `currency_revaluations`
+
+The revaluation close_fiscal_year() posted for a year — the entry on its last day and its mirror on the next — so that reopen_fiscal_year() takes both back. Written and deleted by those two functions only, under the setting ekwo.revaluing.
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `uuid` | not null |
+| `company_id` | `uuid` | not null |
+| `fiscal_year_id` | `uuid` | not null |
+| `revaluation_entry_id` | `uuid` | not null — The entry, dated the last day of the year, that states the open foreign-currency positions at the closing rate. |
+| `reversal_entry_id` | `uuid` | not null — Its mirror, dated the first day after the year, which puts the positions back at the rates they were booked at. |
+| `difference` | `numeric` | not null — What the revaluation moved, in the company's currency, the sum of the differences of its positions: a gain positive, a loss negative. |
+| `created_at` | `timestamp with time zone` | not null |
+
+Constraints:
+
+- `PRIMARY KEY (id)`
+- `UNIQUE (fiscal_year_id)`
 
 ### `declaration_instalments`
 
@@ -2670,7 +2714,7 @@ Constraints:
 | `canonical_json(p_value jsonb)` | A value with every number it holds, at any depth, re-rendered through trim_scale(): the form two sides agree on once a JSON parser has been between them. What the `values_sha256` of an archive is computed over. Normalises notation and never magnitude. |
 | `catch_up_journal_sequence(p_journal_id uuid, p_date date, p_number text)` | Advances the counter of a journal to the counter inside a number that was written by hand, so the next automatic number continues the series. Definer, because nobody writes `journal_sequences` directly — and guarded like `next_entry_number()`: the installer, or entries.post on the company of the journal. |
 | `claim_instance_admin(p_user_id uuid)` | Makes a user an instance administrator. The first claim is open; afterwards only an administrator may appoint one. |
-| `close_fiscal_year(p_fiscal_year_id uuid)` | Closes a fiscal year: brings every income and expense account back to nil on the opening journal, books the result of the year where the pack's closing_style puts it — through an appropriation entry under appropriation_accounts — and the other comprehensive income the pack names on the account it closes to, then marks the year closed. Returns the result and its kind, the other comprehensive income moved, and the entries written. |
+| `close_fiscal_year(p_fiscal_year_id uuid)` | Closes a fiscal year: states what is still open in a foreign currency at the closing rate of its last day (revalue_currency_positions(), reversed the next day), brings every income and expense account back to nil on the opening journal, books the result of the year where the pack's closing_style puts it — through an appropriation entry under appropriation_accounts — and the other comprehensive income the pack names on the account it closes to, then marks the year closed. Returns the result and its kind, the other comprehensive income moved, the unrealised exchange difference booked (a gain positive), and the entries written. |
 | `close_fiscal_year_finally(p_fiscal_year_id uuid)` | Closes a closed fiscal year for good: sets finally_closed_at, after which reopen_fiscal_year() refuses it for everybody and nothing about the year changes. Refused on an open year (fiscal_year_not_closed), on a year already final, and while a closed year before it is not final. Needs year_end.close. Whether the country requires it is fiscal_year_final_close(). |
 | `combination_subsets(p_amounts numeric[], p_target numeric, p_tolerance numeric, p_min_lines integer, p_max_results integer)` | The subsets of a list of positive amounts that add up to a target within a tolerance, as positions in the list, in the order a depth-first walk meets them: an item is taken when it is no more than what is left plus the tolerance, so the first subset is the one an oldest-first greedy walk finds when it finds one. At least p_min_lines positions each, at most p_max_results subsets, within matching_search_bounds(). Pure arithmetic: it reads no table. |
 | `commercial_entity(p_contact_id uuid)` | Root of the contact parent chain; the entity a document is booked against. |
@@ -2721,6 +2765,8 @@ Constraints:
 | `create_document(p_document jsonb, p_lines jsonb)` | Creates a draft and its lines in one statement: a refused line creates nothing, rather than an empty draft. The header names company_id, doc_type, contact_id, document_date and currency_code, and optionally due_date, accounting_date, number, supplier_reference, journal_id, payment_reference and client_ref. Security invoker. |
 | `currency_of_bank_account()` | Fills a statement line's currency_code from its bank account, and from the company as a last resort. |
 | `currency_of_company()` | Fills currency_code from the company when the caller named none. The one place the question is answered for a table that belongs to a company. |
+| `currency_revaluation(p_company_id uuid, p_at date)` | The foreign-currency positions of a company still open on a day, and what stating them at the closing rate of that day moves: per account, counterparty and currency, the amount in the currency, the amount the ledger carries it at, the rate of closing_rates for that day (null where none is recorded), the amount at that rate and the difference. A position is the open part of the lines in that currency of a receivable or payable account — what no matching dated on or before the day settled — or the whole of the lines in that currency of the account of a bank account kept in it. What close_fiscal_year() books, and nothing is written here. |
+| `currency_revaluations_guard()` | Keeps currency_revaluations to the close that writes it and the reopening that takes it back, under the setting ekwo.revaluing. The cascades of a company and of a fiscal year pass, and so does the installer. |
 | `currency_unit(p_rounding money_rounding)` | The smallest amount a currency has: a cent in the euro, a yen in the yen. A tolerance is written as a fraction of this rather than as a fraction of a cent. |
 | `current_api_key()` | The key presented in this transaction, or nothing. What a client reads back to know what it may do. |
 | `declaration_boxes_of(p_tax_id uuid, p_box text, p_tax_line boolean, OUT boxes text[], OUT report_code text)` | What the postings of a tax say today about a ledger line of that tax in that box, on the tax side or not: every box their lists print it in, and the form they name. Null and null where none answers. The rule entry_lines_box_from_posting() freezes on a line when it is written, and the one vat_return() falls back on for a line that carries nothing frozen. Under the caller's row level security. |
@@ -2912,11 +2958,12 @@ Constraints:
 | `rehearse_post_document(p_document_id uuid)` | What post_document() would write, without writing it: the function is called for real inside a block that is then rolled back, so every rule, lock and refusal is the real one. The entry number shown is the one it would take now; somebody else posting first takes it instead. Amounts are text. |
 | `remove_member(p_company_id uuid, p_user_id uuid)` | Takes a member out of a company and returns the row that left. Needs members.manage, except to leave oneself. The last owner of a company is refused, themself included: promote a successor first. Pending invitations are not touched; revoke_invitation() withdraws them. |
 | `reopen_filing(p_filing_id uuid)` | Takes a rejected declaration back to draft so its figures can be worked out again. Only a rejected one: a declaration the administration accepted is replaced by a corrective, never rewritten. What was sent stays in tax_filing_deposits. |
-| `reopen_fiscal_year(p_fiscal_year_id uuid)` | Undoes an ordinary close: reverses the appropriation and closing entries it wrote and clears is_closed, whatever a later year holds — the close wrote nothing there, and the later year reads the result from the ledger. Refused for a year under a final close (fiscal_year_finally_closed), for everybody, and while a later year is closed (later_fiscal_year_closed), which is reopened first. |
+| `reopen_fiscal_year(p_fiscal_year_id uuid)` | Undoes an ordinary close: reverses the appropriation and closing entries it wrote and the revaluation of the open foreign-currency items with the mirror it posted the next day, and clears is_closed, whatever a later year holds — the close wrote nothing else there, and the later year reads the result from the ledger. Refused for a year under a final close (fiscal_year_finally_closed), for everybody, and while a later year is closed (later_fiscal_year_closed), which is reopened first. |
 | `replace_document_lines(p_document_id uuid, p_lines jsonb)` | Replaces every line of a draft with the lines given, in one statement: when the database refuses one of them, the draft keeps the lines it had. Security invoker, so row level security and the guards of document_lines decide as for a direct write. |
 | `resolve_counterpart_account(p_company_id uuid, p_contact_id uuid, p_is_sale boolean)` | Third-party account by role: contact override first, company default second. Never by code prefix. |
 | `resolve_line_account(p_company_id uuid, p_doc_type doc_type, p_account_id uuid)` | Account of a document line: the line, then the company default, then the country model. Never a code prefix. |
 | `resolve_line_account(p_company_id uuid, p_doc_type doc_type, p_product_id uuid, p_account_id uuid)` | Account of a document line: the line, the product, the company default, the country model. Never a code prefix. |
+| `revalue_currency_positions(p_fiscal_year_id uuid)` | Posts what currency_revaluation() finds at the last day of a year: one entry of the miscellaneous journal that day, each position against the unrealised exchange gain or loss account of the pack (the exchange gain or loss account for a bank account), and its mirror the next day through reverse_entry(), which matches the two lines of each receivable or payable with each other; and the pair recorded in currency_revaluations. Refuses a currency open without a closing rate (fx_closing_rate_missing) and a difference the pack names no account for (no_fx_revaluation_accounts, no_fx_accounts). Called by close_fiscal_year() for the year it closes, and refused otherwise. |
 | `reverse_entry(p_entry_id uuid, p_date date)` | Undoes a posted entry: writes its mirror in the same journal — every line with its sides swapped, its tax, its box with the opposite sign and its analytic split — names it in reversed_entry_id, posts it through post_entry() and matches the two on every reconcilable line. Dated on the original's day while that period is open, and otherwise refused until a date is given (reversal_date_needed). Refused for an entry that is not posted, is a reversal, is already reversed, is matched, or belongs to a document (cancel_document()), a close (reopen_fiscal_year()), an opening, a payment, a bank transaction, a module, a declaration or a matching. |
 | `revoke_api_key(p_api_key_id uuid)` | Withdraws a key. There is no un-withdraw: a secret that has been out of the building is issued again, not brought back. |
 | `revoke_invitation(p_invitation_id uuid)` | Withdraws an invitation that has not been accepted. An accepted one is a member, and members are removed from company_members. |

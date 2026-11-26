@@ -70,6 +70,25 @@ somewhere has already run it.
 
 ### Added
 
+- **What is still open in a foreign currency is revalued at the close.**
+  `close_fiscal_year()` states every receivable and payable still open in a
+  currency other than the company's — for the part no matching of the year
+  settled — and every bank account kept in one, at the closing rate of the
+  last day, before it works out the result, and reverses the revaluation on
+  the first day of the next year with `reverse_entry()`, which matches each
+  line with its mirror. The rate is the company's input, `closing_rates`, per
+  currency and day; a currency still open without it refuses the close
+  (`fx_closing_rate_missing`). A receivable or payable goes to the accounts
+  the pack names, `defaults.roles.fx_unrealised_gain` and
+  `fx_unrealised_loss`; a bank account to `fx_gain` and `fx_loss`. A missing
+  role refuses by name (`no_fx_revaluation_accounts`), never a default
+  account; a company with nothing open in a foreign currency closes as
+  before. `currency_revaluation(company, day)` previews it, the close returns
+  `unrealised_exchange_difference` and the two entries, and
+  `reopen_fiscal_year()` takes them back. France (476, 477, pack 1.26.0, with
+  lines CM and ED of the 2050) and the seventeen OHADA members (478, 479) name
+  their accounts; the other packs do not yet. Decision 0100, migration
+  `20261126143200`, additive.
 - **A contact says where it is below its country.** `contacts.territory_code`
   is read before the country when a tax names a territory — the contact is
   the buyer on a sale, the seller on a purchase — and no route a person takes
