@@ -85,6 +85,9 @@ export const CONTACT = [
   'email',
   'phone',
   'country',
+  // Where the party is below its country (US-CA), read before the country
+  // when a tax names a territory.
+  'territory_code',
   'payment_terms_days',
   'receivable_account_id',
   'payable_account_id',

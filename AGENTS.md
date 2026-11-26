@@ -185,6 +185,7 @@ reach and whether you may write; without that box ticked, you read.
 | The companies of the installation | `ekwo company list` | `list_companies` |
 | Company details (address, VAT number) | — | `update_company_profile` |
 | A customer | `ekwo contact add "<name>" --country <cc> --ref <yours>` | `create_contact` |
+| Where a contact is below its country (a state, a province), which a tax that names a territory is judged on | `ekwo contact add … --territory <code>`, `ekwo contact territory "<name>" <code>` (`--clear` takes it back) | `create_contact` with `territory_code`, `set_contact_territory` |
 | The contacts that are probably one party | `ekwo contact duplicates` | `suggest_duplicate_contacts` |
 | One party created twice, joined | `ekwo contact merge <keep> <absorb>` | `merge_contacts` |
 | What a customer owes, line by line | `ekwo contact statement "<name>" --from <date> --to <date>` | `contact_statement` |

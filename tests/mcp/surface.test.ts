@@ -65,6 +65,7 @@ const READ_TOOLS = [
 
 const WRITE_TOOLS = [
   'create_contact',
+  'set_contact_territory',
   'merge_contacts',
   'record_tax_certificate',
   'create_product',

@@ -70,6 +70,18 @@ somewhere has already run it.
 
 ### Added
 
+- **A contact says where it is below its country.** `contacts.territory_code`
+  is read before the country when a tax names a territory — the contact is
+  the buyer on a sale, the seller on a purchase — and no route a person takes
+  wrote it. `create_contact` takes `territory_code` and the new MCP tool
+  `set_contact_territory` moves it or takes it back with `null`; on the
+  command line, `ekwo contact add --territory <code>` and `ekwo contact
+  territory <contact> <code>|--clear`. Migration `20261126071412` holds it
+  within the contact's country: a trigger refuses one outside it,
+  `territory_outside_country`, on insert and whenever either column changes,
+  as `companies` does since `20261121070100`. A contact with no country is
+  held to none, and none is required. Additive; rows already written are
+  not touched.
 - **A document found by its number.** `list_documents` takes `number`, matched
   whole or in part and in any case (`DEV-2025-0043`, `2025-0043`): an agent
   asked for one quote or invoice reads it in one call instead of scanning

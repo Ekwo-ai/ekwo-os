@@ -260,7 +260,8 @@ Every write names its company explicitly.
 | `list_api_keys` | The machine keys of a company, and what each may do |
 | `describe_pack` | Which country packs this installation holds: their version, how much anyone has read them, the register of texts each was built from — title, official publisher, link and the day it was opened — and, for a proven pack, its evidence: per scope, the kind of filing, the year, what was reproduced and what was not tested; and the charts of accounts each country offers, with their audience, for `create_company`'s `chart_code` |
 | `status` | Schema version, instance, connection, companies |
-| `create_contact` | A customer, supplier or other third party |
+| `create_contact` | A customer, supplier or other third party, with the territory it is in below its country where the pack's taxes name territories |
+| `set_contact_territory` | Says where a contact is below its country (`US-NY`), or takes it back with `null`. A tax that names a territory is judged on it at posting; one outside the contact's country is refused (`territory_outside_country`) |
 | `record_tax_certificate` | Records on a contact a certificate they handed over: its reference, the territory under whose law it was given and the days it covers. A sale under a tax that applies on such a certificate posts only once its buyer holds one that covers it (`no_buyer_certificate`) |
 | `merge_contacts` | Joins two contacts that are one party: everything naming the absorbed one, posted lines and issued documents included, names the kept one, whose empty fields are filled; the absorbed one is retired. Refused by name for two different VAT or registration numbers, a contact merged before, or a matching that would span two parties |
 | `create_product` | A catalogue row: code, name, unit, price, account, tax |

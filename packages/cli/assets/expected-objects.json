@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.28.0",
-  "migration": "20261124092000",
+  "migration": "20261126071412",
   "socle": {
     "schema": "ekwo",
     "tables": [
@@ -5338,6 +5338,10 @@
         "arguments": ""
       },
       {
+        "name": "contacts_territory_within_country",
+        "arguments": ""
+      },
+      {
         "name": "create_api_key",
         "arguments": "p_company_id uuid, p_name text, p_capabilities jsonb, p_expires_at timestamp with time zone, p_posting_mode text"
       },
@@ -7440,6 +7444,10 @@
       {
         "table": "contacts",
         "name": "contacts_set_updated_at"
+      },
+      {
+        "table": "contacts",
+        "name": "contacts_territory_within_country"
       },
       {
         "table": "country_defaults",
@@ -10558,6 +10566,14 @@
         },
         {
           "name": "contacts_language_reaches_drafts",
+          "arguments": "",
+          "trigger": true,
+          "anon": [],
+          "authenticated": [],
+          "service_role": []
+        },
+        {
+          "name": "contacts_territory_within_country",
           "arguments": "",
           "trigger": true,
           "anon": [],

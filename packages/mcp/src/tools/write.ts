@@ -61,6 +61,7 @@ export {
   recordPayment,
   reopenFiscalYear,
   reverseEntry,
+  setContactTerritory,
   setLineContact,
   settleFromStatement,
   undoDocument,
@@ -73,6 +74,13 @@ export {
 // ---------------------------------------------------------------------------
 // Contacts
 // ---------------------------------------------------------------------------
+
+const contactTerritory = z
+  .string()
+  .min(2)
+  .describe(
+    'Where the party is below its country, ISO 3166-2 with the country prefix: US-CA. Only where the taxes of the pack name territories (describe_pack) and the user said where the party is — never guessed from an address. A tax that names a territory is judged on it at posting: the contact is the buyer on a sale, the seller on a purchase. One outside the contact\'s country is refused (territory_outside_country).',
+  );
 
 export const CreateContactInput = z.object({
   company_id: companyId,
@@ -87,6 +95,7 @@ export const CreateContactInput = z.object({
   email: z.string().min(1).optional(),
   phone: z.string().min(1).optional().describe('As the party writes it, international form where the e-invoice of its country asks for one.'),
   country: z.string().length(2).optional().describe('ISO country code, e.g. BE.'),
+  territory_code: contactTerritory.optional(),
   payment_terms_days: z.number().int().min(0).max(365).optional(),
   auxiliary_code: z.string().min(1).optional().describe('Sub-ledger code; the French FEC reports it.'),
   address_line1: z.string().min(1).optional(),
@@ -112,6 +121,14 @@ export const RecordTaxCertificateInput = z.object({
   valid_to: isoDate.optional().describe('The last day it covers, where it has one: an expiry printed on it, or the day the buyer withdrew it.'),
   note: z.string().min(1).optional().describe('What was checked, where the paper is kept.'),
   client_ref: z.string().min(1).max(200).optional().describe('Your own reference for this creation. Calling again with the same one returns what was created the first time (`replayed: true`) instead of creating a second — use it whenever a call might be repeated after a timeout.'),
+});
+
+export const SetContactTerritoryInput = z.object({
+  company_id: companyId,
+  contact_id: uuid.describe('The contact, from search_contacts.'),
+  territory_code: contactTerritory.nullable().describe(
+    'Where the party is below its country, ISO 3166-2 with the country prefix: US-NY. null takes it back, and its country is the answer again. Never guessed from an address: the user says where the party is. One outside the contact\'s country is refused (territory_outside_country).',
+  ),
 });
 
 export const MergeContactsInput = z.object({

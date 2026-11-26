@@ -596,6 +596,12 @@
           "count": { "type": "integer" }
         }
       },
+      "contact territory": {
+        "$comment": "What setContactTerritory() of @ekwo-ai/core answers — the MCP server's set_contact_territory: the contact as it stands, its territory_code the one named or null after --clear.",
+        "type": "object",
+        "required": ["contact"],
+        "properties": { "contact": { "$ref": "#/$defs/row" } }
+      },
       "contact certificate add": {
         "$comment": "recordTaxCertificate() of @ekwo-ai/core — the MCP server's record_tax_certificate: the row of contact_tax_certificates as recorded, and replayed: true when --ref named one recorded before.",
         "type": "object",

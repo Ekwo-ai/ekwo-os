@@ -23,6 +23,13 @@ export interface CreateContactArgs {
   email?: string | undefined;
   phone?: string | undefined;
   country?: string | undefined;
+  /**
+   * Where the party is below its country, ISO 3166-2 with the country prefix
+   * (`US-CA`), where the taxes of the pack name territories. Left out, the
+   * country is the answer. One outside `country` is refused
+   * (`territory_outside_country`).
+   */
+  territory_code?: string | undefined;
   payment_terms_days?: number | undefined;
   auxiliary_code?: string | undefined;
   address_line1?: string | undefined;
@@ -59,8 +66,8 @@ export async function createContact(
   const before = await createdBefore(backend, 'contacts', args.company_id, args.client_ref, columns.CONTACT);
   if (before !== undefined) return { contact: before, replayed: true };
 
-  const { company_id, ...rest } = args;
-  const row: Row = { company_id, ...rest };
+  const { company_id, territory_code, ...rest } = args;
+  const row: Row = { company_id, ...rest, ...(territory_code === undefined ? {} : { territory_code: territory_code.toUpperCase() }) };
   const created = only(
     await backend.insert<Row>('contacts', [row], columns.CONTACT),
     'the contact could not be created',
@@ -127,6 +134,38 @@ export async function resolveContact(
     );
   }
   return matches[0] as { id: string; name: string };
+}
+
+export interface SetContactTerritoryArgs {
+  company_id: string;
+  contact_id: string;
+  /** ISO 3166-2 with the country prefix (`US-NY`); null takes it back, and the country is the answer again. */
+  territory_code: string | null;
+}
+
+/**
+ * Says where a contact is below its country — the state of an American
+ * customer, the province of a Canadian supplier — or takes it back with null.
+ * A tax that names a territory is judged on it when a document is posted: the
+ * contact is the buyer on a sale and the seller on a purchase. A territory
+ * outside the contact's country is the database's refusal
+ * (`territory_outside_country`). Posted documents keep the territory they
+ * were judged on; only what is posted from now on reads the new one.
+ */
+export async function setContactTerritory(backend: Backend, args: SetContactTerritoryArgs): Promise<unknown> {
+  const territory = args.territory_code === null ? null : args.territory_code.trim().toUpperCase();
+  const updated = await backend.update<Row>(
+    'contacts',
+    { territory_code: territory },
+    [
+      { column: 'company_id', op: 'eq', value: args.company_id },
+      { column: 'id', op: 'eq', value: args.contact_id },
+    ],
+    columns.CONTACT,
+  );
+  return {
+    contact: only(updated, `contact ${args.contact_id} was not changed`),
+  };
 }
 
 export interface MergeContactsArgs {

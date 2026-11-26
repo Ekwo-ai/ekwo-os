@@ -787,6 +787,18 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
   );
 
   register(
+    'set_contact_territory',
+    {
+      title: 'Say where a contact is below its country',
+      description:
+        'Records the territory a contact is in below its country — the state of an American customer, the province of a Canadian supplier — as ISO 3166-2 with the country prefix (US-NY), or takes it back with null. A tax that names a territory is judged on it when a document is posted: the contact is the buyer on a sale and the seller on a purchase, and post_document refuses a tax whose territory the parties are not in (tax_territory_mismatch). Only where the taxes of the pack name territories (describe_pack), and only with what the user said: never guessed from an address. One outside the contact\'s country is refused (territory_outside_country). Posted documents keep the territory they were judged on.',
+      inputSchema: write.SetContactTerritoryInput.shape,
+      annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false },
+    },
+    async (args) => guard(() => write.setContactTerritory(backend, args)),
+  );
+
+  register(
     'record_tax_certificate',
     {
       title: 'Record a certificate a buyer handed over',

@@ -1,10 +1,12 @@
 /**
  * `ekwo contact add`, `ekwo contact list`, `ekwo contact duplicates`,
  * `ekwo contact merge`, `ekwo contact statement` and
- * `ekwo contact certificate add|list` — `createContact()`,
+ * `ekwo contact territory` and `ekwo contact certificate add|list` —
+ * `createContact()`, `setContactTerritory()`,
  * `searchContacts()`, `suggestDuplicateContacts()`, `mergeContacts()`,
  * `contactStatement()`, `recordTaxCertificate()` and `listTaxCertificates()`
  * of the core, which are the MCP server's `create_contact`,
+ * `set_contact_territory`,
  * `search_contacts`, `suggest_duplicate_contacts`, `merge_contacts`,
  * `contact_statement`, `record_tax_certificate` and `list_tax_certificates`.
  */
@@ -18,29 +20,31 @@ import {
   recordTaxCertificate,
   resolveContact,
   searchContacts,
+  setContactTerritory,
   suggestDuplicateContacts,
   type ContactType,
   type DuplicateContactPair,
   type CreateContactArgs,
 } from '@ekwo-ai/core';
-import { UsageError, numberFlag, rejectUnknownFlags, stringFlag, type ParsedArgs } from '../args.js';
+import { UsageError, boolFlag, numberFlag, rejectUnknownFlags, stringFlag, type ParsedArgs } from '../args.js';
 import { BOOKS_FLAGS, CREATE_FLAGS, given, openBooks, stdinDocument, today, type BooksDeps } from '../books.js';
 import { setResult } from '../output.js';
 import { dim, heading, note, pairs, step, table } from '../ui.js';
 
-const ADD_FLAGS = [...CREATE_FLAGS, 'type', 'vat', 'email', 'country', 'terms', 'aux', 'address', 'postal-code', 'city', 'account-scheme', 'account', 'bank-scheme', 'bank'] as const;
+const ADD_FLAGS = [...CREATE_FLAGS, 'type', 'vat', 'email', 'country', 'territory', 'terms', 'aux', 'address', 'postal-code', 'city', 'account-scheme', 'account', 'bank-scheme', 'bank'] as const;
 const LIST_FLAGS = [...BOOKS_FLAGS, 'query', 'type', 'vat', 'limit'] as const;
 const MERGE_FLAGS = [...BOOKS_FLAGS] as const;
 const DUPLICATES_FLAGS = [...BOOKS_FLAGS] as const;
 const STATEMENT_FLAGS = [...BOOKS_FLAGS, 'from', 'to'] as const;
 const CERTIFICATE_ADD_FLAGS = [...CREATE_FLAGS, 'from', 'to', 'territory', 'note'] as const;
 const CERTIFICATE_LIST_FLAGS = [...BOOKS_FLAGS] as const;
+const TERRITORY_FLAGS = [...BOOKS_FLAGS, 'clear'] as const;
 
 const USAGE =
-  'usage: ekwo contact add <name> [--type --vat --email --country --terms --account-scheme <scheme> --account <identifier> --bank-scheme <scheme> --bank <identifier> --ref] | ekwo contact list [--query --type --vat] | ekwo contact duplicates | ekwo contact merge <keep> <absorb> | ekwo contact statement <name|id> --from <date> [--to <date>] | ekwo contact certificate add <name|id> <reference> --from <date> [--to <date> --territory <code> --note --ref] | ekwo contact certificate list [<name|id>]';
+  'usage: ekwo contact add <name> [--type --vat --email --country --territory <code> --terms --account-scheme <scheme> --account <identifier> --bank-scheme <scheme> --bank <identifier> --ref] | ekwo contact list [--query --type --vat] | ekwo contact duplicates | ekwo contact merge <keep> <absorb> | ekwo contact statement <name|id> --from <date> [--to <date>] | ekwo contact territory <name|id> <code>|--clear | ekwo contact certificate add <name|id> <reference> --from <date> [--to <date> --territory <code> --note --ref] | ekwo contact certificate list [<name|id>]';
 
 const ADD_FIELDS = [
-  'name', 'contact_type', 'vat_number', 'registration_number', 'identifiers', 'email', 'phone', 'country',
+  'name', 'contact_type', 'vat_number', 'registration_number', 'identifiers', 'email', 'phone', 'country', 'territory_code',
   'payment_terms_days', 'auxiliary_code', 'address_line1', 'postal_code', 'city',
   'account_scheme', 'account_identifier', 'bank_scheme', 'bank_identifier', 'client_ref',
 ] as const;
@@ -60,6 +64,7 @@ export async function contactCommand(args: ParsedArgs, deps: BooksDeps = {}): Pr
   if (action === 'duplicates') return duplicates(args, deps);
   if (action === 'merge') return merge(args, deps);
   if (action === 'statement') return statement(args, deps);
+  if (action === 'territory') return territory(args, deps);
   if (action === 'certificate' && args.positional[1] === 'add') return certificateAdd(args, deps);
   if (action === 'certificate' && args.positional[1] === 'list') return certificateList(args, deps);
   throw new UsageError(USAGE);
@@ -77,6 +82,9 @@ async function add(args: ParsedArgs, deps: BooksDeps): Promise<number> {
     vat_number: stringFlag(args, 'vat') ?? input['vat_number'],
     email: stringFlag(args, 'email') ?? input['email'],
     country: stringFlag(args, 'country') ?? input['country'],
+    // Where the party is below its country (US-CA), where the pack's taxes
+    // name territories; one outside the country is the database's refusal.
+    territory_code: stringFlag(args, 'territory') ?? input['territory_code'],
     payment_terms_days: numberFlag(args, 'terms') ?? input['payment_terms_days'],
     auxiliary_code: stringFlag(args, 'aux') ?? input['auxiliary_code'],
     address_line1: stringFlag(args, 'address') ?? input['address_line1'],
@@ -112,6 +120,34 @@ async function add(args: ParsedArgs, deps: BooksDeps): Promise<number> {
   const contact = result.contact;
   if (result.replayed === true) note(dim(`already created under the reference ${String(contact['client_ref'])}; nothing was written`));
   step(`${String(contact['name'])} ${dim(String(contact['id']))}, in ${company.name}`);
+  return 0;
+}
+
+async function territory(args: ParsedArgs, deps: BooksDeps): Promise<number> {
+  rejectUnknownFlags(args, TERRITORY_FLAGS);
+  const wanted = args.positional[1];
+  const code = args.positional[2];
+  const clear = boolFlag(args, 'clear');
+  if (wanted === undefined || (code === undefined) === !clear) {
+    throw new UsageError(
+      'missing_argument: the contact and where it is, or --clear. `ekwo contact territory "<name|id>" <code>` (ISO 3166-2 with the country prefix, US-NY), or `--clear` to take it back.',
+    );
+  }
+  const { backend, company } = await openBooks(args, deps);
+  const contact = await resolveContact(backend, company.id, wanted);
+  const result = (await setContactTerritory(backend, {
+    company_id: company.id,
+    contact_id: contact.id,
+    territory_code: clear ? null : (code as string),
+  })) as { contact: Record<string, unknown> };
+  setResult(result);
+
+  heading(`Territory of ${String(result.contact['name'])}`);
+  const c = result.contact;
+  pairs([
+    ['country', c['country'] === null ? dim('none') : String(c['country'])],
+    ['territory', c['territory_code'] === null ? dim('the country is the answer') : String(c['territory_code'])],
+  ]);
   return 0;
 }
 

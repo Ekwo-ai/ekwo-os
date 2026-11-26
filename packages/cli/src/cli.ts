@@ -188,6 +188,9 @@ ${bold('Connecting')} ${dim('(every command)')}
               names the first, and the second is retired. By name or id;
               statement <name|id> --from <date> [--to <date>] — what went
               through their accounts, the balance it runs to, what is open;
+              territory <name|id> <code> | --clear — where the party is below
+              its country (US-NY), which a tax that names a territory is
+              judged on; add takes it as --territory <code>;
               certificate add <name|id> <reference> --from <date> [--to <date>
               --territory <code>] | certificate list [<name|id>] — a resale or
               exemption certificate the buyer handed over, which a sale under

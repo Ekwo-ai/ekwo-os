@@ -389,6 +389,9 @@ describe('every command answers --json with one document of the published shape'
       expect(certificate.data).toMatchObject({ certificate: { reference: 'EXAMPLE-0001', territory_code: null, valid_to: null } });
       const again = await asPerson(['contact', 'certificate', 'add', 'Client Example', 'EXAMPLE-0001', '--from', '2026-01-01', '--ref', 'cert-1']);
       expect(again.data).toMatchObject({ replayed: true });
+      // Where a contact is below its country, taken back: the country is the answer.
+      const territory = await asPerson(['contact', 'territory', 'Client Example', '--clear']);
+      expect(territory.data).toMatchObject({ contact: { name: 'Client Example', territory_code: null } });
       const certificates = await asPerson(['contact', 'certificate', 'list', 'Client Example']);
       expect(certificates.data).toMatchObject({ count: 1, certificates: [{ contact_name: 'Client Example' }] });
       const set = await asPerson(['bank', 'profile', bankAccount, profilePath]);
