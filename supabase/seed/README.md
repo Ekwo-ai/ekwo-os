@@ -10,10 +10,10 @@ exists.
 
 | File | Content | Applied by default |
 |---|---|---|
-| `00_currencies.sql` | The ISO 4217 currencies the packs name, each with the number of decimals it is rounded at. A pack whose currency is not here adds its row | yes |
-| `00_territories.sql` | The territories of the common system of VAT: the 27 Member States with the day each became bound, the United Kingdom with the day it stopped being, Northern Ireland, the territories articles 6 and 7 of Directive 2006/112/EC take out of the system or put into it, and the VAT prefixes that are not ISO codes — plus a row, outside the system, for each country a pack outside it names. Read by `ec_sales_list()`, which refuses to write a statement when the file has not been applied | yes |
+| `00_currencies.sql` | The ISO 4217 currencies the packs name, each with the number of decimals it is rounded at. **Closed** at the number of rows on its last line: a new country's currency is in its own pack seed, and a row is added here only for a currency several packs share | yes |
+| `00_territories.sql` | The territories of the common system of VAT: the 27 Member States with the day each became bound, the United Kingdom with the day it stopped being, Northern Ireland, the territories articles 6 and 7 of Directive 2006/112/EC take out of the system or put into it, and the VAT prefixes that are not ISO codes — plus a row, outside the system, for each country a pack outside it named before packs carried their own. **Closed** like the currencies: a new country's territories are in its own pack seed. Read by `ec_sales_list()`, which refuses to write a statement when the file has not been applied | yes |
 | `05_framework_generic.sql` | **Generated from `packs/generic`.** Two country-less financial statements, `IFRS-SME-BS` and `IFRS-SME-IS`, whose rules are all account types: they fit any chart of any country, and they are the fallback for a chart that names no statement of its own | yes |
-| `<n>_pack_<cc>.sql`, one per pack | **Generated from `packs/<cc>`.** Its charts of accounts, its journals, its taxes with their postings, the boxes of its periodic declaration, its financial statements, the legal mentions, the account roles and the labels in every language it publishes. `<n>` is the number the pack declares in `seed_sequence`, so that adding a country renames nobody. The [table of packs](../../docs/packs.md#the-packs-of-this-checkout) — generated too — gives each pack's file | yes |
+| `<n>_pack_<cc>.sql`, one per pack | **Generated from `packs/<cc>`.** First, for a country added since the two files above were closed, its own currency and territories (`reference` of its `pack.json`). Then its charts of accounts, its journals, its taxes with their postings, the boxes of its periodic declaration, its financial statements, the legal mentions, the account roles and the labels in every language it publishes. `<n>` is the number the pack declares in `seed_sequence`, so that adding a country renames nobody. The [table of packs](../../docs/packs.md#the-packs-of-this-checkout) — generated too — gives each pack's file | yes |
 | `modules/fixed_assets/<n>_pack_<cc>.sql`, where the pack has a `fixed_assets.json` | **Generated from `packs/<cc>/fixed_assets.json`.** The fixed-asset rules of one country: how it prorates a first period, whether its declining balance is capped, how it derecognises an asset, and the usual duration of each kind of asset | **no** — applied by the module migration runner |
 | `modules/corporate_tax/<n>_pack_<cc>.sql`, where the pack has a `corporate_tax.json` | **Generated from `packs/<cc>/corporate_tax.json`.** The corporate income tax rules of one country: the line of the income statement the computation starts from, what is added back and deducted, how far a loss carries, the rates with their conditions, the prepayments and the credits — each with the article it comes from and the day it applies from | **no** — applied by the module migration runner |
 | `90_demo_company.sql` | A fictional company, « Exemple Conseil SRL », with contacts, four catalogue products, posted documents, a matched payment and a bank statement | **no** — sample data only |
@@ -23,9 +23,10 @@ exists.
 The files applied by default — every `.sql` of this folder but the demo — are
 applied **in file-name order**, and the
 order matters twice: the currencies exist before a pack names one, and the
-generic framework exists before a chart falls back to it. The territories
-answer to nobody in this folder and are read only at run time, so where they
-sit is a matter of reading order and not of dependency.
+generic framework exists before a chart falls back to it. The territories are
+named by the taxes of a pack, and the pack seed that carries its own writes
+them before its taxes; a territory or a currency several packs name stays in
+the shared files, which come first. Nothing else in this folder reads them.
 
 | Who | What it applies |
 |---|---|
@@ -68,9 +69,9 @@ and the generated pair into another and compares every template row.
 
 ## What the generated files fill
 
-The *template* tables, and nothing that belongs to a company — plus the two
-reference tables of the framework, `currencies` and `territories`, which no
-pack writes and no company owns:
+The *template* tables, and nothing that belongs to a company — plus, for a
+pack that carries them, its rows of the two reference tables of the framework,
+`currencies` and `territories`, which no company owns:
 `chart_templates`, `account_templates`, `journal_templates`, `tax_templates`,
 `tax_posting_templates`, `country_defaults`, `country_packs` and
 `legal_mention_templates`; the two declaration-form tables,

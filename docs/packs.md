@@ -918,7 +918,8 @@ the column takes its codes.
 Which side of that line a pack is on is never written in code: it is the row of
 `territories` for the pack's country (`eu_vat_scope`) on the day of the pack's
 `released_at`. `ekwo pack check` reads it from
-`supabase/seed/00_territories.sql`, the file the database is seeded from.
+`supabase/seed/00_territories.sql`, the file the database is seeded from, and
+from `reference.territories` of the packs, which their own seeds write.
 
 A few decisions behind the table are worth knowing before filling a column in:
 
@@ -1307,8 +1308,9 @@ foreign keys. It refuses a `jurisdiction` the table does not carry for the same
 reason, now that there is a table to check it against, and it refuses a
 `seller_in` outside the pack's own country, because a pack is keyed on the
 country its companies file under. A pack outside the common system, or one that conditions a tax on a territory
-below the country, therefore adds rows to
-[`supabase/seed/00_territories.sql`](../supabase/seed/00_territories.sql).
+below the country, therefore carries its rows under `reference.territories` of
+its `pack.json` (see [step 0](#adding-a-country-in-a-day)); the rows written before
+that are in [`supabase/seed/00_territories.sql`](../supabase/seed/00_territories.sql).
 
 **The regime a tax is held to follows the territory too.** Whether the VATEX
 list of EN 16931 reaches a tax used to be a question about the pack's country;
@@ -2996,16 +2998,31 @@ texts, and the citation is cheaper to write while the tab is open than to
 reconstruct from a rate you no longer remember reading.
 
 **If your country is outside the common system of VAT, there is one more thing
-to do before step 1**, and it is the only edit a pack ever makes outside its own
-folder. `ekwo pack check` decides whether the VATEX list of EN 16931 reaches
+to do before step 1.** `ekwo pack check` decides whether the VATEX list of EN 16931 reaches
 your taxes by looking your country up in `territories`, and a country the table
 carries no row for is held to the European Union's table — so an exempt sale with no
 `exemption_code` would be refused and you would be told to write a code that
-names an article of a Directive your seller is not bound by. Add a row to
-`supabase/seed/00_territories.sql`: your ISO code, `eu_vat_scope` `none`, no
-window, no `vat_prefix`, and a `legal_reference` saying why the common system
-does not reach you. `tests/territories.test.ts` refuses a pack whose country the
-table does not carry, so the check is enforced from both sides.
+names an article of a Directive your seller is not bound by. Give your
+`pack.json` a `reference`, which your own seed writes before anything else:
+
+```json
+"reference": {
+  "currency": { "code": "XXX", "name": "…", "symbol": "…", "decimal_places": 2, "source": "<key of the register>" },
+  "territories": [
+    { "code": "XX", "code_source": "iso_3166_1", "name": "…", "parent_code": null,
+      "legal_reference": "why the common system of VAT does not reach it" }
+  ]
+}
+```
+
+`currency` is there only when no other pack keeps its books in it; a currency
+several packs share is a row of `supabase/seed/00_currencies.sql`. A row is
+outside the common system by construction (`eu_vat_scope` `none`, no window, no
+`vat_prefix`). The two seed files keep the rows they hold and are closed at that
+number: `ekwo pack check` refuses a row added there without the number on their
+last line raised, a code written in two places, and a pack whose currency nobody
+writes. `tests/territories.test.ts` refuses a pack whose country the table does
+not carry, so the check is enforced from both sides.
 
 ### 1. Copy a pack and give it its identity
 
@@ -3397,30 +3414,30 @@ seed under `supabase/seed/`, and the generated blocks of
 `supabase/config.toml`, `README.md`, `.github/CODEOWNERS` and this page. A
 contributor runs the command and commits its output, exactly as for the seed.
 
-A pack whose currency no pack used before adds its row — the ISO 4217 code,
-its name, its symbol and its decimals — to `supabase/seed/00_currencies.sql`.
-A member State of OHADA finds all three already written: its code in `members`
+A pack whose currency no pack used before carries its row — the ISO 4217 code,
+its name, its symbol and its decimals — under `reference.currency` of its
+`pack.json` (step 0). A member State of OHADA finds all three already written: its code in `members`
 in `packs/ohada/manifest.json`, which is how it receives the chart the members
 share, its currency and its territory — so it touches its own folder and
 nothing else. [`packs/ohada/README.md`](../packs/ohada/README.md) is that
 path.
 
-A country **outside the common system of VAT** adds a third, and exactly one
-row of it: `supabase/seed/00_territories.sql`, for the reason step 0 gives. It
-is framework reference data and not a country literal in the core — the table
-exists precisely so that no function holds a list of countries — and it is
-still a file outside `packs/`, so a pull request that adds one says so.
+A country **outside the common system of VAT** carries its own row under
+`reference.territories`, for the reason step 0 gives. It is framework reference
+data and not a country literal in the core — the table exists precisely so that
+no function holds a list of countries.
 
-A pack that **conditions a tax on a territory below the country** adds rows to
-the same file, one per territory it names — and one per territory its golden
+A pack that **conditions a tax on a territory below the country** carries those
+rows after it, each with its parent listed first, one per territory it names — and one per territory its golden
 scenario delivers to, because `documents.supply_territory_code` is a foreign
 key as well. Once a pack conditions a tax on one territory of a country, every
 territory of the same level in that country is a place its documents can
 deliver to and its contacts can be in, so the file carries all of them:
 `packs/us/` taxes three states, and the file carries the fifty and the District
 of Columbia, as it carries the thirteen provinces and territories of Canada and
-the States and Union territories of India. The rows grow with the packs and
-not with the world: a country no pack divides has no row below it.
+the States and Union territories of India — rows written before `reference`
+existed, which stay in `supabase/seed/00_territories.sql`. The rows grow with
+the packs and not with the world: a country no pack divides has no row below it.
 
 **Nothing under `tests/` or `modules/*/tests/`.** A test about the core walks
 `listPacks()` and reads its expectation from the pack — a role from the
