@@ -8,7 +8,7 @@
 
 import type { PGlite } from '@electric-sql/pglite';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import { writeTools, type Backend } from '../../packages/mcp/src/index.js';
+import { readTools, writeTools, type Backend } from '../../packages/mcp/src/index.js';
 import { freshDatabase, one } from '../helpers/db.js';
 import { newCompany, newContact, newDocument, type Fixture } from '../helpers/factory.js';
 import { backendFor, ledgerOfEntry, record } from './helpers.js';
@@ -170,5 +170,46 @@ describe('close_fiscal_year and reopen_fiscal_year', () => {
     await expect(
       writeTools.reopenFiscalYear(backend, { fiscal_year_id: year2026 }),
     ).rejects.toThrow(/fiscal_year_finally_closed/);
+  });
+});
+
+describe('set_closing_rate and currency_revaluation', () => {
+  it('show what a close would revalue, and which rate is still missing', async () => {
+    const customer = await newContact(db, fx.companyId, { name: 'Overseas', country: null });
+    // A receivable of 1 000 USD booked at 900, open at the end of the year.
+    const entry = await one<{ id: string }>(
+      db,
+      `insert into entries (company_id, journal_id, entry_date, description)
+       select $1, miscellaneous_journal_id, date '2026-03-01', 'By hand' from companies where id = $1
+       returning id`,
+      [fx.companyId],
+    );
+    await db.query(
+      `insert into entry_lines (entry_id, company_id, account_id, sequence, debit, credit, contact_id, currency_code, amount_currency)
+       select $1::uuid, $2::uuid, c.receivable_account_id, 10, 900, 0, $3::uuid, 'USD', 1000 from companies c where c.id = $2::uuid
+       union all
+       select $1::uuid, $2::uuid, c.default_sales_account_id, 20, 0, 900, null, 'USD', 1000 from companies c where c.id = $2::uuid`,
+      [entry.id, fx.companyId, customer],
+    );
+    await db.query(`select post_entry($1)`, [entry.id]);
+
+    const before = record(await readTools.currencyRevaluation(backend, { company_id: fx.companyId, at: '2026-12-31' }));
+    expect(before['missing_rates']).toEqual(['USD']);
+
+    const set = record(
+      await writeTools.setClosingRate(backend, {
+        company_id: fx.companyId,
+        currency_code: 'usd',
+        rate_date: '2026-12-31',
+        rate: '1.25',
+        source: 'Test series',
+      }),
+    );
+    expect(record(set['closing_rate'])).toMatchObject({ currency_code: 'USD', rate_date: '2026-12-31' });
+
+    const after = record(await readTools.currencyRevaluation(backend, { company_id: fx.companyId, at: '2026-12-31' }));
+    expect(after['missing_rates']).toEqual([]);
+    const [position] = after['positions'] as Record<string, unknown>[];
+    expect(Number(position!['difference'])).toBe(-100);
   });
 });

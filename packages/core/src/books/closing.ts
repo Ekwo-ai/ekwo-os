@@ -62,7 +62,78 @@ export async function closeFiscalYear(backend: Backend, args: FiscalYearArgs): P
   return {
     close: only(answer, `fiscal year ${args.fiscal_year_id}`),
     final_close: only(finalClose, `fiscal year ${args.fiscal_year_id}`),
-    note: 'The income statement is back at zero and the year refuses new entries. It can still be reopened with reopen_fiscal_year. What a general meeting decides to do with the result — a dividend, a reserve — is a later entry, and the close never writes it. Where final_close.required is true, the country requires a final close by final_close.due_date: tell the user, and call close_fiscal_year_finally only when they ask for it.',
+    note: 'What was still open in a foreign currency is stated at the closing rate on the last day and back at its own rate the next (revaluation_entry_id, revaluation_reversal_entry_id, unrealised_exchange_difference). The income statement is back at zero and the year refuses new entries. It can still be reopened with reopen_fiscal_year. What a general meeting decides to do with the result — a dividend, a reserve — is a later entry, and the close never writes it. Where final_close.required is true, the country requires a final close by final_close.due_date: tell the user, and call close_fiscal_year_finally only when they ask for it.',
+  };
+}
+
+export interface ClosingRateArgs {
+  company_id: string;
+  /** ISO 4217 code of the currency, other than the company's. */
+  currency_code: string;
+  /** The day the rate is the closing rate of: the last day of a year, for its close. */
+  rate_date: string;
+  /** Units of that currency for one unit of the company's, as a decimal string. */
+  rate: string | number;
+  /** Where the rate comes from — a central bank, a published series. */
+  source?: string | null | undefined;
+}
+
+const CLOSING_RATE_COLUMNS = ['id', 'currency_code', 'rate_date::text', 'rate::text', 'source'];
+
+/**
+ * Records the rate a company closes a currency at on a day, in
+ * `closing_rates`: the same currency and day again replaces the rate. Whoever
+ * may close a year may set it (`year_end.close`), and the table's policies
+ * say so, not this function.
+ */
+export async function setClosingRate(backend: Backend, args: ClosingRateArgs): Promise<unknown> {
+  const where = [
+    { column: 'company_id', op: 'eq' as const, value: args.company_id },
+    { column: 'currency_code', op: 'eq' as const, value: args.currency_code.toUpperCase() },
+    { column: 'rate_date', op: 'eq' as const, value: args.rate_date },
+  ];
+  const patch: Row = { rate: String(args.rate), source: args.source ?? null };
+  const updated = await backend.update<Row>('closing_rates', patch, where, CLOSING_RATE_COLUMNS);
+  const rate =
+    updated[0] ??
+    (
+      await backend.insert<Row>(
+        'closing_rates',
+        [{ company_id: args.company_id, currency_code: args.currency_code.toUpperCase(), rate_date: args.rate_date, ...patch }],
+        CLOSING_RATE_COLUMNS,
+      )
+    )[0];
+  if (rate === undefined) {
+    throw new BooksError('not_allowed: setting a closing rate in this company needs year_end.close, and nothing was written.');
+  }
+  return {
+    closing_rate: rate,
+    note: 'A close reads the rate of the last day of the year, that day exactly, for every currency still open; currency_revaluation shows what it would move.',
+  };
+}
+
+export interface CurrencyRevaluationArgs {
+  company_id: string;
+  /** The closing day: the last day of the year to be closed. */
+  at: string;
+}
+
+/**
+ * What a close on `at` would revalue: `currency_revaluation()`, position by
+ * account, counterparty and currency, and the currencies still open with no
+ * closing rate for that day, which would refuse the close. Writes nothing.
+ */
+export async function currencyRevaluation(backend: Backend, args: CurrencyRevaluationArgs): Promise<unknown> {
+  const positions = await backend.rpc<Row>('currency_revaluation', { p_company_id: args.company_id, p_at: args.at });
+  const missing = [...new Set(positions.filter((p) => p['closing_rate'] === null).map((p) => String(p['currency_code'])))].sort();
+  return {
+    at: args.at,
+    positions,
+    missing_rates: missing,
+    note:
+      missing.length > 0
+        ? `No closing rate on ${args.at} for ${missing.join(', ')}: close_fiscal_year refuses the year until one is set with set_closing_rate.`
+        : 'close_fiscal_year books each difference on the last day of the year, on the accounts the country pack names, and reverses it the next day. A position is the open part of the receivables and payables in that currency, or the balance of a bank account kept in it.',
   };
 }
 

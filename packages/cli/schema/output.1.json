@@ -920,12 +920,21 @@
         }
       },
       "close year": {
-        "$comment": "Without --final, close_fiscal_year() and fiscal_year_final_close(): the result as the currency writes it, its kind, the closing style of the country and the entries written; then whether the country requires a final close, by when and under which reference. With --final, close_fiscal_year_finally(). The amount is a decimal string.",
+        "$comment": "Without --final, close_fiscal_year() and fiscal_year_final_close(): the result as the currency writes it, its kind, the closing style of the country, the unrealised exchange difference of the revaluation of what was still open in a foreign currency and the entries written; then whether the country requires a final close, by when and under which reference. With --final, close_fiscal_year_finally(). The amount is a decimal string.",
         "type": "object",
         "required": ["note"],
         "properties": {
           "close": { "type": "object", "required": ["fiscal_year_id", "result"] },
           "final_close": { "type": "object", "required": ["fiscal_year_id"] },
+          "note": { "type": "string" }
+        }
+      },
+      "close rate": {
+        "$comment": "setClosingRate() of @ekwo-ai/core — the MCP server's set_closing_rate: the row of closing_rates for the currency and the day, the rate as a decimal string.",
+        "type": "object",
+        "required": ["closing_rate", "note"],
+        "properties": {
+          "closing_rate": { "type": "object", "required": ["id", "currency_code", "rate_date", "rate"] },
           "note": { "type": "string" }
         }
       },

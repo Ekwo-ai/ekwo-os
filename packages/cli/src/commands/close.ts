@@ -18,8 +18,16 @@
  * that nothing closes the books by ricochet.
  */
 
-import { closeFiscalYear, closeFiscalYearFinally, getCompany, lockPeriod, reopenFiscalYear } from '@ekwo-ai/core';
-import { UsageError, boolFlag, rejectUnknownFlags, type ParsedArgs } from '../args.js';
+import {
+  closeFiscalYear,
+  closeFiscalYearFinally,
+  currencyRevaluation,
+  getCompany,
+  lockPeriod,
+  reopenFiscalYear,
+  setClosingRate,
+} from '@ekwo-ai/core';
+import { UsageError, boolFlag, rejectUnknownFlags, stringFlag, type ParsedArgs } from '../args.js';
 import { BOOKS_FLAGS, openBooks, type BooksDeps } from '../books.js';
 import { setResult } from '../output.js';
 import { confirm, isInteractive } from '../prompt.js';
@@ -29,8 +37,10 @@ type Row = Record<string, unknown>;
 
 const CONFIRM_FLAGS = [...BOOKS_FLAGS, 'yes'] as const;
 const YEAR_FLAGS = [...BOOKS_FLAGS, 'yes', 'final'] as const;
+const RATE_FLAGS = [...BOOKS_FLAGS, 'on', 'source'] as const;
 
-const CLOSE_USAGE = 'usage: ekwo close month <YYYY-MM> [--yes] | ekwo close year <name|id> [--final] [--yes]';
+const CLOSE_USAGE =
+  'usage: ekwo close month <YYYY-MM> [--yes] | ekwo close year <name|id> [--final] [--yes] | ekwo close rate <currency> <rate> --on <YYYY-MM-DD> [--source <text>]';
 const REOPEN_USAGE = 'usage: ekwo reopen month <YYYY-MM> [--yes] | ekwo reopen year <name|id> [--yes]';
 
 const text = (value: unknown): string => (value === null || value === undefined ? '—' : String(value));
@@ -93,6 +103,7 @@ function declined(): number {
 
 export async function closeCommand(args: ParsedArgs, deps: BooksDeps = {}): Promise<number> {
   const [action, target, ...rest] = args.positional;
+  if (action === 'rate') return await closeRate(target, rest, args, deps);
   if (rest.length > 0) throw new UsageError(`too_many_arguments: ${rest.join(' ')}. ${CLOSE_USAGE}`);
   if (action === 'month') return await closeMonth(target, args, deps);
   if (action === 'year') return await closeYear(target, args, deps);
@@ -166,6 +177,45 @@ async function reopenMonth(month: string | undefined, args: ParsedArgs, deps: Bo
   return 0;
 }
 
+/**
+ * `ekwo close rate <currency> <rate> --on <day>`: the rate a currency closes
+ * at on a day, in units of it for one unit of the company's currency. The
+ * close of a year reads the rate of its last day for every currency still
+ * open in the books. It changes no figure, so it asks nothing.
+ */
+async function closeRate(
+  currency: string | undefined,
+  rest: string[],
+  args: ParsedArgs,
+  deps: BooksDeps,
+): Promise<number> {
+  rejectUnknownFlags(args, RATE_FLAGS);
+  const [rate, ...extra] = rest;
+  if (extra.length > 0) throw new UsageError(`too_many_arguments: ${extra.join(' ')}. ${CLOSE_USAGE}`);
+  if (currency === undefined || !/^[A-Za-z]{3}$/.test(currency)) {
+    throw new UsageError(`bad_currency: a currency is its three-letter ISO 4217 code${currency === undefined ? '' : `, got "${currency}"`}. ${CLOSE_USAGE}`);
+  }
+  if (rate === undefined || !/^\d+(\.\d+)?$/.test(rate)) {
+    throw new UsageError(`bad_rate: a rate is a positive decimal, units of ${currency.toUpperCase()} for one unit of the company's currency${rate === undefined ? '' : `, got "${rate}"`}. ${CLOSE_USAGE}`);
+  }
+  const on = stringFlag(args, 'on');
+  if (on === undefined || !/^\d{4}-\d{2}-\d{2}$/.test(on)) {
+    throw new UsageError(`missing_date: --on <YYYY-MM-DD>, the day the rate closes — the last day of the year. ${CLOSE_USAGE}`);
+  }
+  const { backend, company } = await openBooks(args, deps);
+  const result = (await setClosingRate(backend, {
+    company_id: company.id,
+    currency_code: currency,
+    rate_date: on,
+    rate,
+    source: stringFlag(args, 'source') ?? null,
+  })) as { closing_rate: Row };
+  setResult(result);
+  step(`${text(result.closing_rate['currency_code'])} closes at ${text(result.closing_rate['rate'])} on ${on} for ${company.name}`);
+  line();
+  return 0;
+}
+
 async function closeYear(asked: string | undefined, args: ParsedArgs, deps: BooksDeps): Promise<number> {
   rejectUnknownFlags(args, YEAR_FLAGS);
   const final = boolFlag(args, 'final');
@@ -181,6 +231,23 @@ async function closeYear(asked: string | undefined, args: ParsedArgs, deps: Book
     ['to', text(year['end_date'])],
     ['state', year['is_closed'] === true ? 'closed' : 'open'],
   ]);
+  // What is still open in a foreign currency is revalued at the closing rate
+  // of the last day: said before the question, with the rates still missing.
+  if (!final && year['is_closed'] !== true) {
+    const preview = (await currencyRevaluation(backend, { company_id: company.id, at: text(year['end_date']) })) as {
+      positions: Row[];
+      missing_rates: string[];
+    };
+    if (preview.positions.length > 0) {
+      const currencies = [...new Set(preview.positions.map((p) => text(p['currency_code'])))].sort();
+      pairs([['open in a foreign currency', `${preview.positions.length} position(s) in ${currencies.join(', ')}`]]);
+      if (preview.missing_rates.length > 0) {
+        warn(
+          `No closing rate on ${text(year['end_date'])} for ${preview.missing_rates.join(', ')}: the close will be refused. ekwo close rate <currency> <rate> --on ${text(year['end_date'])} records one.`,
+        );
+      }
+    }
+  }
   if (final) {
     warn('A final close cannot be undone: nobody can reopen the year or change it afterwards, and a correction is booked in a later year.');
   } else {
@@ -204,6 +271,9 @@ async function closeYear(asked: string | undefined, args: ParsedArgs, deps: Book
     ['result', text(result.close['result'])],
     ['result kind', text(result.close['result_kind'])],
     ['closing style', text(result.close['closing_style'])],
+    ...(result.close['revaluation_entry_id']
+      ? ([['unrealised exchange difference', text(result.close['unrealised_exchange_difference'])]] as [string, string][])
+      : []),
   ]);
   const finalClose = result.final_close;
   if (finalClose['required'] === true) {

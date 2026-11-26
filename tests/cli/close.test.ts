@@ -156,6 +156,35 @@ describe('a month', () => {
   });
 });
 
+describe('a closing rate', () => {
+  // A currency that is not the company's own.
+  const FOREIGN = somePack.manifest.defaults.currency === 'USD' ? 'EUR' : 'USD';
+
+  it('is recorded for a currency and a day, and the same day again replaces it', async () => {
+    const first = await ekwo(['close', 'rate', FOREIGN, '1.25', '--on', '2026-12-31', '--source', 'Test series']);
+    expect(first.exitCode).toBe(0);
+    expect(first.data).toMatchObject({ closing_rate: { currency_code: FOREIGN, rate_date: '2026-12-31' } });
+    const second = await ekwo(['close', 'rate', FOREIGN.toLowerCase(), '1.3', '--on', '2026-12-31']);
+    expect(second.exitCode).toBe(0);
+    const rows = await one<{ n: number; rate: string }>(
+      pg,
+      `select count(*)::int as n, max(rate)::float8::text as rate from closing_rates where company_id = $1`,
+      [companyId],
+    );
+    expect(rows).toEqual({ n: 1, rate: '1.3' });
+  });
+
+  it('refuses a rate that is not a decimal, and a day that is not given', async () => {
+    expect((await ekwo(['close', 'rate', FOREIGN, 'high', '--on', '2026-12-31'])).exitCode).toBe(EXIT_USAGE);
+    expect((await ekwo(['close', 'rate', FOREIGN, '1.25'])).exitCode).toBe(EXIT_USAGE);
+  });
+
+  it('is set by whoever may close the year, and nobody else', async () => {
+    const refused = await ekwo(['close', 'rate', FOREIGN, '1.4', '--on', '2026-12-31'], 'viewer');
+    expect(refused.exitCode).not.toBe(0);
+  });
+});
+
 describe('a financial year', () => {
   it('is named as the company names it, and an unknown one says which exist', async () => {
     const unknown = await ekwo(['close', 'year', '1999', '--yes']);

@@ -61,6 +61,7 @@ export {
   recordPayment,
   reopenFiscalYear,
   reverseEntry,
+  setClosingRate,
   setContactTerritory,
   setLineContact,
   settleFromStatement,
@@ -1422,6 +1423,14 @@ export async function openingBalance(
         : 'The opening entry is posted, and each open item is a posted document on the opening journal, matched by statements like any invoice. A year holds one opening; a second call is refused rather than adding to it.',
   };
 }
+
+export const SetClosingRateInput = z.object({
+  company_id: companyId,
+  currency_code: z.string().regex(/^[A-Za-z]{3}$/, 'an ISO 4217 code, three letters').describe('The currency, other than the company\'s, still open at the close.'),
+  rate_date: isoDate.describe('The day the rate closes: the last day of the financial year to be closed. A close reads that day exactly.'),
+  rate: z.union([z.string(), z.number()]).describe('Units of that currency for one unit of the company\'s currency, as a decimal string — the convention of a document\'s exchange rate. Never invented: the user gives it, or the source they name.'),
+  source: z.string().min(1).optional().describe('Where the rate comes from — the central bank or the published series the user named.'),
+});
 
 export const CloseFiscalYearInput = z.object({
   fiscal_year_id: uuid.describe('The year to close. Every entry in it must be posted.'),

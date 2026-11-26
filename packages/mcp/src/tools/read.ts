@@ -37,6 +37,7 @@ import {
 // from here under the names they always had.
 export {
   agedBalance,
+  currencyRevaluation,
   analyticReport,
   contactStatement,
   ecSalesList,
@@ -561,6 +562,11 @@ export const JournalBookInput = z.object({
   to: isoDate,
   journal_code: z.string().min(1).optional().describe('The journal to read, by its code, e.g. "SAL". Leave both out for the book of every journal.'),
   journal_ids: z.array(uuid).optional().describe('The journals to read, by id.'),
+});
+
+export const CurrencyRevaluationInput = z.object({
+  company_id: companyId,
+  at: isoDate.describe('The closing day: the last day of the financial year to be closed.'),
 });
 
 export const AgedBalanceInput = z.object({

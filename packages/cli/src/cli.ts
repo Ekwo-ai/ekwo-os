@@ -269,6 +269,9 @@ ${bold('Connecting')} ${dim('(every command)')}
               moving the lock date to its last day; a financial year closed by
               close_fiscal_year(), the way the country pack says, and with
               --final for good. Asks first; outside a terminal, needs --yes.
+              rate <currency> <rate> --on <YYYY-MM-DD> [--source <text>] — the
+              rate a currency closes at on the last day of a year: the close
+              revalues what is still open in it, and refuses without it.
   ${cyan('reopen')}      month <YYYY-MM> | year <name|id> — the same, undone: the lock
               date back to the day before the month, a year's close reversed.
               Asks first; outside a terminal, needs --yes.

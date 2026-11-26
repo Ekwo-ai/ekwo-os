@@ -533,6 +533,18 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
   );
 
   register(
+    'currency_revaluation',
+    {
+      title: 'Foreign-currency positions at a closing day',
+      description:
+        'What close_fiscal_year would revalue on a closing day: every receivable and payable still open in a currency other than the company\'s — for the part no matching dated on or before that day settled — and every bank account kept in one, by account, counterparty and currency, with the amount in the currency, the amount the ledger carries it at, the closing rate recorded for that day, the amount at that rate and the difference. missing_rates lists the currencies with no closing rate that day, which would refuse the close until set_closing_rate records one. It writes nothing.',
+      inputSchema: read.CurrencyRevaluationInput.shape,
+      annotations: { readOnlyHint: true, openWorldHint: false },
+    },
+    async (args) => guard(() => read.currencyRevaluation(backend, args)),
+  );
+
+  register(
     'aged_balance',
     {
       title: 'Aged balance',
@@ -1297,11 +1309,23 @@ export function buildServer(backend: Backend, options: ServerOptions = {}): McpS
   );
 
   register(
+    'set_closing_rate',
+    {
+      title: 'Set a closing exchange rate',
+      description:
+        'Records the rate a company closes a foreign currency at on a day — units of that currency for one unit of the company\'s — which close_fiscal_year reads on the last day of the year for every currency still open there (fx_closing_rate_missing otherwise). The same currency and day again replaces the rate. Needs year_end.close. Never pick a rate yourself: use the one the user gives, or the series they name, and say where it came from in source.',
+      inputSchema: write.SetClosingRateInput.shape,
+      annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: false },
+    },
+    async (args) => guard(() => write.setClosingRate(backend, args)),
+  );
+
+  register(
     'close_fiscal_year',
     {
       title: 'Close a fiscal year',
       description:
-        'Closes a year: the result of the year leaves the income statement the way the country model says — straight to retained earnings, into a current-year result account, or through the appropriation accounts — every income and expense account goes back to zero, and the year stops accepting entries. The close can be undone with reopen_fiscal_year; final_close in the answer says whether the country also requires a final close, which cannot, and by when. Refused while the year holds a draft entry, while an earlier year with entries is open, or when a later year is already closed. It never writes what a general meeting decides to do with the result. Always ask the user before calling it.',
+        'Closes a year: what is still open in a foreign currency is first stated at the closing rate of its last day (set_closing_rate; currency_revaluation shows it) on the accounts the country pack names, and reversed the next day; then the result of the year leaves the income statement the way the country model says — straight to retained earnings, into a current-year result account, or through the appropriation accounts — every income and expense account goes back to zero, and the year stops accepting entries. The close can be undone with reopen_fiscal_year; final_close in the answer says whether the country also requires a final close, which cannot, and by when. Refused while the year holds a draft entry, while an earlier year with entries is open, or when a later year is already closed. It never writes what a general meeting decides to do with the result. Always ask the user before calling it.',
       inputSchema: write.CloseFiscalYearInput.shape,
       annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false },
     },
