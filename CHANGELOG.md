@@ -11,6 +11,21 @@ somewhere has already run it.
 
 ### Changed
 
+- **A country is one folder.** A pack declares its currency and its
+  territories in `packs/<cc>/reference.json`, and `ekwo pack build` writes
+  `supabase/seed/00_currencies.sql` and `supabase/seed/00_territories.sql`
+  from the reference files of every pack; `ekwo pack check` refuses either
+  seed when a hand edit made it differ. A currency belongs to the pack of the
+  country its ISO 4217 code begins with, or to `packs/generic/` for a monetary
+  union; a territory to the pack of the country it lies in. Applied to a
+  database, the generated seeds write the same 124 currencies and 322
+  territories as the hand-written ones, with the same file names and conflict
+  rules, so an installation seeded by an earlier release re-applies them
+  unchanged. What the core could not do for a country moves from
+  `docs/international.md` to the pack's README, under `## What the core could
+  not say`, and the page carries a generated index of those sections, checked
+  by the same command. See [`docs/packs.md`](docs/packs.md#what-a-pack-is).
+
 - **An amount holds the decimals of its currency.** Every money column of the
   socle and of the modules (`budgets`, `contracts`, `crm`, `assets`) is a bare
   `numeric` instead of `numeric(16, 2)` or `numeric(18, 2)`: a Kuwaiti or
