@@ -103,3 +103,23 @@ of 7 500 000, so 22 500 000 (tax 2 250 000), tuition 3 000 000 exempt, input tax
 4 000 000 refundable; April taxable 20 000 000 (tax 2 000 000), an export of 15 000 000,
 input tax 800 000, so 1 200 000 payable; May seeds 12 000 000, exempt. Amounts are
 fictitious, in kip (LAK, no decimals); the contacts are named as plainly fictitious.
+
+## What the core could not say
+
+The pack carries VAT at 10 % (restored from 7 % by the Ordinance of 19 March 2024),
+the zero rate on exports of goods, four exemptions, a monthly return and two
+statements, in English.
+
+**A law read through summaries.** The Law on Value Added Tax No. 48/NA of 2018 is
+published in Lao only. The articles are cited as summarised by law firms and a tax
+summary; a Lao reader must confirm them. The return is dated the 15th of the following
+month on one such reading, and one source suggests that monthly deadlines may have
+moved to the 20th.
+
+**A currency with no minor unit in use.** The kip is carried with no decimals, as the
+dong and the won are.
+
+**No readable chart, form or portal.** The enterprise chart of accounts, the VAT return
+form and the Tax Department site could not be read from the machine that wrote the
+pack; the chart is the pack's grouping, the boxes are named after the operations of the
+Law, and the portal source is the Ministry of Finance.

@@ -101,3 +101,21 @@ charged VAT, less input tax credits.
 3. The category (A, B, C) assigned to the company and the cadence chosen.
 4. Reverse charge: the recipient-created tax invoice and the first reporting period.
 5. Whether the chart's levy and contribution accounts match the company's payroll.
+
+## What the core could not say
+
+**Tax periods that start in December.** Under s. 54 of the Value Added Tax Act,
+2026, a Category A registered person files for two months ending in January,
+March, May…; `bimonth` is anchored on January and fits Category B only. The
+pack declares `month` and `bimonth` and no default cadence.
+
+**An electronic billing system that reports to the administration.** Section 15
+of the Tax Administration Act, 2026 obliges every taxpayer to issue invoices
+through a billing system approved by the Botswana Unified Revenue Service. It
+is a reporting system, with no Peppol profile and no party scheme, so
+`einvoicing.obligation` is `none`; the date it becomes binding is set by
+regulations the pack could not open.
+
+**A suspension by notice.** The charging of VAT on private medical services was
+suspended by a public notice of 30 July 2026; the Act itself still makes them
+taxable. The pack carries no code for them rather than invent a treatment.

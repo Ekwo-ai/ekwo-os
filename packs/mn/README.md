@@ -104,3 +104,20 @@ the Mongolian wording.
 7 500 (tax 2 250), exempt 3 000, input tax 1 000, so 1 250 payable; March only a
 purchase of 40 000 (tax 4 000), so 4 000 refundable; April taxable 20 000 (tax
 2 000), zero-rated 15 000, input tax 800, so 1 200 payable; May exempt 12 000 only.
+
+## What the core could not say
+
+**A ten per cent VAT with a return on the 10th.** The Law on Value Added Tax of
+2015 fixes 10 % (article 11), a zero rate and an exemption list (articles 12 and
+13), and the return and payment by the 10th of the following month (article 16.1).
+Amendments announced for 1 January 2027 would move the deadlines by about ten
+days; the pack carries the 10th until the final text is read.
+
+**Chart and return form not readable.** The annex of the Ministry of Finance order
+that lists the accounts, and the approved return form, could not be read from an
+open source: the chart's classes and the boxes' names are the pack's own, and the
+README says so.
+
+**State receipt system.** Every sale gives a receipt sent to the state's integrated
+system (ebarimt, article 17); the core has no clearance step, so `einvoicing` is
+left empty.

@@ -24,6 +24,12 @@
  * A marker that has gone missing is a refusal, not a block silently skipped:
  * the list would stop being maintained without anybody being told.
  *
+ * `docs/international.md` carries one more: the index of what each pack says
+ * the core could not do for its country. Each pack writes its own gaps in its
+ * README, under `## What the core could not say`, and the index is generated
+ * from those sections — so a country added in parallel with another never
+ * edits the same page.
+ *
  * Nothing here is written down per country. The seeds are the files the
  * installer applies (`listSeeds`), the packs are `listPacks()`, and what a
  * row says about a pack — its name, its seed, its languages, its status — is
@@ -61,6 +67,8 @@ interface ManifestSummary {
   seed: string;
   languages: string[];
   status: string;
+  /** The points of the README's core-gaps section, or null where it has none. */
+  coreGaps: string[] | null;
 }
 
 function markers(style: Block['style'], name: string): [string, string] {
@@ -78,6 +86,33 @@ function bodyOf(text: string, block: Block): { start: number; end: number; body:
   const end = text.indexOf(close, start);
   if (end < 0) return null;
   return { start, end, body: text.slice(start, end) };
+}
+
+/** The heading under which a pack's README states what the core could not do for its country. */
+export const CORE_GAPS_HEADING = 'What the core could not say';
+
+/** The anchor GitHub gives that heading, which the index links to. */
+const CORE_GAPS_ANCHOR = CORE_GAPS_HEADING.toLowerCase().replace(/[^a-z0-9 -]/g, '').replace(/ /g, '-');
+
+/**
+ * The points of a README's core-gaps section: the sentence in bold each one
+ * opens on, as a paragraph or as an item of a list, without its closing
+ * punctuation. Null where the README has no such section.
+ */
+export function coreGapsOf(readme: string): string[] | null {
+  const lines = readme.split('\n');
+  const start = lines.findIndex((line) => line.trim() === `## ${CORE_GAPS_HEADING}`);
+  if (start < 0) return null;
+  const points: string[] = [];
+  let previous = '';
+  for (const line of lines.slice(start + 1)) {
+    if (/^#{1,2} /.test(line)) break;
+    const opening = previous.trim() === '' || /^(\d+\.|[-*])\s/.test(line);
+    const match = /^(?:\d+\.\s+|[-*]\s+)?\*\*(.+?)\*\*/.exec(line);
+    if (opening && match !== null) points.push((match[1] as string).trim().replace(/[.:;,]+$/, ''));
+    previous = line;
+  }
+  return points;
 }
 
 async function summaries(dir: string): Promise<ManifestSummary[]> {
@@ -98,6 +133,9 @@ async function summaries(dir: string): Promise<ManifestSummary[]> {
       seed: seedFileName(slug, slugs, declared),
       languages: [...(own === undefined ? [] : [own]), ...(manifest.languages ?? []).filter((l) => l !== own)],
       status: manifest.certification?.status ?? 'none',
+      coreGaps: existsSync(join(dir, slug, 'README.md'))
+        ? coreGapsOf(await readFile(join(dir, slug, 'README.md'), 'utf8'))
+        : null,
     });
   }
   return out;
@@ -150,6 +188,23 @@ async function blocks(root: string): Promise<Block[]> {
           )
           .join('\n') +
         '\n',
+    },
+    {
+      // What each pack says the core could not do for its country, one line
+      // per pack, linking to the section of its README that says it.
+      file: 'docs/international.md',
+      name: 'core-gaps',
+      style: 'markdown',
+      render: () => {
+        const rows = packs
+          .filter((p) => p.coreGaps !== null)
+          .map(
+            (p) =>
+              `- **[${p.name}](../packs/${p.slug}/README.md#${CORE_GAPS_ANCHOR})** (\`${p.slug}\`)` +
+              ((p.coreGaps as string[]).length === 0 ? '' : ` — ${(p.coreGaps as string[]).join('; ')}`),
+          );
+        return `\n${rows.join('\n')}\n`;
+      },
     },
     {
       // Who reads a change to a pack. The owner a line names is kept — a

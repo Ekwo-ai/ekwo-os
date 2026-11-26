@@ -112,3 +112,20 @@ A Lesotho accountant should read first: the rate table above against the
 current consolidated Regulations; the amended s. 6 and s. 23 of the Act; the
 box names against the RSL eTax form; the e-invoicing connection date; and the
 treatment of the standard-rate history before April 2021.
+
+## What the core could not say
+
+**Rates in regulations, not in the Act.** The Value Added Tax Act, 2001 leaves
+the rates to regulations (s. 19(3), at most four including zero). The pack
+dates its codes from 1 April 2021, the last rate change in the Gazette notices
+it read, and carries 15 %, electricity at 10 % and the zero rate; the
+consolidated regulations were not read.
+
+**Clearance e-invoicing.** The Value Added Tax (E-Invoicing) Regulations, 2026
+make a vendor issue invoices from an accredited billing system registered on a
+tax-authority platform. The core has no clearance step; `obligation` is `none`
+and the pack says so.
+
+**A return form with no published numbering.** The boxes follow s. 20(1) of the
+Act (output tax less input tax) and are numbered by the pack, since the form
+the Commissioner prescribes was not found in a readable text.

@@ -148,10 +148,14 @@ jobs:
       - run: npm ci
       # The country seeds are compiled from packs/. A seed that is no longer
       # the exact output of its pack means the two have drifted, and the pack
-      # is the source. The same command checks the lists that name every pack
-      # outside packs/ — config.toml, the README, CODEOWNERS, docs/packs.md —
-      # so a country is added in its folder and nowhere else.
-      - name: The country seeds and the lists of packs are the output of packs/
+      # is the source. The same command checks the two seeds every country
+      # shares, 00_currencies.sql and 00_territories.sql, written from each
+      # pack's reference.json — so a hand edit to either fails here — and the
+      # lists that name every pack outside packs/: config.toml, the README,
+      # CODEOWNERS, docs/packs.md and the index of core gaps of
+      # docs/international.md. A country is added in its folder and nowhere
+      # else.
+      - name: The country seeds, the shared seeds and the lists of packs are the output of packs/
         run: |
           # The CLI reads a refusal through the core, and the core reads and
           # writes books through every format brick: the workspaces are built

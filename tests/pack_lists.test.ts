@@ -2,8 +2,9 @@
  * The lists of packs outside `packs/` are written from `packs/`.
  *
  * `supabase/config.toml`, the `psql -f` lines and the list of countries of the
- * README, `.github/CODEOWNERS` and the table of `docs/packs.md` each name every
- * pack, and each used to be edited by hand by the pull request that added one.
+ * README, `.github/CODEOWNERS`, the table of `docs/packs.md` and the index of
+ * core gaps of `docs/international.md` each name every pack, and each used to
+ * be edited by hand by the pull request that added one.
  * `ekwo pack build` writes them now and `ekwo pack check` refuses them stale —
  * see `packages/cli/src/pack/lists.ts`. This file holds the repository to it,
  * and pins what the generator does in a checkout made up for the purpose: which
@@ -15,7 +16,7 @@ import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
-import { packLists } from '../packages/cli/src/pack/lists.js';
+import { coreGapsOf, packLists } from '../packages/cli/src/pack/lists.js';
 import { repoRoot } from './helpers/db.js';
 
 describe('the lists of packs of this repository', () => {
@@ -35,7 +36,7 @@ describe('the generator, in a checkout of two packs', () => {
     await rm(root, { recursive: true, force: true });
   });
 
-  /** Two made-up packs — `zz` declares the lower number — and the five files with their markers. */
+  /** Two made-up packs — `zz` declares the lower number — and the six blocks with their markers. */
   async function checkout(): Promise<void> {
     root = await mkdtemp(join(tmpdir(), 'ekwo-lists-'));
     const manifests: [string, Record<string, unknown>][] = [
@@ -59,6 +60,13 @@ describe('the generator, in a checkout of two packs', () => {
     );
     await mkdir(join(root, 'docs'));
     await writeFile(join(root, 'docs', 'packs.md'), '<!-- generated:packs -->\n<!-- /generated -->\n');
+    await writeFile(join(root, 'docs', 'international.md'), '<!-- generated:core-gaps -->\n<!-- /generated -->\n');
+    // Only `aa` says what the core could not do for it.
+    await writeFile(
+      join(root, 'packs', 'aa', 'README.md'),
+      '# Alpha\n\n## What the core could not say\n\n**A device, not a network.** Prose.\n\n' +
+        '1. **A deadline in days:** prose.\n\n## Sources\n\n**Not a gap.**\n',
+    );
     await mkdir(join(root, '.github'));
     await writeFile(
       join(root, '.github', 'CODEOWNERS'),
@@ -68,9 +76,9 @@ describe('the generator, in a checkout of two packs', () => {
 
   it('finds every block stale, then writes each one from the packs', async () => {
     await checkout();
-    expect((await packLists(false, root)).map((l) => l.state)).toEqual(Array(5).fill('stale'));
-    expect((await packLists(true, root)).map((l) => l.state)).toEqual(Array(5).fill('written'));
-    expect((await packLists(false, root)).map((l) => l.state)).toEqual(Array(5).fill('unchanged'));
+    expect((await packLists(false, root)).map((l) => l.state)).toEqual(Array(6).fill('stale'));
+    expect((await packLists(true, root)).map((l) => l.state)).toEqual(Array(6).fill('written'));
+    expect((await packLists(false, root)).map((l) => l.state)).toEqual(Array(6).fill('unchanged'));
 
     // The seeds the installer applies, in file-name order, the demo left out.
     const config = await readFile(join(root, 'supabase', 'config.toml'), 'utf8');
@@ -88,6 +96,14 @@ describe('the generator, in a checkout of two packs', () => {
     const table = await readFile(join(root, 'docs', 'packs.md'), 'utf8');
     expect(table).toContain('| [`aa`](../packs/aa/) | Alpha | `42_pack_aa.sql` | xa, xb | `community` |');
     expect(table).toContain('| [`zz`](../packs/zz/) | Zeta | `10_pack_zz.sql` | xz | `maintained` |');
+
+    // The index of core gaps names the pack that has some, and its points.
+    const gaps = await readFile(join(root, 'docs', 'international.md'), 'utf8');
+    expect(gaps).toBe(
+      '<!-- generated:core-gaps -->\n' +
+        '- **[Alpha](../packs/aa/README.md#what-the-core-could-not-say)** (`aa`) — A device, not a network; A deadline in days\n' +
+        '<!-- /generated -->\n',
+    );
   });
 
   it('keeps the owner a line names, gives a new pack the owner of `*`, and drops a pack that is gone', async () => {
@@ -106,5 +122,19 @@ describe('the generator, in a checkout of two packs', () => {
     const lists = await packLists(true, root);
     expect(lists.find((l) => l.file === 'docs/packs.md')?.state).toBe('missing');
     expect(await readFile(join(root, 'docs', 'packs.md'), 'utf8')).toBe('A table somebody deleted the markers of.\n');
+  });
+});
+
+describe('the core gaps a README states', () => {
+  it('are the bold sentences that open each point of its section, and nothing after it', () => {
+    const readme =
+      '# A\n\n## What the core could not say\n\nIntro, with **bold** inside.\n\n' +
+      '**First gap.** Prose\nthat goes on with **bold** inside.\n\n- **Second gap:** an item.\n' +
+      '- **Third gap**, an item.\n\n### A sub-heading\n\n**Fourth gap.**\n\n## Next\n\n**Not one.**\n';
+    expect(coreGapsOf(readme)).toEqual(['First gap', 'Second gap', 'Third gap', 'Fourth gap']);
+  });
+
+  it('are null where the README has no such section', () => {
+    expect(coreGapsOf('# A\n\n## Sources\n\n**Not a gap.**\n')).toBeNull();
   });
 });
