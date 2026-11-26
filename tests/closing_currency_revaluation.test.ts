@@ -267,6 +267,46 @@ describe('a receivable still open in a foreign currency at the close', () => {
 
     expect(await refusal(close(fx))).toMatch(/^fx_closing_rate_missing: /);
   });
+
+  it('takes the installation’s rate on or before the last day when the company has none, and says which', async () => {
+    const pack = withRoles;
+    const fx = await company(pack, 'Fetched rate');
+    const customer = await newContact(db, fx.companyId, { name: 'Overseas', country: null });
+    await sale(fx, pack, customer, '2026-03-01', 1000, 900);
+    // The installation quotes against the company's own currency, and its
+    // last rate of the year is of the 30th.
+    await db.query(`update instance set reference_currency = $1 where id = 1`, [pack.manifest.defaults.currency]);
+    await db.query(
+      `insert into currency_rates (currency_code, rate_date, rate, source) values ($1, date '2026-12-30', 1.25, 'series')`,
+      [foreignOf(pack)],
+    );
+
+    const preview = await asUser(db, fx.ownerId, () =>
+      rows<{ closing_rate: string; closing_rate_date: string; closing_rate_source: string; difference: number }>(
+        db,
+        `select closing_rate::text, closing_rate_date::text, closing_rate_source, difference::float8 as difference
+           from currency_revaluation($1, date '2026-12-31')`,
+        [fx.companyId],
+      ),
+    );
+    expect(preview).toEqual([
+      { closing_rate: '1.25000000', closing_rate_date: '2026-12-30', closing_rate_source: 'series', difference: -100 },
+    ]);
+    expect(Number((await close(fx))['unrealised_exchange_difference'])).toBe(-100);
+  });
+
+  it('still refuses by name when the installation’s last rate is further back than the bound', async () => {
+    const pack = withRoles;
+    const fx = await company(pack, 'Stale rate');
+    const customer = await newContact(db, fx.companyId, { name: 'Overseas', country: null });
+    await sale(fx, pack, customer, '2026-03-01', 1000, 900);
+    await db.query(`update instance set reference_currency = $1 where id = 1`, [pack.manifest.defaults.currency]);
+    await db.query(
+      `insert into currency_rates (currency_code, rate_date, rate, source) values ($1, date '2026-12-01', 1.25, 'series')`,
+      [foreignOf(pack)],
+    );
+    expect(await refusal(close(fx))).toMatch(/^fx_closing_rate_missing: /);
+  });
 });
 
 describe('one table of rates, in two bases', () => {
@@ -276,8 +316,8 @@ describe('one table of rates, in two bases', () => {
     const other = await company(pack, 'Other rate');
     const customer = await newContact(db, fx.companyId, { name: 'Overseas', country: null });
     await sale(fx, pack, customer, '2026-03-01', 1000, 900);
-    // The instance-wide rate of the closing day is in another base: the close
-    // does not take it for the company's.
+    // The instance-wide rate of the closing day is in a base the installation
+    // does not name (no reference currency): the close does not take it.
     await db.query(
       `insert into currency_rates (currency_code, rate_date, rate, source) values ($1, date '2026-12-31', 1.1, 'Instance')`,
       [foreignOf(pack)],

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.28.0",
-  "migration": "20261126160000",
+  "migration": "20261126180000",
   "socle": {
     "schema": "ekwo",
     "tables": [
@@ -5685,6 +5685,10 @@
       {
         "name": "evaluate_totals",
         "arguments": "p_values jsonb, p_formulas jsonb, p_rounding money_rounding, p_keep_zero boolean"
+      },
+      {
+        "name": "exchange_rate_on",
+        "arguments": "p_company_id uuid, p_currency_code character, p_on date, p_max_age_days integer, p_required boolean"
       },
       {
         "name": "export_company",
@@ -11375,6 +11379,17 @@
         {
           "name": "evaluate_totals",
           "arguments": "p_values jsonb, p_formulas jsonb, p_rounding money_rounding, p_keep_zero boolean",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "exchange_rate_on",
+          "arguments": "p_company_id uuid, p_currency_code character, p_on date, p_max_age_days integer, p_required boolean",
           "anon": [],
           "authenticated": [
             "execute"
