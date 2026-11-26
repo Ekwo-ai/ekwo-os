@@ -38,6 +38,7 @@ import {
 import { runStdio } from '../../packages/mcp/src/index.js';
 import { ask, askSecret, confirm } from '../../packages/cli/src/prompt.js';
 import { table } from '../../packages/cli/src/ui.js';
+import { ECB_DAILY, ecb } from '../../packages/cli/src/rates/ecb.js';
 import { asUser, expectError, freshDatabase, repoRoot } from '../helpers/db.js';
 import { amountValue, newCompany, newContact, newDocument, newUser } from '../helpers/factory.js';
 import { roleOf, somePack } from '../helpers/packs.js';
@@ -229,6 +230,15 @@ describe('every command answers --json with one document of the published shape'
     expect(registered.data).toMatchObject({ registered: true, announced: true });
     const undone = await json(['unregister', '--yes']);
     expect(undone.data).toEqual({ registered: false, changed: true });
+  });
+
+  it('rates fetch', async () => {
+    // The ECB's daily file, as it is served, with one illustrative rate.
+    const daily = `<gesmes:Envelope><Cube><Cube time='2026-03-03'><Cube currency='USD' rate='1.2500'/></Cube></Cube></gesmes:Envelope>`;
+    const fetchImpl = (async (url: string | URL | Request) =>
+      String(url) === ECB_DAILY ? new Response(daily) : new Response('', { status: 404 })) as typeof globalThis.fetch;
+    const fetched = await json(['rates', 'fetch', '--reference-currency', ecb.base], { fetchImpl });
+    expect(fetched.data).toMatchObject({ published: true, written: [{ currency_code: 'USD', rate: '1.25000000' }] });
   });
 
   it('demo', async () => {

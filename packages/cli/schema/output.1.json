@@ -938,6 +938,24 @@
           "note": { "type": "string" }
         }
       },
+      "rates fetch": {
+        "$comment": "The rates a source published for a day, written as instance-wide rows of currency_rates: units of each currency for one unit of reference_currency, as decimal strings. published false: the source has nothing for that day, and nothing was written. kept: a rate already recorded differently for the day, left as it is without --overwrite. unknown: currencies the installation does not know, left out.",
+        "type": "object",
+        "required": ["source", "base", "reference_currency", "date", "published", "written", "overwritten", "unchanged", "kept", "unknown"],
+        "additionalProperties": false,
+        "properties": {
+          "source": { "type": "string" },
+          "base": { "type": "string" },
+          "reference_currency": { "type": "string" },
+          "date": { "type": "string" },
+          "published": { "type": "boolean" },
+          "written": { "type": "array", "items": { "type": "object", "required": ["currency_code", "rate"] } },
+          "overwritten": { "type": "array", "items": { "type": "object", "required": ["currency_code", "rate", "previous_rate", "previous_source"] } },
+          "unchanged": { "type": "array", "items": { "type": "string" } },
+          "kept": { "type": "array", "items": { "type": "object", "required": ["currency_code", "rate", "quoted", "source"] } },
+          "unknown": { "type": "array", "items": { "type": "string" } }
+        }
+      },
       "reopen year": {
         "$comment": "reopen_fiscal_year(): the entries the close wrote, reversed.",
         "type": "object",

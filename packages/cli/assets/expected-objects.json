@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.28.0",
-  "migration": "20261126143200",
+  "migration": "20261126160000",
   "socle": {
     "schema": "ekwo",
     "tables": [
@@ -3086,6 +3086,10 @@
           {
             "name": "public_base_url",
             "type": "text"
+          },
+          {
+            "name": "reference_currency",
+            "type": "character(3)"
           },
           {
             "name": "registered_at",

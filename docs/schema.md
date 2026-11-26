@@ -1265,8 +1265,8 @@ Dated exchange rates. A document stores the rate it used; this table is the hist
 | `id` | `uuid` | not null |
 | `currency_code` | `character(3)` | not null |
 | `rate_date` | `date` | not null — The day the rate is the rate of. A close reads the company's row of the last day of the year exactly: a rate of another day is never taken for it. |
-| `rate` | `numeric(18,8)` | not null |
-| `source` | `text` |  |
+| `rate` | `numeric(18,8)` | not null — Units of currency_code for one unit of the base the row is in: with company_id set, that company's currency; without, instance.reference_currency. |
+| `source` | `text` | Where the rate comes from: the name of a published series (ecb, written by `ekwo rates fetch`), or free text for a rate typed by hand. |
 | `created_at` | `timestamp with time zone` | not null |
 | `company_id` | `uuid` | The company whose own rate the row is, or null for the instance-wide rate. It fixes the base of rate: null, units of currency_code for one unit of the instance reference currency; set, units of currency_code for one unit of that company's currency, as documents.exchange_rate holds a rate. A reader names the company it reads for, or company_id is null, and never mixes the two. |
 
@@ -1681,6 +1681,7 @@ The installation itself. Exactly one row. Registration with Ekwo is optional and
 | `public_base_url` | `text` | Where this installation answers on the public internet, as an origin with no trailing slash — the base a shared document link is built on. Null where the operator has not said, and then a share returns its token with no URL. |
 | `shared` | `boolean` | not null — Whether this installation is shared by several unrelated people, each with companies of their own (decision 0065). Off by default: an installation is one customer's. |
 | `companies_per_person` | `integer` | On a shared installation, how many companies one signed-in person may create and own. Null when the installation is not shared. |
+| `reference_currency` | `character(3)` | The currency the instance-wide rows of currency_rates (company_id null) are against: their rate is units of currency_code for one unit of this currency. Null until the operator names it, the first time `ekwo rates fetch` runs; changing it once rows exist would leave those rows in a base nothing names, so the command refuses to. |
 
 Constraints:
 
