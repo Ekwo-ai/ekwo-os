@@ -16,8 +16,8 @@
 --   2. the installation's rows of the last day on or before it that quotes
 --      both legs (`origin` 'instance'): the currency's quote divided by the
 --      company currency's quote, both of that same day, in `numeric`,
---      rounded to the eight decimals `currency_rates.rate` and
---      `documents.exchange_rate` keep (numeric(18, 8)): a rate, not an amount. A leg in the reference currency itself
+--      rounded to the decimals `currency_rates.rate` keeps, read from its
+--      type (eight, as `documents.exchange_rate`): a rate, not an amount. A leg in the reference currency itself
 --      is 1. Nothing is carried forward into the table: an earlier day is read
 --      where it is.
 -- A day further back than `p_max_age_days` is not taken: the function refuses
@@ -79,8 +79,9 @@ stable
 set search_path = ekwo, pg_temp
 as $$
 declare
-  v_home char(3);
-  v_ref  char(3);
+  v_home  char(3);
+  v_ref   char(3);
+  v_scale integer;
 begin
   if p_currency_code is null or p_on is null then
     raise exception 'exchange_rate_question_incomplete: a rate is asked for a currency and a day'
@@ -116,6 +117,10 @@ begin
   -- The installation's, of the last day on or before that quotes both legs.
   select i.reference_currency into v_ref from instance i where i.id = 1;
   if v_ref is not null then
+    -- The decimals a stored rate keeps, from the column itself.
+    select c.numeric_scale into v_scale
+      from information_schema.columns c
+     where c.table_schema = 'ekwo' and c.table_name = 'currency_rates' and c.column_name = 'rate';
     return query
       with legs as (
         select r.rate_date, r.currency_code, r.rate, r.source
@@ -135,7 +140,7 @@ begin
                (select string_agg(distinct l.source, ' / ') from legs l where l.rate_date = d.rate_date) as source
           from (select distinct legs.rate_date from legs) d
       )
-      select round(days.quote / days.base, 8), days.rate_date, days.source, 'instance'::text
+      select round(days.quote / days.base, v_scale), days.rate_date, days.source, 'instance'::text
         from days
        where days.quote is not null
          and days.base is not null
