@@ -171,8 +171,8 @@ Category A operator files on periods the socle does not yet build.
 
 **Deadline.** The 10th of the month after the period for the return, the 15th
 for the payment (Statutory Instrument 81 of 2025, ZIMRA Public Notice No. 11 of
-2026), replacing the 25th of s. 28(1). The format holds one day; the pack
-carries the 10th.
+2026), replacing the 25th of s. 28(1). The pack carries both: `deadline` is
+the 10th and `deadline.payment` the 15th.
 
 **Registration.** Compulsory when taxable supplies exceed US$25,000 in twelve
 months (s. 23(1)(a), as amended by Act 13 of 2023); the pack does not check a

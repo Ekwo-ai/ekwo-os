@@ -71,6 +71,8 @@ export interface DescribedDeadline {
   day: number | null;
   plusDays: number | null;
   legalReference: string;
+  /** The day the tax is paid, where the pack names one apart from the day the form is filed. Null otherwise. */
+  payment: { rule: string; day: number | null; plusDays: number | null } | null;
 }
 
 /**
@@ -355,6 +357,14 @@ export function describePack(pack: Pack, options: DescribeOptions = {}): PackDes
               day: report.deadline.day,
               plusDays: report.deadline.plus_days,
               legalReference: report.deadline.legal_reference,
+              payment:
+                report.deadline.payment === null
+                  ? null
+                  : {
+                      rule: report.deadline.payment.rule,
+                      day: report.deadline.payment.day,
+                      plusDays: report.deadline.payment.plus_days,
+                    },
             },
       file: { brick: report.file_format, byHand: report.file_format === null },
       legalReference: report.legal_reference,

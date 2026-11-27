@@ -70,6 +70,18 @@ somewhere has already run it.
 
 ### Added
 
+- **A declaration says when its tax is paid, where that is another day.** A
+  form's `deadline` may carry `payment`, a second rule of the two that produce
+  a date, with its own `day` and `plus_days`; the text that sets it is the
+  deadline's `legal_reference`. `payment_deadline()` answers the day, null
+  where the pack names none, and `upcoming_filings()` and
+  `portfolio_upcoming_filings()` give it as `payment_due_date` at the end of
+  each row. `filing_deadline()` keeps its answer; the computation both share is
+  `deadline_after_period()`. `ekwo pack check` and the database refuse a
+  payment rule beside `depends_on_taxpayer`. Zimbabwe (0.3.0) pays on the 15th
+  for a return due on the 10th, North Macedonia (0.5.0) five days after its
+  twenty-fifth. Migration `20261127070000`; `SCHEMA_FEATURES.payment_deadline`.
+
 - **What is still open in a foreign currency is revalued at the close.**
   `close_fiscal_year()` states every receivable and payable still open in a
   currency other than the company's — for the part no matching of the year

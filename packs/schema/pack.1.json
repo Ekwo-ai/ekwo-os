@@ -1775,6 +1775,34 @@
             "source": {
               "type": "string",
               "description": "Key of the register entry the reference is in."
+            },
+            "payment": {
+              "type": "object",
+              "description": "The day the tax of the period is paid, where the law sets one apart from the day the form is filed — Zimbabwe's 15th beside a return due on the 10th. The same two rules that produce a date, with `day` and `plus_days` as above; the text that sets it is this deadline's `legal_reference`, which cites both. Refused beside `depends_on_taxpayer`. Leave it out where the tax is paid on the day the form is filed.",
+              "additionalProperties": false,
+              "required": [
+                "rule"
+              ],
+              "properties": {
+                "rule": {
+                  "enum": [
+                    "day_of_month_after_period",
+                    "last_day_of_month_after_period"
+                  ]
+                },
+                "day": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 31,
+                  "description": "Day of the month following the period. Required by `day_of_month_after_period` and refused by `last_day_of_month_after_period`."
+                },
+                "plus_days": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 60,
+                  "description": "Days added to the date the rule produces — North Macedonia's five days after its twenty-fifth."
+                }
+              }
             }
           }
         },

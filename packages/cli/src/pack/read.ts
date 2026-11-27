@@ -860,6 +860,20 @@ export interface PackDeadline {
   plus_days: number | null;
   legal_reference: string;
   source: string | null;
+  /**
+   * The day the tax of the period is paid, where it is not the day the form
+   * is filed — Zimbabwe's 15th beside a return due on the 10th. The same two
+   * rules that produce a date; the text that sets it is `legal_reference`,
+   * which cites both. Null where the pack names one day for both.
+   */
+  payment: PackPaymentDeadline | null;
+}
+
+/** The day the tax of a period is paid, as a rule rather than a date. */
+export interface PackPaymentDeadline {
+  rule: 'day_of_month_after_period' | 'last_day_of_month_after_period';
+  day: number | null;
+  plus_days: number | null;
 }
 
 /**
@@ -2793,6 +2807,17 @@ function normaliseDeadline(raw: unknown): PackDeadline | null {
     plus_days: (d['plus_days'] as number | undefined) ?? null,
     legal_reference: String(d['legal_reference'] ?? ''),
     source: (d['source'] as string | undefined) ?? null,
+    payment: normalisePayment(d['payment']),
+  };
+}
+
+function normalisePayment(raw: unknown): PackPaymentDeadline | null {
+  if (raw === null || typeof raw !== 'object') return null;
+  const p = raw as Record<string, unknown>;
+  return {
+    rule: p['rule'] as PackPaymentDeadline['rule'],
+    day: (p['day'] as number | undefined) ?? null,
+    plus_days: (p['plus_days'] as number | undefined) ?? null,
   };
 }
 
@@ -4247,6 +4272,23 @@ function reportReferences(report: PackReport | null, taxes: PackTax[]): Issue[] 
         path: `${where} deadline`,
         message: 'depends_on_taxpayer produces no date, so there is nothing to add days to',
       });
+    }
+    // A payment day says what differs from a filing day the pack knows; on a
+    // form whose day is assigned per filer there is no such day to differ from.
+    const payment = deadline.payment;
+    if (payment !== null) {
+      if (deadline.rule === 'depends_on_taxpayer') {
+        issues.push({
+          path: `${where} deadline.payment`,
+          message: 'depends_on_taxpayer names no filing day, so there is no other day the tax is paid on',
+        });
+      }
+      if (payment.rule === 'day_of_month_after_period' && payment.day === null) {
+        issues.push({ path: `${where} deadline.payment`, message: 'day_of_month_after_period names no day' });
+      }
+      if (payment.rule !== 'day_of_month_after_period' && payment.day !== null) {
+        issues.push({ path: `${where} deadline.payment`, message: `${payment.rule} takes no day` });
+      }
     }
   }
 

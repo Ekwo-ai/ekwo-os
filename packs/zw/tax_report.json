@@ -12,8 +12,12 @@
   "deadline": {
     "rule": "day_of_month_after_period",
     "day": 10,
-    "legal_reference": "Finance (Due Dates for Submission of Returns and References to the Zimbabwe Dollar) Regulations, 2025 (Statutory Instrument 81 of 2025), as applied by ZIMRA Public Notice No. 11 of 2026: the VAT return is due on or before the 10th of the month after the tax period and the payment on or before the 15th. This overrides the twenty-fifth day of s. 28(1) of the Value Added Tax Act. The payment day (15th) is not carried by the format, which holds one deadline per form.",
-    "source": "public-notice-11-2026"
+    "legal_reference": "Finance (Due Dates for Submission of Returns and References to the Zimbabwe Dollar) Regulations, 2025 (Statutory Instrument 81 of 2025), as applied by ZIMRA Public Notice No. 11 of 2026: the VAT return is due on or before the 10th of the month after the tax period and the payment on or before the 15th. This overrides the twenty-fifth day of s. 28(1) of the Value Added Tax Act.",
+    "source": "public-notice-11-2026",
+    "payment": {
+      "rule": "day_of_month_after_period",
+      "day": 15
+    }
   },
   "boxes": [
     {

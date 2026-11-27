@@ -330,6 +330,18 @@ export const SCHEMA_FEATURES = {
     columns: [],
     functions: ['exchange_rate_on'],
   },
+  /**
+   * The day the tax of a period is paid, where the pack names one apart from
+   * the day the form is filed, and `payment_due_date` in the answer of
+   * `upcoming_filings()` and `portfolio_upcoming_filings()`
+   * (`20261127070000_a_declaration_says_when_its_tax_is_paid`). Below it,
+   * that column is absent and a form has one day, `due_date`.
+   */
+  payment_deadline: {
+    since: '0.28.0',
+    columns: ['tax_report_templates.payment_rule'],
+    functions: ['payment_deadline'],
+  },
 } as const satisfies Record<string, { since: string; columns: readonly string[]; functions: readonly string[] }>;
 
 export type SchemaFeature = keyof typeof SCHEMA_FEATURES;

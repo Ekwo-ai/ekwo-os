@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "ZW",
   "name": "Zimbabwe",
-  "version": "0.2.0",
-  "schema_min": "20261023124650",
+  "version": "0.3.0",
+  "schema_min": "20261127070000",
   "seed_sequence": 147,
-  "released_at": "2026-10-23",
+  "released_at": "2026-11-27",
   "certification": {
     "status": "community",
     "sources": [

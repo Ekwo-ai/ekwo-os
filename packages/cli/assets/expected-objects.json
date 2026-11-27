@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.28.0",
-  "migration": "20261126180000",
+  "migration": "20261127070000",
   "socle": {
     "schema": "ekwo",
     "tables": [
@@ -4220,6 +4220,18 @@
             "type": "jsonb"
           },
           {
+            "name": "payment_day",
+            "type": "smallint"
+          },
+          {
+            "name": "payment_plus_days",
+            "type": "smallint"
+          },
+          {
+            "name": "payment_rule",
+            "type": "filing_deadline_rule"
+          },
+          {
             "name": "period_default",
             "type": "declaration_period"
           },
@@ -5431,6 +5443,10 @@
         "arguments": ""
       },
       {
+        "name": "deadline_after_period",
+        "arguments": "p_rule filing_deadline_rule, p_day smallint, p_plus_days smallint, p_period_end date"
+      },
+      {
         "name": "declaration_boxes_of",
         "arguments": "p_tax_id uuid, p_box text, p_tax_line boolean, OUT boxes text[], OUT report_code text"
       },
@@ -6073,6 +6089,10 @@
       {
         "name": "party_identifier",
         "arguments": "p_number text"
+      },
+      {
+        "name": "payment_deadline",
+        "arguments": "p_company_id uuid, p_report_code text, p_period_end date"
       },
       {
         "name": "periodic_return_code",
@@ -10799,6 +10819,17 @@
           ]
         },
         {
+          "name": "deadline_after_period",
+          "arguments": "p_rule filing_deadline_rule, p_day smallint, p_plus_days smallint, p_period_end date",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
           "name": "declaration_boxes_of",
           "arguments": "p_tax_id uuid, p_box text, p_tax_line boolean, OUT boxes text[], OUT report_code text",
           "anon": [],
@@ -12438,6 +12469,17 @@
         {
           "name": "party_identifier",
           "arguments": "p_number text",
+          "anon": [],
+          "authenticated": [
+            "execute"
+          ],
+          "service_role": [
+            "execute"
+          ]
+        },
+        {
+          "name": "payment_deadline",
+          "arguments": "p_company_id uuid, p_report_code text, p_period_end date",
           "anon": [],
           "authenticated": [
             "execute"

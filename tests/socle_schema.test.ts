@@ -78,6 +78,12 @@ const TERRITORY_REQUIRED = '20261121070100_a_company_names_its_territory.sql';
 const NUMBER_SHAPE = '20261123070912_a_pack_gives_a_number_its_shape.sql';
 
 /**
+ * Another, on a form rather than the country model: the day a form's tax is
+ * paid, which the seeds of the packs that name one write.
+ */
+const PAYMENT_DAY = '20261127070000_a_declaration_says_when_its_tax_is_paid.sql';
+
+/**
  * The command line's PostgREST client, signed in as `userId`, against a
  * stand-in for PostgREST that serves a schema by its profile header and
  * answers 404 for a function its schema does not hold, as PostgREST does.
@@ -109,17 +115,24 @@ describe('an installation before the move: the socle in public, ekwo created and
     const fromTheMove = (await migrationFiles()).filter((file) => file >= THE_MOVE);
     // Today's seeds are loaded all the same, and the pack seeds write
     // `country_defaults.invoice_labels`, the columns of other comprehensive
-    // income, `territory_required`, `number_shape` and the unrealised exchange accounts, which files after the move add to
-    // `ekwo`: they are added here to the socle in `public`, as nothing else.
+    // income, `territory_required`, `number_shape`, the unrealised exchange accounts and the payment day of
+    // a form, which files after the move add to `ekwo`: they are added here to the socle in `public`, as
+    // nothing else.
     const migrations = join(repoRoot, 'supabase', 'migrations');
     const columns = (
       await Promise.all(
         [OTHER_COMPREHENSIVE_INCOME, TERRITORY_REQUIRED, NUMBER_SHAPE, FX_UNREALISED].map((file) => readFile(join(migrations, file), 'utf8')),
       )
     ).flatMap((sql) => sql.match(/^alter table ekwo\.country_defaults[\s\S]*?;$/gm) ?? []);
-    const beforeSeeds = [await readFile(join(migrations, WORDS_OF_A_PACK), 'utf8'), ...columns]
+    const formColumns =
+      (await readFile(join(migrations, PAYMENT_DAY), 'utf8')).match(
+        /^alter table ekwo\.tax_report_templates\s+add column[\s\S]*?;$/gm,
+      ) ?? [];
+    const beforeSeeds = [await readFile(join(migrations, WORDS_OF_A_PACK), 'utf8'), ...columns, ...formColumns]
       .join('\n')
-      .replaceAll('ekwo.country_defaults', 'public.country_defaults');
+      .replaceAll('ekwo.country_defaults', 'public.country_defaults')
+      .replaceAll('ekwo.tax_report_templates', 'public.tax_report_templates')
+      .replaceAll('ekwo.filing_deadline_rule', 'public.filing_deadline_rule');
     db = await freshDatabase({ withoutMigrations: fromTheMove, beforeSeeds });
     ({ ownerId: owner } = await newCompany(db));
   });

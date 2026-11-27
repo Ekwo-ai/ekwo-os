@@ -1075,6 +1075,30 @@ is the one meaning a missing deadline has, and the country page prints it as a
 gap. `filing_deadline()` answers null for both — the core cannot know which
 slice of a per-taxpayer schedule a company falls in.
 
+**When the tax is paid, where that is another day,** is `deadline.payment`, a
+second rule of the same two that produce a date, with its own `day` and
+`plus_days`:
+
+```json
+"deadline": {
+  "rule": "day_of_month_after_period", "day": 10,
+  "legal_reference": "… the VAT return is due on or before the 10th of the month after the tax period and the payment on or before the 15th …",
+  "payment": { "rule": "day_of_month_after_period", "day": 15 }
+}
+```
+
+Zimbabwe files on the 10th and pays on the 15th; North Macedonia files 25 days
+after the period and pays five days later, `{ "rule":
+"day_of_month_after_period", "day": 25, "plus_days": 5 }`. The text that sets
+the payment day is the deadline's own `legal_reference`, which cites both.
+Leave `payment` out where the tax is paid on the day the form is filed, which
+is most countries; `ekwo pack check` and the database refuse it beside
+`depends_on_taxpayer`, since there is no filing day for it to differ from.
+`payment_deadline()` answers the day, null where the pack names none, and
+`upcoming_filings()` and `portfolio_upcoming_filings()` give it as
+`payment_due_date` beside `due_date`. A pack that names one needs `schema_min`
+of `20261127070000` or later.
+
 **The unit the form is filed in** is `rounding`, and almost every form leaves
 it out: its figures are filed at the decimals of its currency. A form filed in
 coarser units says so, with the text that sets it —
