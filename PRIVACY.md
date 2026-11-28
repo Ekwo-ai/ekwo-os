@@ -1,8 +1,8 @@
 # What Ekwo knows about you
 
-**Ekwo is one piece of software, and you choose where your company data lives.** The
-same open-source schema runs everywhere; what changes is who operates the
-database, and what Ekwo holds follows from that choice.
+**You choose where your company data lives.** Run Ekwo on your own Supabase
+project, or let Ekwo host a project for you. The same open source schema runs
+in both, and what Ekwo holds follows from your choice.
 
 | | **Your own Supabase project** | **A project Ekwo hosts for you** |
 |---|---|---|
@@ -11,15 +11,15 @@ database, and what Ekwo holds follows from that choice.
 | Is an account needed | **No** — the licence forbids requiring one | Yes: the account is how the project is reached |
 | How you leave | Stop using it; there is nothing to close | Move the project to your own Supabase account, or take a `pg_dump` |
 
-**Moving from one to the other is seamless, in both directions.** A project
-Ekwo hosts is a plain Supabase project carrying the same schema: you can move
-it to your own Supabase account in one step, and Ekwo keeps nothing of a
-project it no longer hosts. A company started on Ekwo's trial instance moves to
-a project of its own, and the move is checked by comparing both trial balances,
-to the cent. A company can also be exported from one installation and imported
+**You move from one to the other seamlessly, in both directions.** A project
+Ekwo hosts is a plain Supabase project carrying the same schema: you move it
+to your own Supabase account in one step, and Ekwo keeps nothing of a project
+it no longer hosts. A company started on Ekwo's trial instance moves to a
+project of its own, and the move is checked by comparing both trial balances,
+to the cent. You can also export a company from one installation and import it
 into another, wherever each one runs.
 
-*Version 1.4 — 13 November 2026. This page covers the software of this
+*Version 1.5 — 28 November 2026. This page covers the software of this
 repository, the site at ekwo.ai and the hosted service at cloud.ekwo.ai,
 including the MCP server at mcp.ekwo.ai. Each section says which one it is
 about.*
@@ -27,20 +27,21 @@ about.*
 ## 1. The software on your own project
 
 **Nothing reaches Ekwo.** `npx ekwo-os init` installs the schema on a Supabase
-project you create and pay for. Your accounts, your transactions, your documents, your VAT returns
-and your customers' names are written to your database and stay there. There
-is no telemetry, no call home, no licence check and no account required — the
-licence (AGPL-3.0) forbids making one a condition of using the software.
+project you create and pay for. Your accounts, your transactions, your
+documents, your VAT returns and your customers' names are written to your
+database and stay there. The software sends no telemetry, never calls home,
+runs no licence check and needs no account — the licence (AGPL-3.0) forbids
+making one a condition of using the software.
 
-One step is yours to take or leave: `ekwo register` announces an installation
-to Ekwo. It is offered, never required, and sends the installation's
-identifier, the organisation name, its country, its edition and schema
-version, and the contact address you type. `ekwo unregister` clears it on your
-side; write to the address in §8 to have it deleted on Ekwo's.
+You decide whether to take one step: `ekwo register` announces an installation
+to Ekwo. It is optional, and sends the installation's identifier, the
+organisation name, its country, its edition and schema version, and the
+contact address you type. `ekwo unregister` clears it on your side; write to
+the address in §8 to have it deleted on Ekwo's.
 
 The command line and the local MCP server talk to your database directly. What
-an AI agent does with them happens between that agent and your database. If the
-agent is hosted by somebody else — Anthropic, OpenAI or another — what it sends
+an AI agent does with them happens between that agent and your database. When
+somebody else hosts the agent — Anthropic, OpenAI or another — what it sends
 to its own provider is governed by that provider's terms.
 
 ## 2. The site, ekwo.ai
@@ -49,35 +50,33 @@ Today the pages set no cookie in your browser. If the site uses a measurement
 tool that needs one, it asks for your consent first, and this page says so.
 
 The host that serves the site counts requests from its own logs: pages
-viewed, the country a request came from, the address that referred it. It is
-aggregated, it is not tied to an identity, and it reaches us as counts rather
-than as visits by a person. The host keeps the underlying logs under its own
-terms.
+viewed, the country a request came from, the address that referred it. These
+counts are aggregated, are not tied to an identity, and reach us as totals,
+never as the visits of a person. The host keeps the underlying logs under its own terms.
 
-**The one place the site asks you for something** is its contact form. It
+**The site asks you for something in one place only:** its contact form. It
 collects your address and whatever else you choose to fill in — your company,
-your country, who you are, your message — to reply to you and for nothing
-else, on the basis of Article 6(1)(b) GDPR. It passes through the site host,
-acting as our processor, is kept **twenty-four months at most**, and is never
-sold. The form says all of this next to itself, in the language of the page.
-To see it, correct it or have it erased, ask from your Ekwo Cloud account or
-write to the address in §8.
+your country, who you are, your message — only to reply to you, on the basis
+of Article 6(1)(b) GDPR. It passes through the site host, acting as our
+processor, is kept **twenty-four months at most**, and is never sold. The form
+says all of this next to itself, in the language of the page. To see it,
+correct it or have it erased, ask from your Ekwo Cloud account or write to the
+address in §8.
 
 ## 3. Ekwo Cloud, the hosted service
 
 This section is about **Ekwo Cloud**: an account, and the instances linked to
-it. For somebody running Ekwo OS on their own project without an account, §1
-is the whole page.
+it. If you run Ekwo OS on your own project without an account, §1 is the
+whole page for you.
 
-An account is free. Each thing below exists because it was **asked for**:
-linking an instance is a deliberate act, a backup runs on an instance you
-linked, and an agent reads your company data only after you approved it in your
-browser. Nothing here is turned on by default, and what Ekwo Cloud holds is
-this and nothing else:
+An account is free. Each thing below exists because you **asked for it**:
+you link an instance yourself, a backup runs on an instance you linked, and an
+agent reads your company data only after you approve it in your browser.
+Everything here starts switched off, and Ekwo Cloud holds exactly this list:
 
 | What | Why |
 |---|---|
-| Your email address | To sign you in. There is no password: a six-digit code is sent and verified |
+| Your email address | To sign you in. You sign in with a six-digit code sent to you and verified, without a password |
 | Your answers to three questions — the kind of work you do, your organisation, your countries, what you keep and what you want | To know who Ekwo is for. Left blank, they stay blank |
 | The address of your Supabase project and its publishable key | To reach the instance you linked |
 | The key your instance issued us, **encrypted** | To take the backup you asked for. It is stored as ciphertext, never in plain text |
@@ -90,10 +89,10 @@ this and nothing else:
 ### The backups hold your company data
 
 The daily backup exports your companies and keeps the bytes. **That is a copy
-of your accounting data on our infrastructure**, with its checksum, and it is
-the whole point of the feature: it is what makes it restorable into an empty
-installation. It is there, and you should decide with that in mind. Unlink an
-instance and its backups go with it.
+of your accounting data on our infrastructure**, with its checksum. It is what
+the feature is for: it lets you restore your companies into an empty
+installation. Decide with that in mind. Unlink an instance and its backups go
+with it.
 
 ### When Ekwo reads your company data
 
@@ -131,12 +130,12 @@ your company data is never handed to another company to train its models.
 
 ## 5. Who else is involved
 
-Running the service means using three suppliers, and they see what passing
-through them requires: **Supabase** (the database of the control plane, in the
-European Union, and the projects Ekwo hosts, in the region of the continent you
-chose), **Netlify** (serving the site and the application) and the provider
-that sends the sign-in codes. Each holds data under its own terms as Ekwo's
-processor, and none of them is given your company data to do anything with.
+Three suppliers run parts of the service, and each sees what passing through
+it requires: **Supabase** (the database of the control plane, in the European
+Union, and the projects Ekwo hosts, in the region of the continent you chose),
+**Netlify** (serving the site and the application) and the provider that sends
+the sign-in codes. Each holds data under its own terms as Ekwo's processor,
+and none of them is given your company data to do anything with.
 
 ## 6. How long it is kept
 
@@ -157,9 +156,9 @@ done with it, and you can object. You can ask through the support page inside
 Ekwo Cloud, or by writing to the address below. We answer in a month at the
 latest, and free of charge.
 
-You can also take everything and go, and that is a property of the software
-rather than a favour: your company data is an ordinary PostgreSQL database with
-the open schema. On your own project it is reachable with any PostgreSQL client
+You can also take everything and go, at any time, because the software is
+built for it: your company data is an ordinary PostgreSQL database with the
+open schema. On your own project you reach it with any PostgreSQL client
 without asking Ekwo; a project Ekwo hosts moves to your own Supabase account in
 one step. A backup taken by Ekwo Cloud restores into an installation that has
 never seen the company — that restore is exercised against a real project
@@ -181,4 +180,4 @@ your own data protection authority wherever you are.
 
 The version and the date at the top move, and the change is in the changelog of
 this repository like any other. This file lives in the public repository, so
-what it said on any day can be read from its history.
+you can read what it said on any day from its history.
