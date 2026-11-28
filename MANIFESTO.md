@@ -73,8 +73,8 @@ basis, its own revaluation, and a reporting obligation that is two years old.
 In Ekwo that is a module, written against a schema made ready for it, and the
 accounts stay as they are. The carbon module makes the same bet from the other
 end: a tonne of CO₂ recorded against the transaction that caused it, in the
-same company data, with the same audit trail. Ekwo is the first to bring this
-into open source accounting. It is where the name points.
+same company data, with the same audit trail. Your carbon and your money live
+in one ledger. It is where the name points.
 
 ## 4. Free and independent data infrastructure, in every country.
 
