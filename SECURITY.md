@@ -1,8 +1,8 @@
 # Security
 
-Ekwo OS holds books. A flaw here is not a crash, it is a company reading
-another company's ledger, or an entry that posts without a trace. Please
-report it, and please report it privately first.
+Ekwo OS holds the books of companies, so a flaw here can let one company read
+another company's ledger, or let an entry post without a trace. Please report
+it, privately first.
 
 ## Reporting a vulnerability
 
@@ -32,8 +32,8 @@ once the fix has shipped (see [`docs/decisions/README.md`](docs/decisions/README
   Shorter when the exploit is simple.
 - Credit in the advisory and the changelog, unless you would rather not.
 
-No bounty programme yet. The project is young; what it can offer today is a
-fast fix and a public thank-you.
+Today Ekwo offers a fast fix and a public thank-you for a report; a bounty
+programme is not in place yet.
 
 ## What counts
 
@@ -72,12 +72,13 @@ The threat model is short, and its reasons are in the decision records
   `service_role` key or a token anywhere but memory is a vulnerability. The
   MCP server accepting a `service_role` key is one too.
 
-What the schema does not hold against, because PostgreSQL gives it no way to:
+Two things sit outside what the schema can enforce, because PostgreSQL gives it
+no means to:
 
 - **The owner of the database.** Every rule above is a function or a
   trigger, and the owner of a table may disable its triggers; a superuser may
-  do anything. The guarantees bind clients. A trail that its own operator
-  cannot edit is a copy that has already left the database.
+  do anything. The guarantees bind clients. For a trail its own operator
+  cannot edit, keep a copy outside the database.
 - **The identity a direct connection declares.** Over the API, `auth.uid()`
   comes from a token Supabase Auth signed. On a direct connection it comes
   from `request.jwt.claims`, which is a setting like any other: a login that
@@ -96,7 +97,7 @@ anything in a dependency that is already reported upstream.
 latest minor is the supported line: it receives the fixes, and the changelog
 says what changed. `main` is where they land first.
 
-There is no backport to an earlier minor. Migrations move forward only —
-there is no `down` — so the answer to a fix on an old installation is
+Fixes land on the latest minor only. Migrations move forward only, with no
+`down`, so an old installation takes a fix with
 `npx -y ekwo-os@latest migrate`, and [`docs/releasing.md`](docs/releasing.md)
 is how a release carrying one is cut.
