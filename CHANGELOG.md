@@ -9,64 +9,7 @@ somewhere has already run it.
 
 ## [Unreleased]
 
-### Changed
-
-- **An amount holds the decimals of its currency.** Every money column of the
-  socle and of the modules (`budgets`, `contracts`, `crm`, `assets`) is a bare
-  `numeric` instead of `numeric(16, 2)` or `numeric(18, 2)`: a Kuwaiti or
-  Tunisian dinar keeps the thousandth `round_amount()` computed, where the
-  column used to cut it to a hundredth. `round_amount()` stays the one
-  rounding rule; no rounding trigger was added. Rates, percentages,
-  quantities and unit prices keep their types. The views, triggers and
-  generated columns that read the amounts are recreated with identical
-  definitions and grants; `entry_lines.balance`, `documents.amount_residual`,
-  `entries.is_balanced` and `bank_statements.is_consistent` move to the end
-  of their tables. **Text of an amount:** `numeric` prints the scale a value
-  holds, so an amount written as `100` now reads back `100` rather than
-  `100.00` — the clients read both, and every legal format (FEC, XBRL,
-  Factur-X, UBL, bank files) writes the decimals its specification requires
-  whatever the storage. `fixed_assets.run_depreciation()` writes its total
-  with the mask of the company's currency. Migrations `20261123203000`,
-  `assets/20261123203100`, `budgets/20261123203200`,
-  `contracts/20261123203300`, `crm/20261123203400`; additive, no data
-  rewritten, no change to the oldest schema a client reads.
-
-- **An amount finer than its currency is refused.** Since money columns hold
-  what their currency has, an amount written as it is — rather than computed
-  by `round_amount()` — was stored as sent: `12.3456` in euros on a line keyed
-  on a draft entry, a statement line, a payment. One check,
-  `assert_amount_of_currency()`, asks `rounding_of()` and compares the amount
-  with `round_amount()` of itself, and refuses it by name,
-  `amount_finer_than_currency`, with the amount, the currency, the decimals it
-  holds and the amount at the currency's decimals; it never rounds. It runs
-  from an `after insert or update` trigger on `entry_lines` (`debit`, `credit`
-  in the company's currency, `amount_currency` in the line's),
-  `bank_transactions`, `bank_statements` (the balances, in the account's
-  currency), `payments`, `reconciliations` (the amount `reconcile()` is given),
-  `document_lines.stated_tax_amount` (the document's currency) and
-  `companies.share_capital`, and in the modules on `fixed_assets` (cost,
-  residual value, proceeds of a disposal), `budgets.lines`,
-  `contracts.contracts` and `crm.deals`. An update judges only the amounts it
-  changes, the installer passes, and nothing written before is validated: the
-  migration creates triggers and reads no row. `import_bank_statement()`
-  reads a file at the decimals of the account's currency instead of two
-  whatever the currency — a dinar statement imports its thousandths, a krona
-  statement with a fraction of a krona is refused, `unreadable_statement_line`;
-  its sentences that name a balance write it with `amount_text_format()`.
-  Unit prices, quantities and rates are untouched. Migrations
-  `20261124090000`, `assets/20261124090100`, `budgets/20261124090200`,
-  `contracts/20261124090300`, `crm/20261124090400`; additive.
-  [`docs/international.md`](docs/international.md#an-amount-is-written-at-the-decimals-of-its-currency).
-
-- **A merge carries a contact's account as a scheme and a value.**
-  `merge_contacts()` decided whether the kept contact had an account by its
-  `iban` alone and copied `iban` and `bic`: an account in another scheme — an
-  ABA routing number and account, a BSB, an IFSC — was lost when absorbed,
-  and a kept contact holding one had it overwritten by the absorbed IBAN. The
-  rule is the one it had, read on the pair: the kept contact keeps its
-  account in any scheme; when it has none it takes the absorbed contact's
-  account and bank together, both pairs and their mirrors. `filled` names the
-  pairs beside `iban` and `bic`. Migration `20261124091000`, additive.
+## [0.28.0] — 2026-11-28
 
 ### Added
 
@@ -325,8 +268,6 @@ somewhere has already run it.
   §13. Ekwo OS on a project of one's own stays governed by its licence and
   `DISCLAIMER.md` alone.
 
-### Added
-
 - **`describe_pack` lists the charts of accounts a country offers.** Each
   pack in the answer carries `charts`, read from `chart_templates`: `code`,
   `name`, `audience`, `is_default`, `statements`, `certification_status`,
@@ -414,6 +355,67 @@ somewhere has already run it.
   migration.
 
 ### Changed
+
+- **The schema is 0.28.0 (`20261120100100`); the floor of the packages stays
+  at 0.19.0.** Every migration of this release adds; what the packages read
+  or call of it is named in `SCHEMA_FEATURES` under 0.28.0.
+
+- **An amount holds the decimals of its currency.** Every money column of the
+  socle and of the modules (`budgets`, `contracts`, `crm`, `assets`) is a bare
+  `numeric` instead of `numeric(16, 2)` or `numeric(18, 2)`: a Kuwaiti or
+  Tunisian dinar keeps the thousandth `round_amount()` computed, where the
+  column used to cut it to a hundredth. `round_amount()` stays the one
+  rounding rule; no rounding trigger was added. Rates, percentages,
+  quantities and unit prices keep their types. The views, triggers and
+  generated columns that read the amounts are recreated with identical
+  definitions and grants; `entry_lines.balance`, `documents.amount_residual`,
+  `entries.is_balanced` and `bank_statements.is_consistent` move to the end
+  of their tables. **Text of an amount:** `numeric` prints the scale a value
+  holds, so an amount written as `100` now reads back `100` rather than
+  `100.00` — the clients read both, and every legal format (FEC, XBRL,
+  Factur-X, UBL, bank files) writes the decimals its specification requires
+  whatever the storage. `fixed_assets.run_depreciation()` writes its total
+  with the mask of the company's currency. Migrations `20261123203000`,
+  `assets/20261123203100`, `budgets/20261123203200`,
+  `contracts/20261123203300`, `crm/20261123203400`; additive, no data
+  rewritten, no change to the oldest schema a client reads.
+
+- **An amount finer than its currency is refused.** Since money columns hold
+  what their currency has, an amount written as it is — rather than computed
+  by `round_amount()` — was stored as sent: `12.3456` in euros on a line keyed
+  on a draft entry, a statement line, a payment. One check,
+  `assert_amount_of_currency()`, asks `rounding_of()` and compares the amount
+  with `round_amount()` of itself, and refuses it by name,
+  `amount_finer_than_currency`, with the amount, the currency, the decimals it
+  holds and the amount at the currency's decimals; it never rounds. It runs
+  from an `after insert or update` trigger on `entry_lines` (`debit`, `credit`
+  in the company's currency, `amount_currency` in the line's),
+  `bank_transactions`, `bank_statements` (the balances, in the account's
+  currency), `payments`, `reconciliations` (the amount `reconcile()` is given),
+  `document_lines.stated_tax_amount` (the document's currency) and
+  `companies.share_capital`, and in the modules on `fixed_assets` (cost,
+  residual value, proceeds of a disposal), `budgets.lines`,
+  `contracts.contracts` and `crm.deals`. An update judges only the amounts it
+  changes, the installer passes, and nothing written before is validated: the
+  migration creates triggers and reads no row. `import_bank_statement()`
+  reads a file at the decimals of the account's currency instead of two
+  whatever the currency — a dinar statement imports its thousandths, a krona
+  statement with a fraction of a krona is refused, `unreadable_statement_line`;
+  its sentences that name a balance write it with `amount_text_format()`.
+  Unit prices, quantities and rates are untouched. Migrations
+  `20261124090000`, `assets/20261124090100`, `budgets/20261124090200`,
+  `contracts/20261124090300`, `crm/20261124090400`; additive.
+  [`docs/international.md`](docs/international.md#an-amount-is-written-at-the-decimals-of-its-currency).
+
+- **A merge carries a contact's account as a scheme and a value.**
+  `merge_contacts()` decided whether the kept contact had an account by its
+  `iban` alone and copied `iban` and `bic`: an account in another scheme — an
+  ABA routing number and account, a BSB, an IFSC — was lost when absorbed,
+  and a kept contact holding one had it overwritten by the absorbed IBAN. The
+  rule is the one it had, read on the pair: the kept contact keeps its
+  account in any scheme; when it has none it takes the absorbed contact's
+  account and bank together, both pairs and their mirrors. `filled` names the
+  pairs beside `iban` and `bic`. Migration `20261124091000`, additive.
 
 - **The MCP server opens an installation below the schema floor for
   reading.** It used to refuse to start (`schema_too_old`) on a database
