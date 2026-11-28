@@ -1,10 +1,11 @@
 # ekwo
 
-The installer and the operator's tool for [Ekwo OS](https://github.com/Ekwo-ai/ekwo-os).
-One command turns a Supabase project you already own into a set of double-entry
-books: the schema, every country pack, the first administrator, the first
-company and its first financial year. The same command line then keeps books,
-as a signed-in person.
+Turn a Supabase project you already own into the memory of your company, in one
+command: the schema, every country pack, the first administrator, the first
+company and its first financial year, with double-entry books from the first
+row. The same command line then keeps the books, as a signed-in person. This
+is the installer and the operator's tool for
+[Ekwo OS](https://github.com/Ekwo-ai/ekwo-os).
 
 ```sh
 npx -y ekwo-os@latest init
@@ -22,13 +23,12 @@ You need Node 20 or later. No Supabase CLI, no Docker.
 ## From a free Supabase account to a first invoice
 
 1. **Create a project** at [supabase.com](https://supabase.com). The free plan
-   is enough to start. Ekwo does not create it, does not pay for it and has no
-   access to it: it is yours from the first row.
+   is enough to start. It is yours from the first row: you create it, you pay
+   for it, and Ekwo has no access to it.
 2. **Copy two things** from the dashboard:
    - **Connect → Session pooler**: the connection string. It contains your
-     database password. Take the session pooler line rather than the direct
-     one: the direct host answers on IPv6 only, which many networks cannot
-     reach.
+     database password. Take the session pooler line: the direct host
+     answers on IPv6 only, which many networks cannot reach.
    - **Project Settings → API Keys**: the **secret key** (`sb_secret_…`, or
      the legacy `service_role` key on an older project) and the **Project
      URL**. They are used once, to create the first administrator in your own
@@ -43,9 +43,9 @@ You need Node 20 or later. No Supabase CLI, no Docker.
    the language where the pack offers a choice, your organisation, the
    currency, the first company, the address of the first administrator and —
    optionally — your main bank account, written the way your country's banks
-   write it. A few seconds on a free project. Nothing is preselected on the
-   three questions whose wrong answer is expensive: the country, the chart and
-   the language.
+   write it. A few seconds on a free project. You choose the three answers
+   that matter most yourself, with nothing preselected: the country, the chart
+   and the language.
 
 4. **Sign in** as that administrator and start booking — in the web
    application, [Ekwo Cloud](https://cloud.ekwo.ai/signup?src=cli), which opens your own
@@ -71,8 +71,8 @@ npx -y ekwo-os@latest init \
   --yes
 ```
 
-With `--yes` nobody is asked anything, so **`ekwo init` refuses rather than
-choosing for you**: no country without `--country`, and `--chart`,
+With `--yes` nobody is asked anything, so **`ekwo init` refuses to choose for
+you**: no country without `--country`, and `--chart`,
 `--language` or `--fiscal-year-start` wherever the country's pack offers more
 than one answer, and `--territory` (`US-CA`) wherever it requires the company
 to name the state or province it is established in. Each refusal lists the
@@ -82,7 +82,7 @@ values the pack accepts.
 
 ## Several countries in one installation: `init --no-company`
 
-An installation is not in a country; its companies are. `ekwo init` loads every
+Each company of an installation has its own country. `ekwo init` loads every
 pack of the release whatever `--country` says, so one installation keeps the
 books of companies in as many countries as it holds packs. When there is no
 "first company" to name — a group, a firm, a holding with subsidiaries abroad —
@@ -108,19 +108,19 @@ terminal.
 
 ## Before you go live: four things on your project
 
-An installation leaves four things undone on purpose: they are yours to
-decide, on a project Ekwo has no access to. `ekwo init` prints this list at the
+Four decisions are yours, on a project Ekwo has no access to, so the installer
+leaves them to you. `ekwo init` prints this list at the
 end of a successful run.
 
 **1. Turn off self sign-up on your project.**
 Supabase dashboard → **Authentication → Sign In / Providers → "Allow new users
 to sign up"**, switched off. An Ekwo installation is closed: the people who
-keep the books are invited. A stranger who signs up sees nothing, but there is
-no reason to let them in.
+keep the books are invited. A stranger who signs up sees nothing, and closing
+sign-up keeps them out altogether.
 
 **2. Keep two administrators.**
-An instance administrator invites everybody else. With one, a lost password or
-a closed mailbox is a set of books nobody can let anyone into. Create a second
+An instance administrator invites everybody else. With two, a lost password or
+a closed mailbox still leaves somebody who can let people in. Create a second
 account and add it with `claim_instance_admin()`, or invite it from the
 application.
 
@@ -211,8 +211,8 @@ project reports what was already there and creates nothing a second time.
 | `ekwo einvoice clearance <document> submitted\|validated\|rejected\|cancelled` | Under a clearance regime — the authority validates every invoice before it is issued — records what happened to a posted sale: its submission (`--reference`, `--issue`), the authority's validation (`--identifier`, `--validated-at`, `--verification-url` — or, where the pack builds the link, `--detail` and `--environment`), a rejection by the authority or the buyer (`--reason`, `--by`), its cancellation (`--reason`), each `--at` a moment, `--detail <file>` the answer as JSON. It dials nobody; the database refuses a transition that cannot have happened, and a window of the pack that has closed. `fiscalisation` then counts the sales validated, waiting, rejected and cancelled. |
 | `ekwo peppol validate <file>` / `lookup <participant>` | The Peppol network, with no installation and no sign-in. `validate` reads a UBL invoice or credit note as it arrived and names the rules it breaks — the arithmetic of EN 16931 and the electronic addresses of both parties — with exit 1 if any; nothing is booked. `lookup` checks a participant identifier (`0208:0999999922`, `iso6523-actorid-upis::…` or a symbolic scheme) and asks the DNS of the Service Metadata Locator whether it is registered, and with which Service Metadata Publisher; `--test` asks the acceptance network. Exit 0 only for a registered participant. See [`@ekwo-ai/peppol-ubl`](../formats/peppol-ubl/README.md#participant-identifiers-and-the-sml). |
 
-There is no `eject`, because there is nothing to eject from. The schema is in
-your database, the migrations are in the repository under AGPL-3.0, and
+You own everything this CLI installs, so you never need an `eject`. The schema
+is in your database, the migrations are in the repository, open source, and
 `supabase db push` applies them without this CLI ever running again.
 
 ## What a command answers: `--json` and the exit codes
@@ -249,8 +249,8 @@ reference of commands and flags in one document, for an agent.
 | `3` | **The database refused**: a locked period, a capability you do not hold, a constraint. The call was well formed; the accounting said no. |
 
 A refusal is printed as the database wrote it — `period_locked: …` — and never
-rephrased or worked around. **No command waits on a question when there is
-nobody to answer**: off a terminal, under `--json` or with `--yes`, a missing
+rephrased or worked around. **A command with nobody to answer stops at once**:
+off a terminal, under `--json` or with `--yes`, a missing
 answer is exit code 2 with the flag to pass.
 
 ## Acting as a person: `login`, `use`, `whoami`
@@ -394,8 +394,8 @@ live in storage and are listed in the manifest to copy. The format is in
 
 ## `ekwo doctor`
 
-What a healthy installation is true of. It reads and reports; it never
-repairs.
+Check that your installation is healthy. It reads and reports, and leaves
+every repair to you.
 
 ```sh
 ekwo doctor --db-url "$URL"          # readable
@@ -553,8 +553,8 @@ invitation instead, with the one command:
 npx -y ekwo-os@latest register --email <your address>
 ```
 
-`EKWO_NO_REGISTER_INVITE=1` hides the invitation. Community works
-unregistered: nothing reads the registration to decide what you may do.
+`EKWO_NO_REGISTER_INVITE=1` hides the invitation. Community works fully
+unregistered: the registration decides nothing about what you may do.
 
 Registering writes the address and a date on your instance row, and sends
 exactly six fields:
@@ -571,8 +571,8 @@ exactly six fields:
 ```
 
 No ledger data, no user list, no connection string. `instance_id` is generated
-by your own database and is not a licence key. A failed announcement is a soft
-message, not a failed install: `ekwo register` retries it. `ekwo unregister`
+by your own database and is not a licence key. A failed announcement leaves
+the install intact and prints a short message; `ekwo register` retries it. `ekwo unregister`
 clears the local fields.
 
 ## An Ekwo Cloud account (optional)

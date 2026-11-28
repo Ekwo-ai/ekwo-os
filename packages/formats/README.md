@@ -1,20 +1,22 @@
 # Format libraries
 
-One npm package per file format, organised **by format and never by country**.
-Factur-X is French and German, UBL is universal, camt.053 is European: a format
-is not a country. Which formats a country uses is said by its pack — its
-e-invoicing profile, its bank statement formats, its declaration — never by the
-shape of this directory.
+Write and read the files your administration, your bank and your customers
+expect, from any book-keeping system. You get one npm package per file format,
+organised **by format and never by country**. Factur-X is French and German,
+UBL is universal, camt.053 is European, so each format stands on its own. A
+country's pack says which formats it uses — its e-invoicing profile, its bank
+statement formats, its declaration.
 
 Each package here:
 
-- is **MIT**, with its own `LICENSE` file, so it can be used anywhere,
+- is **MIT**, with its own `LICENSE` file, so you can use it anywhere,
   including inside other software;
-- **imports nothing from the core** — not `@ekwo-ai/core`, not the schema, not
-  another library;
+- **stands alone**: it imports nothing from the core — not `@ekwo-ai/core`,
+  not the schema, not another library;
 - declares the **flat row shapes** it reads or returns in its own types, so any
   book-keeping system that can produce those columns can use it;
-- returns what does not add up in `violations[]`, and never corrects it.
+- reports what does not add up in `violations[]`, and leaves the correction to
+  you.
 
 ## What is here
 
@@ -83,17 +85,18 @@ never after the software that writes it:
 | [`xaf`](xaf/) | XML Audit File Financial, versions 3.2 and 4.0 |
 | [`fec`](fec/) | The FEC, read back with `readFec()` |
 
-A file that comes from outside is treated as untrusted until read: the XML
-readers refuse DTDs and external entities and bound size and depth, and the
-fixed-width and CSV readers take the encoding they are told and never guess it.
+Every file from outside is read safely: the XML readers refuse DTDs and
+external entities and bound size and depth, and the fixed-width and CSV readers
+use the encoding they are told and never guess it.
 
 ## Why no shared abstraction
 
-There is no `Filing` interface, no plugin registry and no common `xml`
-package. Two formats that look alike are two formats: the four recapitulative
-statements read the same rows and still disagree on lines, columns, number
-formats and how a VAT number is written. Each package says, in its README,
-which official pages the format was read from.
+Each format gets its own package, written to its own specification, with no
+`Filing` interface, plugin registry or common `xml` package between them. Two
+formats that look alike still differ: the four recapitulative statements read
+the same rows and disagree on lines, columns, number formats and how a VAT
+number is written. Each package says, in its README, which official pages the
+format was read from.
 
 **Invoices, drawn.** It renders the visual PDF of a sale invoice or credit note
 from the rows of the `document_*` views, PDF/A-3b, with no country in its

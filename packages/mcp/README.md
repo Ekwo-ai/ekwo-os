@@ -1,18 +1,18 @@
 # @ekwo-ai/mcp
 
-The [Model Context Protocol](https://modelcontextprotocol.io) server for
-[Ekwo OS](https://github.com/Ekwo-ai/ekwo-os). It lets an AI agent work on
-the books in your own Postgres: read the ledger, raise an invoice, post it, match
-a payment, prepare the VAT return — **as you**, under the row
-level security of your own installation.
+Let an AI agent run your company in your own Postgres: read the ledger, raise
+an invoice, post it, match a payment, prepare the VAT return — **as you**,
+under the row level security of your own installation. This is the
+[Model Context Protocol](https://modelcontextprotocol.io) server for
+[Ekwo OS](https://github.com/Ekwo-ai/ekwo-os).
 
-There are two ways to reach it, and they are the same server.
+You reach the same server in two ways.
 
 ## Hosted, at `https://mcp.ekwo.ai/mcp`
 
-For a client that adds remote servers rather than launching them — claude.ai,
-or any other that speaks **Streamable HTTP**. Nothing is installed, and no
-password or key is written into a configuration file.
+For a client that adds remote servers by URL — claude.ai, or any other that
+speaks **Streamable HTTP**. You install nothing, and no password or key goes
+into a configuration file.
 
 ```
 https://mcp.ekwo.ai/mcp
@@ -54,12 +54,11 @@ same environment: `"command": "ekwo", "args": ["mcp"]`.
 
 ## What it is, and what it is not
 
-The server holds no privileges of its own. It signs in as the person using it,
-or is handed their access token, and everything it can do afterwards is
-exactly what that person can do: a viewer reads and cannot write, a member of
-one company cannot see another, a locked period refuses a posting. None of
-that is checked in this package — the policies and the triggers in the schema
-decide, and this server reports what they answered.
+The server acts with exactly the rights of the person using it. It signs in as
+that person, or is handed their access token, and can then do what they can
+do: a viewer reads and cannot write, a member of one company cannot see
+another, a locked period refuses a posting. The policies and the triggers in
+the schema decide, and this server reports what they answered.
 
 Three things it will never do:
 
@@ -71,9 +70,9 @@ Three things it will never do:
   undone the one way its country allows — back to draft where nothing about it
   has left, otherwise by the credit note that names it — and an entry keyed by
   hand by its reversal.
-- **Use a `service_role` key.** It would work, and that is the objection: it
-  bypasses every policy, so the agent would answer for companies its user
-  was never invited to. The server refuses to start with one.
+- **Use a `service_role` key.** Such a key bypasses every policy, so the agent
+  would answer for companies its user was never invited to. The server
+  refuses to start with one.
 
 ## Configuration
 
@@ -116,11 +115,10 @@ for tests.
 }
 ```
 
-`EKWO_ACT_AS_USER_ID` is **required**, and that is the whole point of this
-mode. A database connection is nobody: `auth.uid()` is null, row level
-security is bypassed rather than satisfied, and a server running that way
-would be a way round the policies rather than a client of them. So every
-query runs inside a transaction that sets `request.jwt.claims` to that user
+`EKWO_ACT_AS_USER_ID` is **required**: it keeps the policies in force on a
+direct connection. On its own, a database connection has no user —
+`auth.uid()` is null and row level security is bypassed. So every query runs
+inside a transaction that sets `request.jwt.claims` to that user
 and switches to the `authenticated` role, and the policies bind exactly as
 they do over the API. This mode needs the `postgres` package installed
 alongside the server; the recommended route needs no driver at all.
@@ -150,9 +148,9 @@ variables to set and where. It connects nowhere until then, and it offers the
 tools of the socle only: which modules an installation carries is read from
 its database.
 
-Only absence is forgiven. A `service_role` key, in either slot, and an
-`EKWO_ACT_AS_USER_ID` that is not a uuid are values somebody wrote, and the
-server still refuses to start with them.
+The server accepts missing values only. A `service_role` key, in either slot,
+and an `EKWO_ACT_AS_USER_ID` that is not a uuid are values somebody wrote, and
+the server still refuses to start with them.
 
 ```sh
 npm run build -w @ekwo-ai/mcp
@@ -172,8 +170,8 @@ with no session id and nothing kept — so it runs on a function platform,
 behind a load balancer, or in one process. A `GET` is answered `405`: this
 server never speaks first, so there is no stream to open.
 
-It does not decide who is calling: the host authenticates the request its own
-way, then hands in **the connection that request may use**.
+The host decides who is calling: it authenticates the request its own way,
+then hands in **the connection that request may use**.
 
 ```ts
 import { handleHttpRequest } from '@ekwo-ai/mcp';
@@ -210,9 +208,9 @@ A remote MCP client expects the server to follow the [authorization part of
 the MCP
 specification](https://modelcontextprotocol.io/specification/2025-11-25/basic/authorization):
 OAuth 2.1 with PKCE, protected resource metadata (RFC 9728), authorization
-server metadata (RFC 8414) and dynamic client registration (RFC 7591). That
-belongs to the host, not to this package: the host signs the person in, issues
-its own tokens, and maps each one to a connection above. The database stays
+server metadata (RFC 8414) and dynamic client registration (RFC 7591). The
+host provides it: it signs the person in, issues its own tokens, and maps each
+one to a connection above. The database stays
 the only place that decides what may be read or written.
 
 ## The tools
@@ -384,7 +382,7 @@ a session starts with the tools of a first session — `status`,
 | `search_tools` | The tools that match a few words of the task, best first, each with its title, its first sentence, whether it reads, adds or destroys, and whether it is loaded. Filters by `effect` |
 | `load_tools` | Adds the tools named to the session. The server tells the client its tool list changed |
 
-A model then carries a short list rather than every description. A client
+A model then carries a short list of descriptions. A client
 that never reads the list again keeps the default.
 
 ## Review or autopilot
@@ -453,14 +451,14 @@ it gates nothing, and the server sends nothing to Ekwo to give it.
   refused beyond it, `stated_tax_out_of_tolerance` (decision 0099).
 - **Refusals travel unchanged.** `period_locked:`, `entry_unbalanced:`,
   `document_total_mismatch:` and the rest arrive with the message the database
-  raised, plus one sentence saying what it means. They are answers, not
-  obstacles to route around.
-- **A product fills a line in and never constrains it.** A line naming
+  raised, plus one sentence saying what it means. They are answers: act on
+  them.
+- **A product fills a line in, and the line has the last word.** A line naming
   `product_code` takes the catalogue's text, description, unit, price, account
   and tax; anything the line carries wins over that. What is already posted is
   never touched when the catalogue changes, and a product referenced by a line
   is retired with `active: false` rather than deleted.
-- **A missing tax is a missing tax.** A line with no tax books a base with no
+- **A line with no tax books no VAT.** A line with no tax books a base with no
   VAT box, which is not the same as 0 %. A missing *account* is different: it
   can only mean "resolve it", because a product line with no account is
   refused by a check constraint. So a line may leave `account_code` out, and
