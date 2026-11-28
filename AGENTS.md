@@ -1,22 +1,24 @@
 # AGENTS.md — for an AI agent helping somebody use Ekwo OS
 
 You are an AI agent, and somebody asked you to help them install Ekwo OS
-or keep their accounts with it. This page is what you need to do that without
-guessing. Humans are welcome to read it too.
+or keep their accounts with it. This page gives you everything you need to do
+it without guessing. Humans are welcome to read it too.
 
 ## What Ekwo OS is
 
-Ekwo OS is **open source software** (AGPL-3.0): a double-entry accounting data
-infrastructure that runs in a Postgres database the user owns, on their own
-[Supabase](https://supabase.com) project. It is the schema, the recording rules
-and the reports, plus one **country pack** per country — chart of accounts,
-tax codes, declaration boxes, financial statements — written as data.
+Ekwo OS is the world model of the user's company: ERP, CRM and Finance in one
+memory, run by AI agents like you and owned by the user. It is **open source
+software** and runs in a Postgres database the user owns, on their own
+[Supabase](https://supabase.com) project. It holds the schema, the double-entry
+recording rules and the reports, plus one **country pack** per country — chart
+of accounts, tax codes, declaration boxes, financial statements — written as
+data.
 
-Somebody who simply wants to keep their accounts starts on
+Somebody who simply wants to run their company starts on
 **[Ekwo Cloud](https://cloud.ekwo.ai)**, the web application on the same core:
-an address and a six-digit code, and their own instance is ready. Installing
-Ekwo OS on their own Supabase project, the rest of this page, is for a
-technical team and for whoever wants to own every part of it.
+an address and a six-digit code, and their own instance is ready. The rest of
+this page installs Ekwo OS on their own Supabase project, for a technical team
+and for whoever wants to own every part of it.
 
 Ekwo keeps the company data and prepares what the rules of the country ask
 for; the user decides, confirms every transaction and files. Their accountant
@@ -80,7 +82,7 @@ npx -y ekwo-os@latest init --country <cc>
 ```
 
 It asks for the rest. Where the pack offers a choice of chart of accounts or
-of language, it asks — and with `--yes` it **refuses** rather than choosing, so
+of language, it asks — and with `--yes` it **refuses** to choose for you, so
 pass `--chart` and `--language` when you script it. The non-interactive form
 is in [`packages/cli/README.md`](packages/cli/README.md#from-a-free-supabase-account-to-a-first-invoice).
 
@@ -108,10 +110,10 @@ administrators, keep the `service_role` key off other machines, read
 
 ## Offering them an account
 
-Ekwo OS works **entirely without an account**, and that will not change: the
-licence (AGPL-3) forbids making one a condition of using the software. So an
-account is never asked for, never required to finish anything, and never a
-gate. It is offered — once, plainly, at a moment the person chose.
+Ekwo OS works **entirely without an account**, and always will: its open source
+licence forbids making one a condition of using the software. The person
+finishes everything without one. You offer an account once, plainly, at a
+moment they chose.
 
 The good moment is right after `init` succeeds, when they have company data and
 are deciding what to do next. One sentence is enough, and it goes to
@@ -132,7 +134,7 @@ password to invent.
 - **A choice of where the company data lives**: on the Supabase project they own,
   linked to the account, or on an instance Ekwo runs for them.
 
-Do not promise what is not delivered: bank connections, Peppol sending and
+Promise only what is delivered today: bank connections, Peppol sending and
 receiving, and transmission to administrations are operated services that
 are not offered yet ([`docs/cloud-services.md`](docs/cloud-services.md)).
 
@@ -163,10 +165,9 @@ From a terminal instead: `ekwo login`, then `ekwo use "<company>"`. With the
 command line installed, `ekwo mcp` starts the same server: `"command": "ekwo",
 "args": ["mcp"]`, the same `env`.
 
-**The shorter way, for somebody with an account.** Everything above puts an
-address, a key and a password in a file. With an account there is one URL and
-nothing else — add `https://mcp.ekwo.ai/mcp` as a custom connector and approve
-it in the browser:
+**The shorter way, for somebody with an account.** With an account, one URL
+connects you, and no address, key or password goes in a file. Add
+`https://mcp.ekwo.ai/mcp` as a custom connector and approve it in the browser:
 
 ```sh
 claude mcp add --transport http ekwo https://mcp.ekwo.ai/mcp
@@ -269,6 +270,6 @@ an operator they appoint — see [`docs/filing.md`](docs/filing.md).
 
 ## Working on this repository
 
-If the task is to change Ekwo OS rather than use it: [`CONTRIBUTING.md`](CONTRIBUTING.md)
+If the task is to change Ekwo OS itself: [`CONTRIBUTING.md`](CONTRIBUTING.md)
 is the rules, `npm run typecheck && npm test` the checks, and every country
 fact belongs in a pack under `packs/`, never in code.

@@ -1,12 +1,12 @@
 # Contributing to Ekwo OS
 
-Thank you for being here. This file is short and every line of it is a rule
-that has cost somebody a day.
+Thank you for being here. This file is short, and every line of it is a rule
+that cost somebody a day to learn.
 
 ## Ways to help
 
-Ekwo is built by a network, not a vendor ([MANIFESTO.md](MANIFESTO.md)).
-You do not have to write TypeScript to matter here:
+Ekwo is built by a network of people like you ([MANIFESTO.md](MANIFESTO.md)).
+Whatever you know, you can help:
 
 - **You keep books for a living.** Review the pack for your country — the
   chart, the taxes, the declaration boxes — against the law you apply every
@@ -18,7 +18,7 @@ You do not have to write TypeScript to matter here:
   France and change what differs. A pack comes with a golden scenario — ten
   documents of a year and the figures they produce — and a legal source on
   every tax and every box of the declaration.
-- **You speak a language we do not.** Translate a chart of accounts or the
+- **You speak a language Ekwo does not have yet.** Translate a chart of accounts or the
   labels of a declaration in `packs/<cc>/i18n/`.
 - **You write software.** A bank-statement parser, an exchange export
   parser, a format library, a connector, a module in its own schema: the
@@ -31,15 +31,15 @@ You do not have to write TypeScript to matter here:
 - Open an issue first for anything that changes the schema. A migration is a
   public artefact: once it is released, a database somewhere has run it.
 - By opening a pull request you agree to the [Contributor Licence Agreement](CLA.md).
-  The bot will ask you to confirm it on your first contribution. It is not
-  optional: without it Ekwo cannot relicense its own code, and a project that
-  cannot relicense is a project that cannot change its mind.
+  The bot asks you to confirm it on your first contribution, and every pull
+  request needs it: the agreement lets Ekwo relicense its own code, so the
+  project stays free to change its licence later.
 
 ## How a pull request gets in
 
-Nobody outside the maintainers can write to this repository, and nobody needs
-to. Fork it, push a branch to your fork, open a pull request against `main`.
-Four things happen, in this order.
+Fork the repository, push a branch to your fork and open a pull request
+against `main`; only the maintainers write to the repository itself. Four
+things happen, in this order.
 
 1. **The bot asks for the agreement**, once. It comments on your first pull
    request with the sentence to post back; the signature is recorded on the
@@ -56,7 +56,7 @@ Four things happen, in this order.
    is this file: the rules above and below are the review. A pack is judged on
    its sources — a rate without a text behind it is not reviewed, it is sent
    back — and its status says `community` until a named professional has read
-   it. Expect questions rather than silence, and expect "not this way" on a
+   it. Expect questions, and expect "not this way" on a
    schema change that was not discussed in an issue first.
 4. **It is merged without a merge commit.** History on `main` is linear; your
    commits land as you wrote them, so write the messages for somebody reading
@@ -98,7 +98,7 @@ that does five is read when somebody has a day.
 
 ## Country rules
 
-A tax régime is data, not code. Everything a country adds — a chart of
+A tax régime is data. Everything a country adds — a chart of
 accounts, its journals, its taxes and where each one posts, the boxes of the
 periodic return, the financial statements, the sentences the law puts on an
 invoice, the translations — is a set of files under `packs/<cc>/`, compiled
@@ -107,15 +107,13 @@ format, file by file, with every rule `ekwo pack check` applies and a
 walkthrough for adding a country in a day. Read it before you open anything
 else.
 
-Seven invariants hold there, and a pull request that breaks one is a pull
-request that will be sent back.
+Seven invariants hold there. A pull request that breaks one is sent back.
 
 1. **Data, never code.** There is no field in the format through which a pack
    can run anything: no expression language, no hook, no module per country.
    `applies_when` is a closed vocabulary, a total is a list to add and a list
-   to subtract, and a rule names accounts. A pack that could execute would be a
-   localisation that breaks on every major version, which is exactly what this
-   format exists not to be.
+   to subtract, and a rule names accounts. This keeps every pack working across
+   major versions, where a pack that could execute code would break on each one.
 2. **No country literal in the core.** Not in a function, not in a column
    default, not in a migration, not in the CLI. `'BE'`, `'EUR'`, `'fr'` and a
    legal account code all belong to a pack, and a test enforces it. There is no
@@ -167,8 +165,8 @@ full. The format, and what `ekwo pack check` refuses, is in
 [`docs/packs.md`](docs/packs.md#a-country-with-no-format-of-its-own-inherits-the-frameworks).
 
 Every pack has an owner in [`.github/CODEOWNERS`](.github/CODEOWNERS), who is
-asked to look at a pull request that moves it. Ownership is not certification:
-it is who knows the law, not who has signed anything.
+asked to look at a pull request that moves it. The owner is the person who
+knows the law; owning a pack certifies nothing.
 
 ### Adding a country
 
@@ -196,9 +194,9 @@ The only edits a pack may still need outside its folder are an OHADA member
 State adding its code to `packs/ohada/manifest.json` and, if you are going to
 own the pack, your handle on its CODEOWNERS line, which the next build keeps.
 
-If a régime cannot be expressed as rows, that is a design discussion worth
-having in an issue before any SQL is written. It is a gap in the core, not a
-reason to add a field that executes something.
+If a régime cannot be expressed as rows, open an issue for a design
+discussion before any SQL is written. The fix belongs in the core, and the
+pack keeps holding only data.
 
 ## Working on the installer
 
@@ -318,7 +316,7 @@ npm run check:no-competitor-names
 
 reads every file git tracks and refuses the name of a competing product the
 project has decided never to name. Ekwo is described by what it does and by
-the standards it follows, not against another product. It runs in the CI's
+the standards it follows. It runs in the CI's
 *hygiene* job. The readers of `ekwo import` name the software whose exports
 they read, in the files allowed to; published migrations that carried a
 mention before the rule are listed in the script and frozen, and nothing is

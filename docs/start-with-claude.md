@@ -8,19 +8,19 @@ questions about them and prepares your next VAT return. The web application,
 [Ekwo Cloud](https://cloud.ekwo.ai), opens this same instance whenever you
 would rather click than type.
 
-It takes about twenty minutes, most of it in the Supabase dashboard. You do
-not need to be a developer, but you will paste a few lines into a terminal and
-one block into a settings file.
+It takes about twenty minutes, most of it in the Supabase dashboard. Anybody
+can do it: you paste a few lines into a terminal and one block into a settings
+file.
 
-**Before you start, know what is not there yet** (the full list is
+**Before you start, know what comes later** (the full list is
 [at the end](#what-this-does-not-do-yet)): Ekwo prepares a declaration and you
 file it; imported history carries no VAT; the reconciliation marks of your old
 accounts are not re-applied.
 
 ## What you need
 
-- A **Supabase account**. The free plan is enough. Ekwo never sees the
-  project: it is yours from the first row.
+- A **Supabase account**. The free plan is enough. The project is yours from
+  the first row, and Ekwo never sees it.
 - **Node.js 20 or later**, from [nodejs.org](https://nodejs.org). Type
   `node --version` in a terminal to check.
 - **Claude Desktop** ([claude.ai/download](https://claude.ai/download)) or
@@ -30,7 +30,7 @@ accounts are not re-applied.
   A full export from another one works too. [`compatibility.md`](compatibility.md) lists every
   export Ekwo reads, with the official page that says how to produce each one.
 
-Try it on a copy first: nothing here touches the software your accounts come from.
+Try it on a copy first. The software your accounts come from stays untouched.
 
 ## 1. Create a free Supabase project
 
@@ -40,7 +40,7 @@ Try it on a copy first: nothing here touches the software your accounts come fro
 2. When the project is ready, collect three things from the dashboard:
    - **Connect** → **Session pooler** → the connection string, with your
      database password where it says `[YOUR-PASSWORD]`. Take the session
-     pooler line rather than the direct one, which many networks cannot reach.
+     pooler line: many networks cannot reach the direct one.
    - **Project Settings → API Keys**: the **publishable key**
      (`sb_publishable_…`, or the older **`anon`** key). This is the key Claude
      will use.
@@ -152,8 +152,8 @@ browser. [`packages/mcp`](../packages/mcp/README.md) explains both routes.
 
 ## 4. Several companies, several countries
 
-Start a conversation. Claude reads the description of every tool, so you speak
-about your company, not about tools.
+Start a conversation. Claude reads the description of every tool, so you
+simply talk about your company.
 
 **"Is Ekwo connected? List my companies."** Claude calls `status` and
 `list_companies`: the schema version, and the company the installer created,
@@ -212,17 +212,17 @@ would happen, and any refusal is the real one. When every suggestion is right:
 **"Every suggestion is right, accept them."**
 
 **"That's right. Import it for real."** The opening transaction is recorded, all of
-it or none of it. The same file a second time is refused rather than counted
-twice.
+it or none of it. The same file a second time is refused, so nothing is
+counted twice.
 
 For a larger history — the transactions of a whole year — the steps are the same.
 A file that does not balance, or a date it does not make unambiguous, is
-refused by name rather than guessed. The tool takes up to 256 KiB of text;
+refused by name, so nothing is guessed. The tool takes up to 256 KiB of text;
 beyond that it answers with the `ekwo import` command that reads the files
 from your disk and runs the same import ([`import.md`](import.md)). Claude Code
 can run it for you.
 
-Bank statements are not accounts: say **"import this bank statement"** and
+A bank statement takes its own path: say **"import this bank statement"** and
 Claude uses `import_bank_statement`, which keeps the lines to be matched and
 records no transaction.
 
