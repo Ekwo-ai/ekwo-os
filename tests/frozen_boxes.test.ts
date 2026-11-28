@@ -31,13 +31,27 @@ import { allPacks } from './helpers/packs.js';
 
 const MIGRATION = '20261011160431_a_line_keeps_the_boxes_it_was_posted_in.sql';
 
+const FORM_TERRITORY = '20261128070000_a_form_names_the_territory_it_is_filed_in.sql';
+
 /** Published after it and reading the columns it adds: left out, applied after it. */
 const LATER = [
   '20261019161437_a_return_settles_what_it_carries.sql',
   // Replaces vat_return() with the body of MIGRATION, under the guard of a
   // company's VAT scheme.
   '20261022110100_the_return_reads_the_vat_scheme.sql',
+  // Replaces it again, choosing the form of the company's territory.
+  FORM_TERRITORY,
 ];
+
+/**
+ * The column the seed of a pack whose form names its territory writes, added
+ * before the seeds the way that migration adds it: the migration itself is
+ * left out with the rest and replayed after them.
+ */
+async function formColumns(): Promise<string> {
+  const sql = await readFile(join(repoRoot, 'supabase', 'migrations', FORM_TERRITORY), 'utf8');
+  return (sql.match(/^alter table ekwo\.tax_report_templates\s+add column[\s\S]*?;$/gm) ?? []).join('\n');
+}
 
 const withGolden = allPacks.filter((pack) => pack.golden !== null);
 
@@ -68,7 +82,7 @@ describe('an installation upgraded with books already in it', () => {
   let touchedBefore = '';
 
   beforeAll(async () => {
-    db = await freshDatabase({ withoutMigrations: [MIGRATION, ...LATER] });
+    db = await freshDatabase({ withoutMigrations: [MIGRATION, ...LATER], beforeSeeds: await formColumns() });
     for (const pack of withGolden) {
       const golden = pack.golden as PackGolden;
       // country-literal: every pack of the checkout books its own year, on its
