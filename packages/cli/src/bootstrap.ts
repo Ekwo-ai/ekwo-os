@@ -208,6 +208,13 @@ export interface FilingForm {
   periodDefault?: string | undefined;
   /** Whether this is the periodic return, which is what `--vat-period` names. */
   isPeriodicReturn: boolean;
+  /**
+   * Whether a company of the territory asked about files this form where it
+   * is: true on a form of the whole country, and on a form of a territory the
+   * company is inside. A form of another territory — New York's return for a
+   * Californian company — is one it files only where it says so.
+   */
+  filedWhereItIs: boolean;
 }
 
 /**
@@ -220,20 +227,30 @@ export interface FilingForm {
  * country read so far. An empty list means the installation carries no form for
  * that country, and then there is nothing to ask.
  */
-export async function countryFilingForms(db: SqlClient, country: string): Promise<FilingForm[]> {
+export async function countryFilingForms(
+  db: SqlClient,
+  country: string,
+  territory?: string,
+): Promise<FilingForm[]> {
+  // The territory of a form is read through `to_jsonb`, so that a schema from
+  // before `20261128070000`, which has no such column, answers every form as
+  // the whole country's — which is what each of them was there.
   const found = await db.query<{
     code: string;
     name: string;
     periods: string[];
     period_default: string | null;
     is_periodic_return: boolean;
+    filed_where_it_is: boolean;
   }>(
     `select t.code, t.name, t.periods::text[] as periods,
-            t.period_default::text as period_default, t.is_periodic_return
+            t.period_default::text as period_default, t.is_periodic_return,
+            (to_jsonb(t) ->> 'territory_code' is null or $2::text is null
+             or territory_within($2::text, to_jsonb(t) ->> 'territory_code')) as filed_where_it_is
        from tax_report_templates t
       where t.country = $1
       order by t.is_periodic_return desc, t.code`,
-    [country.toUpperCase()],
+    [country.toUpperCase(), territory ?? null],
   );
   return found.map((row) => ({
     code: row.code,
@@ -241,6 +258,7 @@ export async function countryFilingForms(db: SqlClient, country: string): Promis
     periods: row.periods ?? [],
     ...(row.period_default === null ? {} : { periodDefault: row.period_default }),
     isPeriodicReturn: row.is_periodic_return,
+    filedWhereItIs: row.filed_where_it_is,
   }));
 }
 

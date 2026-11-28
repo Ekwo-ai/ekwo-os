@@ -739,6 +739,14 @@ function taxReport(pack: Pack, report: PackReport, country: string): string[] {
   const shortValues = shortName === null ? '' : `, ${text(shortName)}`;
   const shortUpdate = shortName === null ? [] : ['  short_name          = excluded.short_name,'];
 
+  // The territory the form is filed in, the same way again: only on a form
+  // that names one, so that every other seed still loads on a schema from
+  // before `20261128070000`.
+  const territory = report.territory;
+  const territoryColumns = territory === null ? '' : ', territory_code';
+  const territoryValues = territory === null ? '' : `, ${text(territory)}`;
+  const territoryUpdate = territory === null ? [] : ['  territory_code      = excluded.territory_code,'];
+
   // The day the tax is paid, the same way: only where the pack names one apart
   // from the day the form is filed, so that every other seed still loads on a
   // schema from before `20261127070000`.
@@ -761,7 +769,7 @@ function taxReport(pack: Pack, report: PackReport, country: string): string[] {
     'insert into tax_report_templates',
     '  (country, code, name, periods, period_default, valid_from, valid_to, legal_reference,',
     '   is_periodic_return, deadline_rule, deadline_day, deadline_plus_days,',
-    `   deadline_reference, deadline_source_key, file_format${roundingColumns}${paymentColumns}${shortColumns}${formColumns})`,
+    `   deadline_reference, deadline_source_key, file_format${roundingColumns}${paymentColumns}${shortColumns}${territoryColumns}${formColumns})`,
     'values',
     `  (${text(country)}, ${text(report.code)}, ${text(report.name)}, ${periods(report.periods)}, ` +
       `${enumeration(report.period_default, 'declaration_period')}, ` +
@@ -770,7 +778,7 @@ function taxReport(pack: Pack, report: PackReport, country: string): string[] {
       `${enumeration(report.deadline?.rule ?? null, 'filing_deadline_rule')}, ` +
       `${number(report.deadline?.day ?? null)}, ${number(report.deadline?.plus_days ?? null)}, ` +
       `${text(report.deadline?.legal_reference ?? null)}, ${text(report.deadline?.source ?? null)}, ` +
-      `${text(report.file_format)}${roundingValues}${paymentValues}${shortValues}${formValues})`,
+      `${text(report.file_format)}${roundingValues}${paymentValues}${shortValues}${territoryValues}${formValues})`,
     'on conflict (country, code) do update set',
     '  name                = excluded.name,',
     '  periods             = excluded.periods,',
@@ -787,6 +795,7 @@ function taxReport(pack: Pack, report: PackReport, country: string): string[] {
     ...roundingUpdate,
     ...paymentUpdate,
     ...shortUpdate,
+    ...territoryUpdate,
     ...formUpdate,
     '  file_format         = excluded.file_format;',
     '',

@@ -206,8 +206,12 @@ export async function initCommand(args: ParsedArgs, deps: InitDeps = {}): Promis
     // it does not, the question is asked with nothing preselected and "later"
     // among the answers: a company that has not decided is recorded as not
     // having decided rather than as filing monthly.
-    const forms = await countryFilingForms(db, country);
-    const periodicReturn = forms.find((form) => form.isPeriodicReturn);
+    // A form of another territory than the company's — New York's return for
+    // a Californian company — is filed where the company has nexus there,
+    // which nothing here knows: it is recorded when it is named with
+    // --filing-period, and otherwise neither asked about nor proposed.
+    const forms = await countryFilingForms(db, country, territory);
+    const periodicReturn = forms.find((form) => form.isPeriodicReturn && form.filedWhereItIs);
     const askedPeriods = new Map<string, string>();
     for (const pair of stringFlags(args, 'filing-period')) {
       const equals = pair.indexOf('=');
@@ -239,6 +243,7 @@ export async function initCommand(args: ParsedArgs, deps: InitDeps = {}): Promis
     const filingPeriods: Record<string, string> = {};
     for (const form of forms) {
       const flagged = askedPeriods.get(form.code);
+      if (flagged === undefined && !form.filedWhereItIs) continue;
       if (flagged !== undefined && form.periods.length > 0 && !form.periods.includes(flagged)) {
         throw new UsageError(
           `unknown_vat_period: ${form.code} is filed ${form.periods.join(' or ')}, not ${flagged}.`,
