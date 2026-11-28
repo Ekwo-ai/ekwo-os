@@ -95,7 +95,7 @@ If you need someone to answer for your filings, engage them.
 ## 5. Estimates, and what an AI proposes
 
 Some functions produce estimates by design — a tax estimate during the year,
-a cash-basis view, a carbon footprint. They say so. An estimate is not a
+a cash-basis view. They say so. An estimate is not a
 declaration.
 
 An AI agent connected through the MCP server acts with your rights and on

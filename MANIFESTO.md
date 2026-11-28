@@ -13,9 +13,8 @@ Two things are changing at once. Machines now do the work of keeping accounts
 that used to need a person at a keyboard: this is the moment a business can
 finally understand its own numbers, on its own terms. And *what* you record is
 changing too: invoices that travel as structured data between administrations,
-assets that exist only on a chain, payments that settle in seconds, a tonne of
-carbon that you will account for as strictly as a euro. Ekwo is built for
-every country, every currency, every kind of asset, and for agents working
+assets that exist only on a chain, and payments that settle in seconds. Ekwo is
+built for every country, every currency, every kind of asset, and for agents working
 beside people.
 
 Ekwo makes five commitments.
@@ -58,23 +57,19 @@ The next ten years of finance are already written into regulations:
 structured electronic invoicing becoming the norm and then the law across the
 European Union, filings that machines read before people do, instant
 settlement, crypto-assets that a business holds and now reports on — MiCA, and
-the reporting obligations that start to bite in 2026 — and, close behind, the
-emissions that will sit in a report next to the revenue.
+the reporting obligations that start to bite in 2026.
 
 Ekwo has room for all of it in its shape. Amounts carry their own currency and
 their own rounding. Formats live in independent libraries, organised by format
 and never by country, so a new format is a new package. Everything beyond
-double-entry bookkeeping — fixed assets, budgets, and next carbon, stocks,
+double-entry bookkeeping — fixed assets, budgets, and next stocks and
 crypto-assets — lives in its own Postgres schema, with its own migrations and
 its own tests, and reaches the accounts through one function, in full view.
 
 Crypto shows what this gives you. A token needs its own inventory, its own cost
 basis, its own revaluation, and a reporting obligation that is two years old.
 In Ekwo that is a module, written against a schema made ready for it, and the
-accounts stay as they are. The carbon module makes the same bet from the other
-end: a tonne of CO₂ recorded against the transaction that caused it, in the
-same company data, with the same audit trail. Your carbon and your money live
-in one ledger. It is where the name points.
+accounts stay as they are.
 
 ## 4. Free and independent data infrastructure, in every country.
 
