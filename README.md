@@ -1,8 +1,8 @@
 # Ekwo OS
 
-**Ekwo** is open source accounting, ready to use on **[Ekwo Cloud](https://cloud.ekwo.ai)**: the web application for your invoices, your bank statements, your VAT returns and the electronic invoices your country uses, in your own instance, with an account opened in a minute. **Ekwo OS** is the free and open source core it runs on, under AGPL-3.0: install it on your own Supabase project and own your accounting data, forever.
+**Ekwo** is the world model of your company: ERP, CRM and Finance in one memory, run by AI agents and owned by you. Use it on **[Ekwo Cloud](https://cloud.ekwo.ai)**: the web application for your invoices, your bank statements, your VAT returns and the electronic invoices your country uses, in your own instance, with an account opened in a minute. **Ekwo OS** is the free and open source core it runs on: install it on your own Supabase project and own your company data, forever.
 
-Built and maintained by **Ekwo**. Ekwo OS is a schema, the rules of each country as data, and the tools — a command line and an MCP server — with which you, your accountant and the AI agent you choose work on the same company data, each with their own access. Ekwo reads any supplier invoice, in any language, with the AI model you choose, and every transaction is recorded on your confirmation. What Ekwo is, and its limits: [DISCLAIMER.md](DISCLAIMER.md).
+Ekwo OS gives you a schema, the rules of each country as data, and the tools — a command line and an MCP server — with which you, your accountant and the AI agent you choose work on the same company data, each with their own access. Ekwo reads any supplier invoice, in any language, with the AI model you choose, and records every transaction once you confirm it. Built and maintained by **Ekwo**. What Ekwo is, and its limits: [DISCLAIMER.md](DISCLAIMER.md).
 
 ![An empty Supabase project, npx ekwo-os init, ekwo status, a company, a sale invoice recorded and its VAT return prepared, for two countries side by side](docs/demo/install.gif)
 
@@ -20,15 +20,15 @@ about twenty minutes. Or open the same company data in the web application,
 ## Why Ekwo
 
 > The long version — financial autonomy for every business, accounting as a
-> commons, a network rather than a vendor — is in [MANIFESTO.md](MANIFESTO.md).
+> commons, a network of the people who know the rules — is in [MANIFESTO.md](MANIFESTO.md).
 
-**The data belongs to the business, and the work of keeping the accounts can be
-done by software the business also owns.** So the whole accounting core is
-open, the data sits in a Postgres database you control, and the interface is
-designed for machines as much as for people. Supabase gives the schema a REST
-API for free, and an MCP server sits on top of it, so an AI agent can record a
-purchase, match a payment or prepare a VAT return on your own data — as you,
-under your own row level security, without the data leaving your account.
+**Your company data belongs to you, and so does the software that keeps your
+accounts.** The whole core is open, the data sits in a Postgres database you
+control, and the interface serves machines as well as people. Supabase gives
+the schema a REST API for free, and an MCP server sits on top of it, so an AI
+agent records a purchase, matches a payment or prepares a VAT return on your
+own data — as you, under your own row level security, with the data staying in
+your account.
 
 What ships today:
 
@@ -58,24 +58,24 @@ Who it is for: a company that wants to keep its own accounts with an AI at the
 keyboard, and a founder who wants to know, from that data, how long the cash
 lasts and how fast customers pay; an accounting firm that runs several
 companies inside one installation; a developer who needs a real double-entry
-core with tax rules as data rather than as code; and anyone who wants to leave
-a proprietary system with its company data intact.
+core with tax rules held as data; and anyone moving off a proprietary system
+who wants to take their company data along, whole.
 
 ## What is in this repository
 
-A double-entry accounting core for Postgres. There is no server to run:
+A double-entry core for Postgres that runs without a server of its own:
 Supabase turns the schema into a REST API with an OpenAPI description, and row
 level security decides who sees what.
 
-- **Double entry, enforced by the database.** A transaction cannot be
-  recorded unless it balances, and a locked period refuses writes at the
-  trigger — not in a form validator.
+- **Double entry, enforced by the database.** The database records a
+  transaction only when it balances, and a trigger refuses every write to a
+  locked period, whichever client sends it.
 - **Documents and transactions are two layers.** An invoice answers to EN 16931
-  and Peppol; a transaction answers to the chart of accounts. Keeping them apart keeps
-  both honest.
+  and Peppol; a transaction answers to the chart of accounts. Each layer stays exact to its
+  own standard.
 - **Country rules are data.** A tax points at the accounts it records to
-  and at the boxes of the declaration it feeds. Adding a régime is a row, not a
-  release.
+  and at the boxes of the declaration it feeds. You add a régime as a row of
+  data, with no new release.
 - **Every label is data, in every language a country pack publishes.**
   Identifiers stay English; what a person reads comes from the pack, in the
   language of the company or of the reader. See
@@ -117,15 +117,16 @@ npx -y ekwo-os@latest module enable assets --company "…"   # turn one on for a
 Then add the module's schema to the project's exposed schemas (Supabase
 dashboard → Project Settings → API); `ekwo module enable` prints the line.
 
-A module never writes to the accounts directly: it hands its lines to the core,
-which applies the same balancing, numbering and lock rules as everywhere else.
+A module hands its lines to the core, which records them with the same
+balancing, numbering and lock rules as everywhere else.
 [`docs/modules.md`](docs/modules.md) is how to write one.
 
 ## Install on your own Supabase project
 
 Create a project at [supabase.com](https://supabase.com) — the free plan is
-enough to start — and point the installer at it. Node 20 or later is the only
-thing you need locally: no Supabase CLI, no Docker, no clone.
+enough to start — and point the installer at it. All you need locally is
+Node 20 or later; the installer does the rest, without the Supabase CLI,
+Docker or a clone.
 
 ```sh
 npx -y ekwo-os@latest init
@@ -137,8 +138,8 @@ and the address of the first administrator. Then it applies the migrations,
 loads every country pack, creates that administrator in *your* Supabase Auth
 and opens the first financial year. Running it twice creates nothing twice.
 
-Ekwo does not create the project and does not pay for it: your company data is
-on your account from the first row. The installation guide, with every flag and
+You create and pay for the project yourself, so your company data is on your
+account from the first row. The installation guide, with every flag and
 the four settings to change on your project before going live, is
 [`packages/cli`](packages/cli/README.md).
 
@@ -157,8 +158,7 @@ npx -y ekwo-os@latest doctor    # every object this release defines, row level s
 
 ### By hand, with the Supabase CLI
 
-The installer is a convenience, not a requirement: the migrations are ordinary
-SQL, and `supabase db push` writes the same history table `ekwo migrate` does.
+You can also install by hand: the migrations are ordinary SQL, and `supabase db push` writes the same history table `ekwo migrate` does.
 
 ```sh
 git clone https://github.com/Ekwo-ai/ekwo-os.git && cd ekwo-os
@@ -413,8 +413,8 @@ One installation belongs to one customer, so there is no `tenant_id`.
 
 What the policies actually test is a **capability** — `documents.post`,
 `payments.write`, `year_end.close` and the rest of
-`select * from capabilities`. A member can be granted or refused one
-capability without inventing a role. A firm keeps the accounts of many companies
+`select * from capabilities`. You grant or refuse a member one
+capability at a time, on top of their preset. A firm keeps the accounts of many companies
 in one installation, and the person who runs one of them is a `client` of that
 one and sees no other ([`docs/firms.md`](docs/firms.md)). People are invited
 with `invite_member()`; your users live in your own Supabase Auth, and Ekwo
@@ -453,7 +453,7 @@ const boxes   = await ekwo.vatReturn({ companyId, from: '2026-07-01', to: '2026-
 ## Format libraries
 
 [`packages/formats/`](packages/formats/) holds one MIT package per file
-format, organised by format and never by country. None imports the core: the
+format, organised by format and never by country. Each stands on its own: the
 core produces rows, and a library turns rows into a file, or a file into rows.
 
 - **Written from the accounts:** the French FEC ([`fec`](packages/formats/fec/)),
@@ -483,8 +483,8 @@ core produces rows, and a library turns rows into a file, or a file into rows.
 
 ## Community and cloud
 
-The line is operational, not functional. Everything a bookkeeper can do alone
-is here and always will be.
+Every function is in Ekwo OS: everything a bookkeeper can do alone is here
+and always will be. The managed edition adds the operations.
 
 | Ekwo OS, on your Supabase | Managed edition, on [ekwo.ai](https://ekwo.ai) |
 |---|---|
@@ -493,25 +493,25 @@ is here and always will be.
 | Invoicing, credit notes, taxes, reports, statutory files | AI agents you set up, acting on your instructions |
 | Importing bank files and company data kept elsewhere | Bank connections under contract |
 | Writing and checking electronic invoices | A Peppol access point to send and receive them |
-| Everything above, forever, for nothing | Transmission to administrations, on the business's instruction |
+| Everything above, free, forever | Transmission to administrations, on the business's instruction |
 
-The test: does it keep working on its own, with us or without us? If yes, it
-belongs here, under AGPL, and no licence key gates it. If no, it is a service,
-because something has to be kept alive for it — a contract, a certificate, a
-credential, a machine. [`docs/cloud-services.md`](docs/cloud-services.md) lists
+The test: does it keep working on its own, with us or without us? Then it
+belongs here, open source, free of any licence key. When something has to be
+kept alive for it — a contract, a certificate, a credential, a machine — it is
+a service. [`docs/cloud-services.md`](docs/cloud-services.md) lists
 them, and says what will never be sold.
 
 Upgrades follow the same line. On your Supabase, you upgrade with
-`ekwo migrate`, when you decide, and nobody else does. A project Ekwo hosts
+`ekwo migrate`, when you decide, and only you. A project Ekwo hosts
 is upgraded by Ekwo at every release, after a copy of every company and a
 rehearsal. A project of your own that you linked to Ekwo Cloud is upgraded
-for you only if you chose it. An installation that is not upgraded keeps
+for you only if you chose it. An installation you leave as it is keeps
 working, and newer clients keep reading it down to a stated floor:
 [`docs/upgrades.md`](docs/upgrades.md).
 
 ## Support
 
-Three ways to get help, from the open to the dedicated:
+You get help three ways, from the open to the dedicated:
 
 - **In the open, for everyone.** [Issues](https://github.com/Ekwo-ai/ekwo-os/issues)
   for a bug or a rule that is wrong for your country, with the text of law
@@ -539,8 +539,8 @@ anonymous request sees nothing. The MCP server and the command line refuse a
 `service_role` key for keeping the accounts, and the CI fails if a table ever arrives
 without a policy.
 
-Three things the schema cannot do for you, printed by `ekwo init` at the end
-of every installation: **turn off public sign-ups** on your Supabase project,
+Three things are yours to do on your project, printed by `ekwo init` at the
+end of every installation: **turn off public sign-ups** on your Supabase project,
 **keep two administrators**, and **keep the `service_role` key off every
 machine that does not need it**. See
 [`packages/cli`](packages/cli/README.md#before-you-go-live-four-things-on-your-project)
