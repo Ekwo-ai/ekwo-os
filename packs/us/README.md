@@ -222,8 +222,23 @@ There is **no national sales tax return**. A company that sells into several
 states files one return per state, to that state's administration, on that
 state's form and on that state's cadence. `tax_report.json` is California's:
 **CDTFA-401-A, State, Local, and District Sales and Use Tax Return**, revision
-1-26, thirty-nine boxes. New York's ST-100 and every other state's form are
-absent, and the pack has no way to carry two.
+1-26, thirty-nine boxes. It names its territory, `US-CA`: it is the periodic
+return of a company established in California, and of nobody else — a company
+of Oregon or of New York is not handed California's form, and a Californian
+company with nexus elsewhere records that state's form beside it.
+
+New York's ST-100 is absent for a reason of its own. A pack carries one
+periodic return per territory, so the form has a place; its quarter does not.
+New York's sales tax quarters run from 1 March — March to May, June to August,
+September to November, December to February, as the instructions ST-100-I
+(3/26) print them for the first quarter of the 2027 sales tax year, 1 March to
+31 May 2026 — and a quarterly return is due 20 days after its quarter ends
+(TB-ST-275). The cadences of the core begin on 1 January, so a form declared
+`quarter` would be given January to March by the calendar, and a due date of
+20 April for a quarter that ends on 31 May. Until a cadence can begin in
+another month — the gap Zimbabwe's two-month periods of Category A have too
+([`docs/international.md`](../../docs/international.md#from-zimbabwe)) — the
+New York tax posts to the ledger and to no box.
 
 Four things about it are worth knowing before reading the file.
 
@@ -436,9 +451,10 @@ document that is in both statements and in no return it files.
   different shape of problem from a European one.
 - **Any other state's return.** New York's ST-100 is named in the register and
   is not modelled; the New York tax posts to the ledger and to no box. It says
-  which state it belongs to and is refused on a Californian delivery, which is
-  half the answer — the other half is a pack carrying a list of forms with a
-  territory on each, and a pack carries one form.
+  which state it belongs to and is refused on a Californian delivery, and a
+  pack can carry a form per state, each naming its territory. What is still
+  missing is a quarter that begins on 1 March, which New York's is (see "The
+  return").
 - **District rates by address.** One worked combination, and the rest is a feed.
 - **Local sales taxes below the state that are not California districts** —
   Alaska's boroughs, Colorado's home-rule cities, Louisiana's parishes, each

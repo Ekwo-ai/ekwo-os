@@ -62,7 +62,7 @@
     },
     {
       "ref": "S4", "type": "sale_invoice", "contact": "cust-ny", "date": "2026-08-19",
-      "why": "A sale delivered in New York City, where this company has economic nexus since Wayfair. It charges New York's combined 8.875 per cent and owes it to Albany: 532.50 sits on a liability account of its own and reaches no box of any return this pack can produce, because that return is form ST-100 and this pack carries California's. On the California return the sale is an interstate one: line 1 and line 8. A company subject to two states' returns is exactly what the core cannot yet say.",
+      "why": "A sale delivered in New York City, where this company has economic nexus since Wayfair. It charges New York's combined 8.875 per cent and owes it to Albany: 532.50 sits on a liability account of its own and reaches no box of any return this pack can produce, because that return is form ST-100, whose quarters begin on 1 March where the cadences of the core begin on 1 January, and this pack carries California's. On the California return the sale is an interstate one: line 1 and line 8.",
       "lines": [
         { "name": "Provisioning order, delivered New York, NY", "quantity": 1, "unit_price": 6000, "tax": "US-NY-S-8875", "account": "4020" }
       ]

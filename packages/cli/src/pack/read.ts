@@ -960,6 +960,12 @@ export interface PackReport {
    * the pack does not say, and a screen then shows `name`.
    */
   short_name: string | null;
+  /**
+   * The territory inside the country this form is filed in, where the form
+   * is not the whole country's — California's return beside New York's in a
+   * country with no national one. Null on a form of the whole country.
+   */
+  territory: string | null;
   boxes: PackReportBox[];
 }
 
@@ -1717,9 +1723,15 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
   // A posting with a box belongs to a form. The pack names one in
   // `tax_report.json`; a posting may override it the day a country files two.
   for (const tax of taxes) {
-    for (const postings of Object.values(tax.postings)) {
+    for (const [kind, postings] of Object.entries(tax.postings)) {
       for (const posting of postings) {
         if (posting.report === null && posting.boxes.length > 0) posting.report = reportCode;
+        if (posting.report !== null && !reports.some((form) => form.code === posting.report)) {
+          issues.push({
+            path: `taxes.json ${tax.code}.${kind}`,
+            message: `report names ${posting.report}, which is not a form of tax_report.json`,
+          });
+        }
       }
     }
   }
@@ -1740,6 +1752,7 @@ export async function readPack(slug: string, dir = packsDir()): Promise<Pack> {
   );
   const packRegime = await vatRegime(manifest);
   issues.push(...territoryReferences(taxes, territories));
+  issues.push(...formTerritories(manifest, reports, territories));
   issues.push(...sellerTerritory(manifest, taxes, territories));
   issues.push(...supplyVsSeller(manifest, taxes, territories));
   issues.push(...territoryRequired(manifest, territories));
@@ -2784,6 +2797,7 @@ function normaliseReport(raw: Record<string, unknown>): PackReport {
     rounding: normaliseRounding(raw['rounding']),
     file_format: (raw['file_format'] as string | undefined) ?? null,
     short_name: (raw['short_name'] as string | undefined) ?? null,
+    territory: (raw['territory'] as string | undefined) ?? null,
     boxes,
   };
 }
@@ -4199,10 +4213,11 @@ function proposedPeriod(manifest: Manifest, report: PackReport | null): Issue[] 
 
 /**
  * What holds between the forms of a pack that files more than one: each code
- * once, at most one periodic return — the one the postings are for and
- * `companies.vat_period` mirrors, which `periodic_return_code()` can only name
- * when there is exactly one — and a form that reads the postings of another
- * names a form of the pack that reads its own, through boxes that form has.
+ * once, at most one periodic return for each territory it is filed in — the
+ * one `companies.vat_period` mirrors for a company of that territory, which
+ * `periodic_return_code()` can only name when there is exactly one — and a form
+ * that reads the postings of another names a form of the pack that reads its
+ * own, through boxes that form has.
  */
 function reportForms(reports: PackReport[]): Issue[] {
   const issues: Issue[] = [];
@@ -4211,13 +4226,23 @@ function reportForms(reports: PackReport[]): Issue[] {
     if (codes.has(report.code)) issues.push({ path: `tax_report.json ${report.code}`, message: 'the form is declared twice' });
     codes.add(report.code);
   }
+  // Two periodic returns are two territories' returns, or one return too many:
+  // a company has one periodic return where it is, and the one form of the
+  // whole country leaves no room for a second.
   const periodic = reports.filter((report) => report.role === 'periodic');
-  if (periodic.length > 1) {
+  const wholeCountry = periodic.filter((report) => report.territory === null);
+  const clash =
+    periodic.length > 1 && wholeCountry.length > 0
+      ? periodic
+      : periodic.filter((report) => periodic.some((other) => other !== report && other.territory === report.territory));
+  if (clash.length > 1) {
     issues.push({
       path: 'tax_report.json',
       message:
-        `${periodic.map((report) => report.code).join(', ')} are each declared periodic; a pack carries one periodic ` +
-        'return, and every other form says what it is with role',
+        `${clash.map((report) => report.code).join(', ')} are each declared periodic` +
+        (wholeCountry.length > 0 ? '' : ` in ${clash[0]!.territory}`) +
+        '; a pack carries one periodic return for the whole country, or one for each territory a form names ' +
+        'with territory, and every other form says what it is with role',
     });
   }
   for (const report of reports) {
@@ -4575,6 +4600,30 @@ function territoryReferences(taxes: PackTax[], territories: Territory[]): Issue[
           `${field} names ${code}, which territories carries no row for. A territory a tax names ` +
           'is a row of supabase/seed/00_territories.sql or of reference.territories of this pack, so ' +
           'that a reader can look it up and a second pack cannot spell it differently',
+      });
+    }
+  }
+  return issues;
+}
+
+/**
+ * The territory a form is filed in is a row of `territories`, inside the
+ * pack's own country: a form of another country is that country's pack's.
+ */
+function formTerritories(manifest: Manifest, reports: PackReport[], territories: Territory[]): Issue[] {
+  const issues: Issue[] = [];
+  for (const report of reports) {
+    const code = report.territory;
+    if (code === null) continue;
+    const where = `tax_report.json ${report.code} territory`;
+    if (territoryOf(code, territories) === null) {
+      issues.push({ path: where, message: `${code} is a territory territories carries no row for` });
+    } else if (!territoryWithin(code, manifest.country, territories) || code === manifest.country) {
+      issues.push({
+        path: where,
+        message:
+          `${code} is not a territory inside ${manifest.country}; a form of the whole country names none, ` +
+          "and a form of another country is that country's pack's",
       });
     }
   }

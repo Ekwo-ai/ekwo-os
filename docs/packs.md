@@ -1014,7 +1014,9 @@ company files the federal GST/HST return and the Québec one at the same time,
 and line `101` of one is not line `101` of the other. Every posting therefore
 carries a `report_code`, which the compiler fills from the `code` of
 `tax_report.json` — `BE-VAT-PERIODIC`, `FR-CA3` — and which a posting may
-override with `"report": "…"` when a country files more than one.
+override with `"report": "…"` when a country files more than one — the
+Québec return beside the federal one, or one state's return beside another's
+(see "A form of one territory").
 
 A tax whose postings name no box at all is on no form of the pack: the return
 does not print it and `settle_filing()` does not clear it. That is the place
@@ -2194,6 +2196,41 @@ prepares the filing of the regime's form, and `upcoming_filings()` lists that
 form in the place of the periodic return. A pack without the file says
 nothing in its seed.
 
+## A form of one territory: `territory`
+
+Where a tax is levied below the country, each territory files its own return:
+the United States has no national sales tax return, and a company files
+California's CDTFA-401-A to California and New York's ST-100 to New York. A
+form says which territory inside the pack's country it is filed in:
+
+```json
+{ "code": "XX-A-RETURN", "name": "…", "territory": "XX-A", "period": ["quarter"], "boxes": [ … ] }
+```
+
+- **A form that names a territory is the periodic return of a company
+  established inside it, and of nobody else.** `periodic_return_code()`,
+  `vat_return()` with no form named and the calendar of `upcoming_filings()`
+  give a company of `XX-A` that form, and a company of another territory none
+  of it. A company with no territory recorded is held to every periodic form
+  of its country, which is what it was held to before the field.
+- **A company files another territory's form where it records a cadence for
+  it** — a seller with nexus there — and names it when it asks for the return
+  (`ekwo vat --form`). `ekwo init` records the cadence of the forms filed where
+  the company is, and another territory's only when `--filing-period` names it.
+- **One periodic return per territory.** A list may carry one periodic form
+  for each territory it names; `ekwo pack check` refuses two periodic forms of
+  one territory, a periodic form of the whole country beside one of a
+  territory, and a territory that is not inside the pack's country (the
+  country itself included: a form of the whole country names none).
+- A posting names its form with `"report"`; one that names none is for the
+  first periodic form of the list, and one that names a form the pack does not
+  carry is refused.
+
+The seed writes `tax_report_templates.territory_code` only for a form that
+names one, so a pack whose forms are the whole country's loads on a schema from
+before `20261128070000`. A pack that names one declares `schema_min` of
+`20261128070000` or later.
+
 ## VAT schemes: `vat_schemes.json`
 
 A country where a company files different declarations depending on its VAT
@@ -2215,9 +2252,10 @@ its forms as a list in `tax_report.json`:
 ]
 ```
 
-A list carries at most one form whose `role` is `periodic` — the one the
-postings are for, and the one a single-form pack has without saying so — and
-every other form says it is `annual`. A form that restates another names it in
+A list carries at most one form whose `role` is `periodic` for the whole
+country — the one the postings are for, and the one a single-form pack has
+without saying so — and every other form says it is `annual`. A country with
+no national return and one per state is the exception, below. A form that restates another names it in
 `reads_postings_of`, and each of its base or tax boxes names the boxes of that
 form it adds up in `from`; a tax box may instead `reads` the payments on
 account of the declaration, `instalments_paid` or `instalments_due`. A pack

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "0.28.0",
-  "migration": "20261127070000",
+  "migration": "20261128070000",
   "socle": {
     "schema": "ekwo",
     "tables": [
@@ -4261,6 +4261,10 @@
           },
           {
             "name": "short_name",
+            "type": "text"
+          },
+          {
+            "name": "territory_code",
             "type": "text"
           },
           {

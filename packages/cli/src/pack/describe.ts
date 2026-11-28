@@ -95,6 +95,8 @@ export interface DescribedDeclaration {
   name: string;
   /** How the accountants of the country name it in a few words. Null where the pack does not say. */
   shortName: string | null;
+  /** The territory inside the country the form is filed in; null on a form of the whole country. */
+  territory: string | null;
   /** `periodic` for the return the transactions are for, `annual` for a form filed once a year under a scheme. */
   role: string;
   /** The cadences the form is filed on, from the shortest to the longest. */
@@ -345,6 +347,7 @@ export function describePack(pack: Pack, options: DescribeOptions = {}): PackDes
       code: report.code,
       name: report.name,
       shortName: report.short_name,
+      territory: report.territory,
       role: report.role,
       periods: report.periods,
       periodDefault: report.period_default,

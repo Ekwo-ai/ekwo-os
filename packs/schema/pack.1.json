@@ -40,7 +40,10 @@
       "type": "integer",
       "minimum": 10,
       "maximum": 899,
-      "not": { "minimum": 90, "maximum": 99 },
+      "not": {
+        "minimum": 90,
+        "maximum": 99
+      },
       "description": "The number this pack's compiled seed carries: `13` gives `supabase/seed/13_pack_ee.sql`. Immutable once published — the seeds are applied in file-name order and listed by name in supabase/config.toml, so a release that renamed one would rename a file an installation already holds. Packs take 10 to 89, then 100 to 899; 90 to 99 are kept for what runs after every pack, such as the demo company at 90 — in file-name order a three-digit name sorts after `05_framework_generic.sql` and before `90_demo_company.sql`, which is what an installation applying the folder by hand relies on. Take the first number no pack of the checkout has taken; `ekwo pack build` refuses two packs claiming one. It is declared rather than derived because the alphabetical rank it used to be moved every country after the one being added."
     },
     "released_at": {
@@ -1618,7 +1621,7 @@
             "string",
             "null"
           ],
-          "description": "Declaration form this box belongs to. Defaults to the code of tax_report.json — a box number is only unique inside one form, which matters the day a country files two at once (Canada: the federal GST/HST return and the Québec one)."
+          "description": "Declaration form this box belongs to. Defaults to the code of tax_report.json, and where it is a list to its first periodic form — a box number is only unique inside one form, which matters where a country files two at once (Canada: the federal GST/HST return and the Québec one; the United States: one return per state)."
         },
         "sequence": {
           "type": "integer",
@@ -1651,7 +1654,7 @@
             "periodic",
             "annual"
           ],
-          "description": "What the form is to the companies that file it, from a closed vocabulary. `periodic` (the default) is the return the tax postings are for and `companies.vat_period` mirrors; a pack carries at most one. `annual` is a return filed once a year beside it or instead of it, under the schemes of vat_schemes.json that name it. Only a pack whose tax_report.json is a list of forms needs to say it."
+          "description": "What the form is to the companies that file it, from a closed vocabulary. `periodic` (the default) is the return the tax postings are for and `companies.vat_period` mirrors; a pack carries one for the whole country, or one for each territory a form names with `territory`. `annual` is a return filed once a year beside it or instead of it, under the schemes of vat_schemes.json that name it. Only a pack whose tax_report.json is a list of forms needs to say it."
         },
         "reads_postings_of": {
           "$ref": "#/$defs/code",
@@ -1701,6 +1704,10 @@
           "maxLength": 40,
           "pattern": "^\\S(.*\\S)?$",
           "description": "How the accountants of the country name this declaration in a few words, in its language (`TVA CA3` beside `Déclaration de TVA 3310-CA3`): what a calendar or a list of deadlines shows. Read it on the portal or the notice of the administration; leave it out where you have not, and a screen shows `name`."
+        },
+        "territory": {
+          "$ref": "#/$defs/territory",
+          "description": "The territory inside the country this form is filed in, where it is not the whole country's: a country with no national return and one per state names the state on each (`US-CA`, `US-NY`). A company's periodic return is the one of the territory it is established in, and a form of another territory is one it files where it records a cadence for it. Leave it out on a form of the whole country."
         },
         "period_default": {
           "enum": [

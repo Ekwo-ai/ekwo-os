@@ -445,6 +445,7 @@ describe('a database with the table and not the rows', () => {
       await db.query(`update companies set territory_code = null`);
       await db.query(`update contacts  set territory_code = null`);
       await db.query(`update documents set supply_territory_code = null`);
+      await db.query(`update tax_report_templates set territory_code = null`);
       await db.query(`delete from territories`);
       const message = await expectError(
         db,
