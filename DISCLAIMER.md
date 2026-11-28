@@ -7,7 +7,7 @@ adviser and not a financial, legal or investment adviser, and installing it,
 using it or reading this site does not make Ekwo, or anyone who contributed to
 it, your accountant or your adviser.
 
-*Version 2.3 — 13 November 2026. This page applies to Ekwo OS, the software
+*Version 2.4 — 28 November 2026. This page applies to Ekwo OS, the software
 of this repository, and to the site at ekwo.ai. The managed edition is
 governed by its own terms, and so is every engagement of Ekwo Consulting, by
 its quote.*
@@ -25,8 +25,8 @@ PostgreSQL schema it installs on a database it controls — together with:
 - **tools** — a command line, a TypeScript client and an MCP server — through
   which a person, a script or an AI agent works on that data.
 
-Ekwo's mission is to provide that infrastructure, openly, in every country. It
-is not to replace the accountant. The tools are built to be used by
+Ekwo's mission is to provide that infrastructure, openly, in every country,
+alongside the accountant. The tools are built to be used by
 businesses **and by their accountants**, and to be read and checked by them.
 
 ## 2. What Ekwo does not provide
@@ -150,9 +150,8 @@ titles that go with them are protected. Before relying on the software for a
 filing, an election or a decision, consult a professional who is authorised to
 advise you in the country concerned.
 
-**Ekwo works with that profession rather than around it.** Saying that Ekwo
-gives no advice is not a way of keeping its distance: it is how the work is
-divided. Ekwo builds the infrastructure — the schema, the rules of a country
+**Ekwo works with that profession, and the work is divided between them.**
+Ekwo builds the infrastructure — the schema, the rules of a country
 written as data, the tools — and the judgement stays with people who are
 qualified to exercise it and answerable for it. A country pack can be read by
 a named professional, and its status says so: `reviewed` carries their name
@@ -161,8 +160,8 @@ for the work itself — setting the accounts up, taking them over, answering for
 filing — and the tools are built so they can read and check everything the
 software produced.
 
-A way to find professionals who offer that support is **being prepared and is
-not here yet**. Until it is, the right person is the one you already work with,
+A way to find professionals who offer that support is **being prepared**.
+Until it is ready, the right person is the one you already work with,
 or one you find through the body that registers them in your country — the
 sections below name those bodies. Ekwo does not appoint, endorse, employ or
 vouch for anyone, receives nothing for naming a professional, and engaging one
