@@ -2,10 +2,10 @@
 
 **Ekwo Cloud is the hosted application of Ekwo: an account, and the companies
 you keep in it.** These terms are the agreement between you and Ekwo for
-using it. The software underneath, Ekwo OS, is open source, and its licence —
-not these terms — governs what you may do with it.
+using it. The software underneath, Ekwo OS, is open source: its licence
+governs what you may do with it, and these terms leave that untouched.
 
-*Version 1.0 — 20 November 2026. These terms cover the hosted service at
+*Version 1.1 — 28 November 2026. These terms cover the hosted service at
 cloud.ekwo.ai, including the MCP server at mcp.ekwo.ai and the desktop and
 mobile applications that sign in to it. Ekwo OS installed on a project of your
 own, with no Ekwo Cloud account, is covered by its licence and by
@@ -93,8 +93,8 @@ or a partner, for that of the clients who invited you. Do not:
 - resell access to the service as your own, beyond what a Pro plan or a
   written partner agreement provides.
 
-This section is about the hosted service. It takes nothing from your freedom
-to run, study, modify and share Ekwo OS under its licence.
+This section covers the hosted service. Your freedom to run, study, modify
+and share Ekwo OS under its licence stays whole.
 
 ## 7. Plans, prices and payment
 
@@ -180,8 +180,8 @@ limited, nor the rights a consumer holds by law.
 ## 12. When these terms change
 
 The version and the date at the top move, and the change is in the changelog
-of the public repository like any other; this file lives there, so what it
-said on any day can be read from its history. A change that reduces your
+of the public repository like any other; this file lives there, so you can
+read what it said on any day from its history. A change that reduces your
 rights is announced to the account's owner at least thirty days before it
 applies, and you may close your account before then. Using the service after
 that date is accepting the new version.
