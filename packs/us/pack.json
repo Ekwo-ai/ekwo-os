@@ -2,10 +2,10 @@
   "$schema": "https://ekwo.ai/schemas/pack/1.json",
   "country": "US",
   "name": "United States",
-  "version": "0.13.0",
-  "schema_min": "20261121070100",
+  "version": "0.14.0",
+  "schema_min": "20261128070000",
   "seed_sequence": 15,
-  "released_at": "2026-10-23",
+  "released_at": "2026-11-28",
   "certification": {
     "status": "community",
     "sources": [
@@ -160,6 +160,14 @@
         "url": "https://www.tax.ny.gov/forms/sales_cur_forms.htm",
         "consulted_on": "2026-09-16",
         "kind": "form"
+      },
+      {
+        "key": "ny-st-100-i",
+        "title": "Instructions for Form ST-100, New York State and Local Quarterly Sales and Use Tax Return, ST-100-I (3/26) — the first quarter tax period of the 2027 sales tax year, 1 March 2026 through 31 May 2026",
+        "publisher": "New York State Department of Taxation and Finance",
+        "url": "https://www.tax.ny.gov/forms/html-instructions/2027/st/st100i-127.htm",
+        "consulted_on": "2026-11-28",
+        "kind": "guidance"
       },
       {
         "key": "oregon-dor",

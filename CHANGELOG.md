@@ -70,6 +70,24 @@ somewhere has already run it.
 
 ### Added
 
+- **A form names the territory it is filed in.** A form of `tax_report.json`
+  may carry `territory`, a territory inside the pack's country, for a country
+  that files one return per state rather than a national one. It is then the
+  periodic return of a company established inside that territory and of
+  nobody else: `periodic_return_code()`, `vat_return()` with no form named and
+  `upcoming_filings()` follow it, and a company of another territory files it
+  where it records a cadence for it. A pack carries one periodic return for
+  the whole country, or one per territory; `ekwo pack check` refuses two in
+  one territory, one of the whole country beside one of a territory, a
+  territory outside the country, and a posting that names a form the pack does
+  not carry. `ekwo init` records the cadence of the forms filed where the
+  company is, and another territory's only when `--filing-period` names it;
+  `ekwo pack describe` gives `territory`. United States (0.14.0): California's
+  CDTFA-401-A names `US-CA`, so a company of Oregon or New York is no longer
+  handed California's return; New York's ST-100 stays out, because its
+  quarters begin on 1 March and the cadences of the core on 1 January.
+  Migration `20261128070000`, additive.
+
 - **A declaration says when its tax is paid, where that is another day.** A
   form's `deadline` may carry `payment`, a second rule of the two that produce
   a date, with its own `day` and `plus_days`; the text that sets it is the

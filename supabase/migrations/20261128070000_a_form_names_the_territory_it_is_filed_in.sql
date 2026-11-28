@@ -45,7 +45,7 @@ alter table ekwo.tax_report_templates
   add column if not exists territory_code text references ekwo.territories (code);
 
 comment on column ekwo.tax_report_templates.territory_code is
-  'The territory inside the form''s country this form is filed in, from packs/<cc>/tax_report.json `territory`: California''s return is US-CA, New York''s US-NY. Null on a form of the whole country. A periodic form that names one is the periodic return of a company established inside that territory (periodic_return_code(), vat_return() when no form is named); a company elsewhere files it where it records a cadence for it.';
+  'The territory inside the form''s country this form is filed in, from packs/<cc>/tax_report.json `territory`: California''s return names US-CA. Null on a form of the whole country. A periodic form that names one is the periodic return of a company established inside that territory (periodic_return_code(), vat_return() when no form is named); a company elsewhere files it where it records a cadence for it.';
 
 create or replace function ekwo.periodic_return_code(p_company_id uuid)
 returns text

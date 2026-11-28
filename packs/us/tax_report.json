@@ -8,6 +8,7 @@
     "year"
   ],
   "period_default": "quarter",
+  "territory": "US-CA",
   "valid_from": "2026-01-01",
   "legal_reference": "There is no national sales tax return in the United States and no federal form this pack could carry: the tax is levied by the states, and a company that sells into several of them files one return per state, each on its own form, to its own administration and on its own cadence. This form is California's. Revenue and Taxation Code, section 6452(a) makes the return quarterly — on or before the last day of the month following each quarterly period of three months — and section 6455(a) lets the Department require designated periods other than quarterly ones, which is how a monthly or an annual filer arrives. So the form is filed on three cadences and the law still gives one of them to everybody, which is what period_default states: a company that has asked CDTFA for nothing files quarterly. It is regulation 25(1) of the British VAT Regulations in another language, and it is sayable since the proposal moved onto the form. The version carried here is revision 1-26, the form as it stands in January 2026.",
   "source": "cdtfa-401-a",

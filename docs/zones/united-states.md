@@ -28,7 +28,11 @@ the other end.
 
 **One state return**, the California sales and use tax return (`CDTFA-401-A`),
 thirty-nine lines, computed by `vat_return()` from the posted ledger. There is
-no national return and none is invented.
+no national return and none is invented. The form names its territory,
+`US-CA`: it is the periodic return of a company established in California, and
+a company of another state is not handed it. A pack can carry one return per
+state; New York's ST-100 is not carried yet, because its quarters begin on
+1 March and the cadences of the core begin on 1 January.
 
 **Books.** The United States prescribes no chart of accounts; the pack's chart
 is a convention. The balance sheet and income statement follow Regulation S-X
