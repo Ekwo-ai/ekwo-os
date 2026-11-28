@@ -1,6 +1,7 @@
 # Modules
 
-A module is a Postgres schema beside the socle. `fixed_assets` holds fixed
+A module adds a function of the business to your instance, in its own Postgres
+schema beside the socle, and you turn it on company by company. `fixed_assets` holds fixed
 assets and their depreciation; `budgets` holds a plan and compares it to the ledger;
 `tax` estimates the corporate income tax of a year from the books and from the
 rules a country pack carries; `einvoicing` keeps the electronic invoice of a
@@ -10,10 +11,10 @@ socle's own contacts; `contracts` keeps what a company agreed with a party of
 its books, and issues the invoices its schedules say are due as draft
 documents of the socle; `consolidation` keeps groups of companies and who is
 in each, for which period and at which percentage of interest. The socle lives
-in its own schema, `ekwo`, and knows nothing about any of them.
+in its own schema, `ekwo`, and works the same whichever modules are installed.
 
-The decision behind this, with what it rules out, is in
-[decision 0051](decisions/0051-a-module-has-its-own-schema.md). This document is how to write one.
+This page shows you how to write a module. The decision behind the design is in
+[decision 0051](decisions/0051-a-module-has-its-own-schema.md).
 
 ## The shape
 
@@ -102,8 +103,8 @@ either.
 **1. One schema, and the socle is not it.** A module creates its own schema and
 everything it owns lives there. It depends on the socle by foreign key —
 `companies`, `accounts`, `contacts`, `products`, `fiscal_years` — and the
-dependency points one way: the socle has no hook, no callback and no way for a
-module to change what posting means.
+dependency points one way: posting means the same thing whatever modules are
+installed, because the socle offers modules no hook and no callback.
 
 A module's SQL names the socle's schema. The files published before 0.23.0
 say `public.companies`, `public.is_company_member(…)` and
@@ -139,10 +140,10 @@ select public.post_module_entry(
 ```
 
 The tag `(module_code, ref)` is unique per company, so **a module is idempotent
-because the database refuses the duplicate**, not because the module remembered
-to look. That is what `entries.module_code` and `entries.module_ref` are for,
-and it is why no `entry_kind` value is added per module: a depreciation entry is
-an ordinary entry that a report may leave in.
+because the database refuses the duplicate**: the guarantee holds whatever the
+module's own code does. That is what `entries.module_code` and
+`entries.module_ref` are for, and it is why no `entry_kind` value is added per
+module: a depreciation entry is an ordinary entry that a report may leave in.
 
 **3. Row level security on every table, through `module_enabled()`.** A table
 that carries `company_id` gets a policy of the shape
@@ -252,9 +253,9 @@ their own. Two rules are theirs alone:
 
 `ekwo migrate` applies the socle's, then every module's, then the reference
 seeds and the module seeds. **By default**, because a module is a schema whose
-tables are empty and whose row level security is on until a company enables it
-— there is nothing to ask before creating them, and a schema whose migrations
-are half applied is the state nobody can reason about.
+tables are empty and whose row level security is on until a company enables it,
+so creating them is safe without asking, and every schema stays fully migrated
+and predictable.
 
 `ekwo migrate --no-modules` leaves them alone, which is what to pass **before
 running `supabase db push`**: the Supabase CLI knows the socle's files and not a
@@ -269,11 +270,11 @@ ekwo module enable assets --company "…"   # turn it on for one company
 ekwo module disable assets --company "…"  # turn it off, unless the module says it holds data
 ```
 
-`enable` and `disable` go through `enable_module()` and `disable_module()`
-rather than writing `company_modules`, because the guard lives in the function:
-the table has no write policy at all, so the rule applies to psql and PostgREST
-alike and not only to clients that respect it. The CLI sets the request claim
-for an owner of the company, the way `ekwo register` does.
+`enable` and `disable` go through `enable_module()` and `disable_module()`,
+because the guard lives in the function: `company_modules` has no write policy
+at all, so the rule applies to every caller, psql and PostgREST alike. The CLI
+sets the request claim for an owner of the company, the way `ekwo register`
+does.
 
 ### `can_disable`, and the absence of it
 
@@ -317,10 +318,9 @@ $$;
 `exported`, or `excluded` with a `reason` of a sentence. `load_order` is
 relative to the module — the socle loads every module after its own tables —
 and a parent comes before its children. Reference data of the installation,
-with no `company_id` and no foreign key to a company, is not listed at all. A
-function in the module's schema rather than rows in a table of the socle,
-because a module migration may be applied on a socle that does not have that
-table yet.
+with no `company_id` and no foreign key to a company, stays off the list. The
+list is a function in the module's schema, so a module migration works even on
+a socle that predates the table such a list would otherwise need.
 
 ### Renaming what a module owns
 
@@ -356,10 +356,10 @@ the profile error PostgREST answers with into the same sentence.
 
 A module's tools are declared as data in
 `packages/mcp/src/tools/modules.ts` and registered by a loader that reads
-`public.modules`. A module that is not installed is not offered, because a tool
-a model cannot use is worse than a tool it cannot see. Adding a module to the
-server is adding a toolset to that file and nothing else — the same shape the
-registry takes in the database.
+`public.modules`. A model sees the tools of the modules that are installed,
+and only those, so every tool it is offered works. To add a module to the
+server, you add a toolset to that file — the same shape the registry takes in
+the database.
 
 ## Writing one in a day
 

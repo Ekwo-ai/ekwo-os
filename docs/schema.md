@@ -1,14 +1,15 @@
 # Schema
 
-The reference half of this document is generated from the migrations, so it
-cannot drift from what the database actually holds. Regenerate it with
-`node scripts/generate-schema-doc.mjs`.
+This page shows you how your company's data is laid out in the database, and
+the rules the database itself enforces on it. The reference half is generated
+from the migrations, so it always matches what the database holds. Regenerate
+it with `node scripts/generate-schema-doc.mjs`.
 
 ## Shape
 
-One installation belongs to one customer. That is why there is no `tenant_id`
-anywhere: the instance is the tenant, and `instance` records it in a single
-row written by the installer.
+One installation belongs to one customer. The instance is the tenant, so
+tables carry no `tenant_id`, and `instance` records the tenant in a single row
+written by the installer.
 
 ```
 instance                                 one row: who installed it, where, which edition
@@ -42,8 +43,8 @@ four template tables plus `country_defaults` that
    `total_debit` and `total_credit` maintained from the lines by trigger.
 3. **Totals are derived.** `document_lines.amount_untaxed` is generated;
    document and entry totals are maintained by trigger; `documents.amount_paid`
-   is recomputed from the matching on the third-party lines. Nothing is keyed
-   in.
+   is recomputed from the matching on the third-party lines. You key in none
+   of them.
 4. **A locked period refuses writes.** Triggers on `entries` and
    `entry_lines` consult `companies.lock_date`, `companies.tax_lock_date` and
    `fiscal_years.is_closed`. Matching stays allowed. A closed year is
@@ -58,12 +59,12 @@ four template tables plus `country_defaults` that
    instance administrator can see the list of companies and invite people
    into them; they cannot read a ledger they were not invited to.
 7. **The instance row is a singleton.** A primary key of `1` and a check
-   constraint make a second row impossible, not merely unusual.
+   constraint make a second row impossible.
 8. **A piece goes on its document.** An invoice, a credit note or a receipt
    is attached to the document (`attachments.entity_type = 'document'`). An
    entry that a document posted refuses a file and names the document to use;
    an entry no document posted keeps its own piece (decision 0069).
-9. **A tax lands by its code, not on a line.** A document line carries its
+9. **A tax lands by its code.** A document line carries its
    base and names its tax (`document_lines.tax_id`); the posting writes the
    tax on the account the tax points to (`tax_postings`). A line put on such
    an account is refused (`tax_account_on_a_line`), with the taxes that land
@@ -73,9 +74,9 @@ four template tables plus `country_defaults` that
 ## Registration is opt-in
 
 `instance.contact_email` and `instance.registered_at` are empty on a fresh
-install. Nothing writes them unless the operator calls `register_instance()`,
-nothing in this repository reads them, and `unregister_instance()` puts them
-back. Community works unregistered, forever. `instance.edition` records
+install. Only `register_instance()`, called by the operator, writes them;
+`unregister_instance()` empties them again, and no code in this repository
+reads them. Community works unregistered, forever. `instance.edition` records
 whether Ekwo operates the installation; it gates nothing here.
 
 ## Account types

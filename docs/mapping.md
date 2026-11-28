@@ -1,8 +1,8 @@
 # Mapping: Ekwo ↔ EN 16931 ↔ FEC
 
-Each Ekwo column that has a counterpart in a standard, lined up against it. It
-lets an integrator write a connector in a day instead of reading the schema
-and the standards in parallel for a week.
+With this page you can write a connector in a day. Each Ekwo column that has a
+counterpart in a standard is lined up against it, so you read one table where
+you would otherwise read the schema and the standards side by side.
 
 - **EN 16931** references are business term identifiers (`BT-`) and business
   groups (`BG-`) of the European semantic standard for electronic invoicing,
@@ -11,7 +11,7 @@ and the standards in parallel for a week.
   comptables*, arrêté du 29 juillet 2013 (art. A. 47 A-1 du LPF). The column
   is produced by `fec_lines()`.
 
-An empty cell means there is no counterpart, which is itself information.
+An empty cell tells you the standard has no counterpart for that column.
 
 ## Company and period
 
@@ -115,10 +115,10 @@ An empty cell means there is no counterpart, which is itself information.
 
 ## Products
 
-Ekwo has one table for a product and no variant of it, because variants are a
-commerce feature and a variant with no distinct price, account or tax is a row that carries
-nothing. Nothing here is stock: there is no `qty_available`, no valuation and
-no move, and there is deliberately no counterpart to them.
+Ekwo keeps one row per product. Variants are a commerce feature: a variant
+with its own price, account or tax is simply another product. Stock is outside
+this table by design — `qty_available`, valuation and moves have no column and
+no counterpart here.
 
 | Ekwo | EN 16931 | FEC |
 |---|---|---|
@@ -168,10 +168,10 @@ no move, and there is deliberately no counterpart to them.
 
 [`@ekwo-ai/peppol-ubl`](../packages/formats/peppol-ubl/) reads one row of
 `document_header`, the rows of `document_line_items` and the rows of
-`document_tax_summary`, under the column names above, and nothing else: no
-join to a table and no option is needed for a posted sale to come out with no
-rule broken. Dates are selected `::text`. What the views do not say yet, and
-the brick therefore reports rather than writes: the net price of a line keyed
+`document_tax_summary`, under the column names above, and only those: a posted
+sale comes out with every rule met, with no join to a table and no option.
+Dates are selected `::text`. The brick reports, and leaves out of the invoice,
+what the views do not say yet: the net price of a line keyed
 with its tax in it (BT-146, BR-26), document and line allowances and charges,
 and a reason for a supply outside the scope of the tax where the pack gives it
 no code (BR-O-10).
@@ -180,10 +180,9 @@ no code (BR-O-10).
 
 [`@ekwo-ai/factur-x`](../packages/formats/factur-x/) takes a plain
 invoice object and emits EN 16931 CII XML. It lives in this repository under
-`packages/formats/`, but `@ekwo-ai/core` does not depend on it: a format is
-something you add on top of the ledger, not something the ledger needs. The
-mapping is therefore written here and asserted in `tests/mcp/products.test.ts`
-without the library.
+`packages/formats/`, and you add it on top of the ledger when you need it;
+`@ekwo-ai/core` does not depend on it. The mapping is therefore written here
+and asserted in `tests/mcp/products.test.ts` without the library.
 
 Read `document_line_items` and build one line per row:
 

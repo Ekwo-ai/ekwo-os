@@ -1,17 +1,17 @@
 # `docs/releasing.md` — how a release is cut
 
-A release of Ekwo OS is one tag carrying the migrations, the country packs and
-the npm packages together. There is no "down": a database that has run a
-migration cannot be walked back, so every release moves forward, and the
-version a database answers with is what a client decides on.
+A release of Ekwo OS is one tag that carries the migrations, the country packs
+and the npm packages together. Every release moves forward: a migration, once
+run on a database, stays applied, and a client decides what to do from the
+version the database answers with.
 
 The criteria for `1.0.0` — what the 1.x line promises and the proofs required
 before the tag — are in [`road-to-1.0.md`](road-to-1.0.md).
 
 ## What has to move
 
-Each step below fails a test or the build when it is skipped: a release that
-is half done is worse than one that is not cut.
+Each step below fails a test or the build when it is skipped, so a release
+that reaches the tag is complete.
 
 1. **The schema version.** A migration
    `supabase/migrations/<YYYYMMDDHHMMSS>_schema_version_<x_y_z>.sql` that
@@ -93,19 +93,19 @@ is half done is worse than one that is not cut.
 
    It reads everything from the environment and writes no secret anywhere:
    `EKWO_DB_URL`, `SUPABASE_URL`, `SUPABASE_ANON_KEY`,
-   `SUPABASE_SERVICE_ROLE_KEY`, `EKWO_E2E_COUNTRY` (no default — a default
-   country is a chart nobody chose), and where a pack needs them
+   `SUPABASE_SERVICE_ROLE_KEY`, `EKWO_E2E_COUNTRY` (required, so you choose the
+   country and with it the chart), and where a pack needs them
    `EKWO_E2E_CHART`, `EKWO_E2E_LANGUAGE`, `EKWO_E2E_FISCAL_YEAR_START`,
    `EKWO_E2E_VAT_PERIOD`. **Set `EKWO_E2E_PREVIOUS=ekwo-os@<last tag>`** so the
    run upgrades an installation, which is what users actually do.
    `EKWO_E2E_LOAD_DOCUMENTS` adds the load paths of [`load.md`](load.md).
 
-   The project has to be empty and one nobody minds losing: the script installs,
-   books and closes a year, and deletes nothing on its own. `--reset` empties it
-   so a failed run can be replayed — for a throwaway project and nothing else.
-   It is not in the CI: it costs money, and a shared project would be one two
-   releases install into at once. Run it with several packs, including ones with
-   a non-calendar year and a non-monthly return.
+   Use an empty, throwaway project: the script installs, books and closes a
+   year, and deletes nothing on its own. `--reset` empties it so a failed run
+   can be replayed — on a throwaway project only. It runs by hand, outside the
+   CI, because each run costs money and needs a project of its own. Run it with
+   several packs, including ones with a non-calendar year and a non-monthly
+   return.
 
    **The last run: 11 October 2026, for `0.12.2`**, on a throwaway project
    in `eu-central-1` (Postgres 17.11, session pooler `aws-1`), deleted
@@ -216,8 +216,9 @@ Ekwo keeps books in every country its packs cover — value added tax, goods and
 services tax, sales tax, or none. A few names in the schema, the MCP server and
 the command line still carry the vocabulary of value added tax, which is one
 régime among several. They are renamed before 1.0 so that a name says what a
-thing does in every country. This section is the announcement: nothing below is
-renamed yet, and each row says what to call once it is.
+thing does in every country. This section announces the renames ahead of time:
+every name below still works as it is today, and each row says what to call
+once the rename ships.
 
 ### The policy
 

@@ -1,27 +1,25 @@
 # Decisions
 
-Why Ekwo OS is shaped the way it is: one record per decision, each with its
-context, the rule it sets and what follows from it, so that a contributor can
-argue with the reason rather than guess at it.
+Here you find why Ekwo OS is shaped the way it is. Each decision has one
+record with its context, the rule it sets and what follows from it, so you can
+read the reason behind the rule and argue with it.
 
-Each record is written as the rule it establishes and states what holds today.
-A decision that changes is rewritten in place, and its record says what the
-rule now is; the history of the change is in the git log and in
-[`CHANGELOG.md`](../../CHANGELOG.md).
+Each record states the rule it establishes as it holds today. When a decision
+changes, its record is rewritten in place to state the new rule; the history of
+the change is in the git log and in [`CHANGELOG.md`](../../CHANGELOG.md).
 
 A record has five parts: **Status**, **Context**, **Decision**,
 **Consequences** and **See also** (the files, migrations, tests and other
-records it relies on). New records take the next free number. A record whose
-status is `proposed` is a design no code carries yet: it says what would hold
+records it relies on). New records take the next free number. A record with
+status `proposed` is a design written before its code: it says what would hold
 and what it waits for, and it becomes `accepted` in the change that builds it.
 
-**A weakness that is still open is not written here.** The records are public,
-and a record describing a gap an attacker could still use would be a recipe.
-A security issue goes first through a private advisory, as
-[`SECURITY.md`](../../SECURITY.md) describes; the record that tells its story
-is written, or rewritten, once the fix has shipped, and names the release that
-carries it. A limit that is accepted by design — stated, reasoned and not
-exploitable beyond what the design allows — belongs in a record like any other
+**Security issues are written here once they are fixed.** The records are
+public, so an open weakness goes first through a private advisory, as
+[`SECURITY.md`](../../SECURITY.md) describes. Once the fix has shipped, the
+record that tells its story is written, or rewritten, and names the release
+that carries it. A limit accepted by design — stated, reasoned and exploitable
+only as far as the design allows — belongs in a record like any other
 consequence.
 
 ## The instance and who may act

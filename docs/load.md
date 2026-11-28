@@ -1,12 +1,13 @@
 # Books at volume
 
-How the schema behaves when there is something in it, how that is checked, and
-what is still to be measured.
+Your reports stay fast as your books grow. This page shows how the schema
+behaves with years of books in it, how that is checked, and what is still to be
+measured.
 
-Most of `tests/` books a handful of documents, and Postgres plans a handful of
-rows the same way whatever the indexes are. `tests/load/` fills an instance
-with several companies and years of books, and checks that the reads people
-rely on stay fast as the books grow.
+`tests/load/` fills an instance with several companies and years of books, and
+checks that the reads you rely on stay fast at that volume. The rest of
+`tests/` books a handful of documents, and Postgres plans a handful of rows the
+same way whatever the indexes are.
 
 ## What runs, and where
 
@@ -19,13 +20,13 @@ rely on stay fast as the books grow.
 Both read the same definitions: `scripts/load/books.mjs` makes the books and
 `scripts/load/hot-paths.mjs` defines the reads and their budgets.
 
-**The plan is the assertion, the clock is a report.** A time measured on a
-shared CI runner is noise, and a build that fails on noise is a build people
-learn to re-run. The shape of a plan over deterministic data is stable, and it
-is what matters: a report that starts reading a whole table costs what the
-instance holds instead of what the question asks. The tests therefore say *no
-sequential scan of a large table*, never *this exact index is used*, and they
-pass unchanged across packs with very different charts.
+**The plan is the assertion, the clock is a report.** The shape of a plan over
+deterministic data is stable, and it is what matters: a report that reads a
+whole table costs what the instance holds, while one that uses an index costs
+what the question asks. A time measured on a shared CI runner varies from run to
+run, so it is reported and left out of the pass or fail. The tests assert *no
+sequential scan of a large table* and leave the choice of index to Postgres, so
+they pass unchanged across packs with very different charts.
 [Decision 0060](decisions/0060-the-plan-is-the-assertion-the-clock-is-a-report.md)
 has the reasoning.
 
@@ -71,13 +72,13 @@ each large table was reached.
 
 All six paths reach the large tables through an index, as the owner and as a
 member, and row level security costs a bounded number of capability checks per
-statement rather than one per row. Each of these is asserted, so a regression
+statement, whatever the number of rows. Each of these is asserted, so a regression
 fails the build.
 
 Still to be measured:
 
 - **Times on a real Postgres.** Every time above comes from PGlite: the ratios
-  are informative, the absolute figures are not what a hosted project shows.
+  are informative, and a hosted project shows its own absolute figures.
 - **The API layer** — the pooler, PostgREST and JSON serialisation.
 - **Sustained writes**: bulk posting, imports and the close of a large year.
 - **Many companies rather than large ones**, at the scale of a firm with

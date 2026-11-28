@@ -1,10 +1,12 @@
 # Country packs
 
-A country is data. Everything Belgium or France adds to Ekwo — a chart of
+A country pack gives your company the rules of its country as data you can
+read and check. Everything Belgium or France adds to Ekwo — a chart of
 accounts, journals, VAT codes, the accounts each of them posts to, the boxes
 of the periodic return — is a set of files under `packs/<cc>/`, compiled into
-one SQL seed that is committed. There is no module per country, no Python
-hook, and no field in the format through which a pack could run anything.
+one SQL seed that is committed. A pack holds data only: the format has no
+hook and no field through which a pack could run code, so every country is
+read by the same engine.
 
 The decision behind this, with the alternatives that were weighed, is in
 [decision 0025](decisions/0025-a-country-is-a-pack-of-data.md).
@@ -89,8 +91,8 @@ Belgian chart `asbl` and the French chart `association` are the two charts for
 `statements.json` holds one entry per scheme: a `code`, a `kind`
 (`balance_sheet`, `income_statement`, `allocation`), a `framework`, and its
 lines. A line is either summed from the ledger, through `rules`, or computed
-from other lines, through `plus` and `minus` — there is no expression
-language, as there is none for a declaration form.
+from other lines, through `plus` and `minus` — plain lists, the same as on a
+declaration form, so every line reads at a glance.
 
 ```json
 { "code": "40/41", "parent": "29/58", "name": "Créances à un an au plus",
@@ -285,9 +287,9 @@ inside a quoted field. The parser is forty lines and refuses anything else.
 `analysis.json` says what the accounts of the chart mean to an analysis of the
 books: which of them make the revenue, the net result, the equity, the total
 and the current assets, the cash, what customers owe and what is owed to
-suppliers. A statement cannot say it — its lines are the national rubrics, and
-`21/28` means nothing to a screen that draws a current ratio in every country
-— and the core may not, because an account code is the pack's. The function
+suppliers. The pack is the right place for it: a statement's lines are the
+national rubrics, while a screen that draws a current ratio needs the same
+aggregates in every country, and an account code belongs to the pack. The function
 that reads the section is `financial_analysis()`, and
 [`analysis.md`](analysis.md) is what it returns and how each aggregate is read.
 
@@ -858,13 +860,12 @@ definitions of one figure, kept in step by whoever reads the pack next, and
 A tax says the same fact three times over. `treatment` is Ekwo's own word for
 what the operation is. `vat_category` is BT-118 and BT-151 of EN 16931, from
 the UNCL5305 subset the standard publishes. `exemption_code` is BT-121, from
-the VATEX list. Neither of the last two is read by the ledger or by the
-declaration — they are read by whoever renders the invoice — so until
-`ekwo pack check` learned the correspondence, a pack could declare an export
-taxed at the standard rate and every test in this repository would pass.
+the VATEX list. The last two are read by whoever renders the invoice, and the
+ledger and the declaration leave them aside, so `ekwo pack check` checks that
+the three agree: an export taxed at the standard rate is caught before the pack
+ships.
 
-Three published sources decide the table, and nothing in it is anybody's
-opinion: **UNCL5305** (the OpenPEPPOL subset) for what each category means, the
+Three published sources decide the table: **UNCL5305** (the OpenPEPPOL subset) for what each category means, the
 European Commission's **technical guidance for tax codes in EN 16931** for the
 pair each use case takes, and the **VATEX code list**, which states the pairing
 on its own codes (`VATEX-EU-AE` only with `AE`, `VATEX-EU-IC` with `K`, and so
@@ -947,12 +948,12 @@ A few decisions behind the table are worth knowing before filling a column in:
 
 ## What an exemption depends on
 
-A tax code is the answer. Sometimes the *question* is not in the books either,
-and `conditions` is where a pack says which question it was.
+A tax code is the answer. `conditions` is where a pack writes down the
+question behind it, when that question lives outside the books.
 
 A sale for resale is untaxed because the buyer handed over a certificate; a
 seller collects in a territory only once its sales there cross a threshold.
-Neither is a fact the ledger holds.
+Both facts sit outside the ledger.
 
 ```json
 { "code": "US-CA-S-RESALE", "rate": 0, "scope": "sale", "treatment": "exempt",
@@ -1220,8 +1221,8 @@ worked out from itself, or two worked out from each other — is refused by
 
 `defaults.region` is the other half of the same story: where tax follows the
 buyer's province or state, `companies.region` and `contacts.region` hold it
-(ISO 3166-2 without the country prefix). The core never chooses a tax for
-anyone, in any country. A province a company has to name for its taxes to
+(ISO 3166-2 without the country prefix). The choice of tax always comes from
+the pack and the company, in every country. A province a company has to name for its taxes to
 apply is a territory, below: `defaults.territory_required` says it has to be
 named.
 
@@ -1353,11 +1354,11 @@ the condition exists, the word for it does not.
 
 Three sections of the manifest — `documents`, `einvoicing` and `bank` —
 compile into twenty-three columns of `country_defaults` and into
-`legal_mention_templates`. None of them has a default: a pack that says
-nothing leaves null, and a reader that needs the value says which one is
-missing rather than borrowing another country's law. One null is read, and
-said to be: a pack silent on `posted_edit_policy` keeps a posted document as
-it was posted, which is the stricter answer rather than another country's.
+`legal_mention_templates`. Every value comes from the pack itself: a value the
+pack leaves out stays null, and a reader that needs it names the missing value,
+so each company follows its own country's law. One null has a meaning of its
+own: a pack silent on `posted_edit_policy` keeps a posted document as it was
+posted, the stricter answer.
 
 ```json
 "documents": {
@@ -1938,9 +1939,9 @@ edit, which is how the return of a past period keeps giving the same answer.
 ## Languages
 
 The pack's own files are written in `defaults.language`. Every other language
-is one file, `i18n/<lang>.json`, and that file is the only place a translation
-lives — the manifest carries no second wording, and neither does `fixed_assets.json` or
-`corporate_tax.json`.
+is one file, `i18n/<lang>.json`, and that file holds every translation of the
+pack — the manifest, `fixed_assets.json` and `corporate_tax.json` each carry
+one wording only.
 One file per language means a contributor edits one file and a reviewer reads
 one file.
 
@@ -1988,12 +1989,13 @@ own preference comes before the company's.
 
 ## Golden scenario
 
-A pack that compiles says nothing about whether it adds up. A tax that posts
-to the wrong grid and a grid that expects the wrong postings agree with each
-other: the seed builds, every unit test passes, and the return is wrong.
-`packs/<cc>/golden/` is the second opinion — one year of books somebody wrote
-down, and beside it the declaration, the statements and the trial balance the
-engine makes of them, to the cent, in the pack's own currency.
+The golden scenario proves that a pack adds up. `packs/<cc>/golden/` holds
+one year of books somebody wrote down, and beside it the declaration, the
+statements and the trial balance the engine makes of them, to the cent, in the
+pack's own currency. It catches what compiling alone lets through: a tax that
+posts to the wrong grid and a grid that expects the wrong postings agree with
+each other, the seed builds, and only a year of real books shows the return is
+wrong.
 
 `scenario.json` is the input, and it is declarative like everything else in a
 pack. Nothing in it executes and nothing in it is an amount that was computed:
@@ -2258,9 +2260,9 @@ before. A pack without the file has no scheme.
 company's profit. It is the section of the corporate income tax module
 ([`modules/corporate-tax`](../modules/corporate-tax/)), compiled into
 `supabase/seed/modules/corporate_tax/` and applied only where that module is
-installed. A pack without the file says nothing, and a company of that country
-is refused by name — `no_corporate_tax_rules` — rather than given a
-neighbour's rates.
+installed. Each company is computed on its own country's rules: where a pack
+has no such file, a company of that country gets a named refusal —
+`no_corporate_tax_rules` — and no figure.
 
 The computation it feeds is always the same, and the file is its seven
 inputs:
@@ -2492,8 +2494,8 @@ box the form does not carry, and only the pack knows which boxes the form
 carries. The second pass compiles and compares the committed seeds. A pack that
 fails the first never reaches the second.
 
-The list below is the whole of it. It is long because a pack is data somebody
-will file a return with.
+The list below is the whole of it. It is long because you will file a return
+with the pack's data.
 
 **The manifest, and the charts.** A chart whose `accounts` file does not
 exist. No chart marked `"default": true`, or more than one — `ekwo init` would
@@ -2727,7 +2729,7 @@ A `legal_reference` says which article a rule claims. It has been required on
 every tax and every box since the format existed, and it is half an answer: a
 reviewer holding *Arrêté royal n° 20 du 20 juillet 1970, tableau A* has a
 citation and a search engine. The other half is **where that text can be
-read**, and it belongs in one place rather than on four hundred rules.
+read**, written once for the whole pack and shared by its four hundred rules.
 
 `certification.sources` is that place. Each entry is a text:
 
@@ -2815,14 +2817,14 @@ returns all of it.
 
 ## Certification, and who may say what
 
-A golden test proves that a pack is internally coherent. It does not prove
-that it is legally right, and no test can. Three things carry the rest, and all
-three are enforced rather than encouraged.
+A golden test proves that a pack is internally coherent. Whether it is
+legally right is for the law and its readers to say, and three things carry
+that part. `ekwo pack check` enforces all three.
 
 **Every tax and every declaration box names where it comes from.**
-`legal_reference` is a required field, not a convention: `ekwo pack check`
-refuses a pack that leaves one out, on a tax or on a box, and `"TODO"` is not a
-source. A box nobody can trace to a source is a box nobody can review. Beside
+`legal_reference` is a required field: `ekwo pack check` refuses a pack that
+leaves one out, on a tax or on a box, and refuses `"TODO"` as a source. A box
+traced to its source is a box a reviewer can check. Beside
 it, `source` names the text that article is in, out of the register the
 manifest carries in `certification.sources` — see
 [The register of sources](#the-register-of-sources).
@@ -2984,12 +2986,12 @@ has read it — the two are different questions and the file says so at the top.
 
 ## Adding a country in a day
 
-A country is data, so adding one is a day of reading the law and half an hour
-of tooling. What follows is the whole path, in order, with the command that
-tells you whether you are still on it. Copy Belgium or France — whichever
-resembles your country's accounting more — and change what differs.
+You can add a country in a day: a day of reading the law and half an hour of
+tooling. What follows is the whole path, in order, with the command that tells
+you whether you are still on it. Copy Belgium or France — whichever resembles
+your country's accounting more — and change what differs.
 
-Nothing here needs a database. Every command runs in a checkout, and the pull
+You work without a database. Every command runs in a checkout, and the pull
 request you open at the end contains the pack, and the seed and the lists
 `ekwo pack build` writes from it.
 
@@ -3491,11 +3493,11 @@ is genuinely right, one comment says so and why:
 
 ## What is not in a pack
 
-The engine: posting, matching, the returns, the installer. Also deliberately
-out — the rates of American sales tax (thousands of jurisdictions, monthly
-changes; the form belongs here, a maintained rate feed does not), the XML of
+The engine: posting, matching, the returns, the installer. Also kept out on
+purpose — the rates of American sales tax (thousands of jurisdictions, monthly
+changes; the form belongs here, a maintained rate feed belongs elsewhere), the XML of
 the filing formats (format libraries in `packages/formats/`), analytics,
 payroll, and the translation of the application itself. Fixed assets and
 corporate income tax are optional pack sections read by their modules. A handful of stable rates published by the
 administration *is* data and belongs in the pack — Canada's fifteen GST/HST
-combinations would be — and a feed that moves every month is not.
+combinations would be — and a feed that moves every month belongs outside it.
