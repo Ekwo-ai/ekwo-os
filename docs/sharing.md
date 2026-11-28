@@ -1,25 +1,25 @@
 # Sharing a document
 
-A company sends an invoice and the customer wants to look at it: what it says,
-what is still owed on it, what the law put at its foot. Everything needed to
-answer already exists in this schema, and every bit of it is behind row level
-security — which is right, because the customer is not a member of the company
-and never will be.
+You send an invoice and give your customer a link to it. They open it and see
+what it says, what is still owed on it, and the legal mentions at its foot.
+Your data stays behind row level security, and your customer reads that one
+document without becoming a member of your company.
 
 A **share** is a row that says *this document may be read by whoever presents
 this secret*, and one function that takes the secret and returns the document.
-The token in the link is the whole secret. There is no account, no password and
-no second factor.
+The token in the link is the whole secret: your customer opens it with one
+click, with no account, password or second factor.
 
 The core provides the data and the three functions. The page the customer looks
 at is the application's, and it lives outside this repository.
 
-**A share is not a seat.** The customer who opens a link holds nothing in the
-installation. The person whose company it is — the client of the firm that
-keeps the books here — is the opposite case: a member of that one company on
-the `client` preset, who reads everything of it, hands pieces over with
-`documents.deposit`, and writes nothing else. `documents.share` is not in that
-preset: publishing a company's invoice stays with whoever issues it.
+**A share gives one document, and only that.** The customer who opens a link
+holds nothing in the installation. The person whose company it is — the client
+of the firm that keeps the books here — gets a seat instead: a member of that
+one company on the `client` preset, who reads everything of it, hands pieces
+over with `documents.deposit`, and writes nothing else. `documents.share` is
+left out of that preset: publishing a company's invoice stays with whoever
+issues it.
 
 ## The three functions
 
@@ -59,9 +59,8 @@ link itself.
 which is the ordinary case: an invoice is looked at years later.
 
 **A share is never edited.** There is no update policy and no `change_share()`.
-An expiry that can move is a lifetime nobody can rely on, and a token that
-outlives the decision to withdraw it is the one failure a sharing feature must
-not have. To change anything about a link, revoke it and make another.
+You can rely on the expiry you set, and a revoked link stops working for good.
+To change anything about a link, revoke it and make another.
 
 ## What may be shared
 
@@ -86,8 +85,8 @@ remember to revoke them.
 select shared_document('kZ3m…_Q');
 ```
 
-It takes the token and nothing else, so there is nothing to enumerate and
-nothing to widen. It answers with one jsonb object:
+It takes the token and nothing else, so a link opens exactly one document. It
+answers with one jsonb object:
 
 ```jsonc
 {
@@ -113,13 +112,13 @@ nothing to widen. It answers with one jsonb object:
 
 Five things about that shape are deliberate.
 
-**Every amount is a decimal string.** A JSON number is a double by the time it
-reaches a browser, and an invoice total that arrives as `1210.0000000000002` is
-the oldest bug in billing software.
+**Every amount is a decimal string**, so the total your customer sees is
+exact. A JSON number is a double by the time it reaches a browser, and would
+arrive as `1210.0000000000002`.
 
-**No identifier of anything is in it.** Not the document, not the company, not
-the contact, not a tax, not an account. A link is one document, and nothing it
-carries can be turned into a question about a second one.
+**No identifier of anything is in it** — of the document, the company, the
+contact, a tax or an account. A link is one document, and what it carries
+leads to that document alone.
 
 **`payment` is the one thing that moves after the document was sent**, which is
 what makes a link worth keeping: a customer who paid last week opens the same
@@ -130,25 +129,24 @@ adds up to `totals.amount_tax`.
 **A line says which price it is showing.** `unit_price` is the price as it was
 keyed — gross on a line whose tax is included in the price, net otherwise —
 and `unit_price_includes_tax` says which. `amount_incl_tax` is the gross the
-line was quoted at, `null` everywhere else, so a renderer never has to divide
-anything to know what it holds.
+line was quoted at, `null` everywhere else, so a renderer reads each figure
+as it stands.
 
 **The legal mentions come out in the document's own language**, frozen when
 the document was posted. They are the sentences `document_legal_mentions`
-produces for a printed invoice, so a link and a PDF cannot disagree.
+produces for a printed invoice, so a link and a PDF always agree.
 
 ## The same answer for every kind of no
 
 Unknown token, withdrawn link, expired link, a document that may no longer be
-shared: all four return **null**, the same null in the same shape. An error
-message that distinguished them would tell somebody feeding tokens at the
-function which of their guesses had been a real link.
+shared: all four return **null**, the same null in the same shape. Somebody
+guessing tokens learns nothing about which of them was ever a real link.
 
 ## What is counted, and what is not
 
-`document_shares.view_count` and `last_viewed_at` record that the link was
-opened, which is the question a sender actually asks. There is no IP address
-and no user agent: who opened a link and from where is a log of the people a
+`document_shares.view_count` and `last_viewed_at` tell you that the link was
+opened, which is the question a sender asks. The core keeps no IP address and
+no user agent: who opened a link and from where is a log of the people a
 company invoices, which is personal data with a retention policy, a lawful
 basis and a subject-access request behind it. An application that is prepared
 to answer for such a log keeps its own.
@@ -158,13 +156,14 @@ to answer for such a log keeps its own.
 `share_document`, `revoke_share` and `list_shares` are tools, with the same
 contract and the same refusals.
 
-`shared_document` is **not** a tool, and that is a decision rather than an
-omission: it is the public door, and an agent that could read a document by
-presenting a token would be an agent somebody hands a token to.
+`shared_document` is **not** a tool, by decision: it is the public door, for
+the customer. Your agents read documents with your rights only, so a token
+somebody hands an agent opens nothing through the MCP server.
 
 ## Why there is no access code
 
-The token is the secret. A second factor — a code read out over the phone, a
-one-time password by e-mail — turns every link into a conversation, and most
-invoices are sent to somebody who is expected to open them. It can be added to
-a share as an option the sender chooses, without changing the shape above.
+The token is the secret, so your customer opens an invoice in one click. A
+second factor — a code read out over the phone, a one-time password by e-mail —
+would turn every link into a conversation, and most invoices are sent to
+somebody who is expected to open them. It can be added to a share as an option
+the sender chooses, without changing the shape above.

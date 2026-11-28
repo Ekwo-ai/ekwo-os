@@ -1,15 +1,17 @@
 # `docs/filing.md` — the life of a declaration
 
-A tax return is not a report. A report is asked for and answers; a declaration
-**leaves the building**, an administration keeps a copy, money follows it, and
-months later somebody asks what was sent. This page is the whole cycle: what
-each step does, which function does it, and what is free and what is operated.
+Ekwo takes your tax returns through their whole life: computed from your
+books, frozen, sent, paid, and kept with the proof that they went. A
+declaration **leaves the building**: an administration keeps a copy, money
+follows it, and months later you can show exactly what was sent. This page is
+the whole cycle: what each step does, which function does it, and what is free
+and what is operated.
 
 The short version: **everything up to the transmission is open core, and
-everything that comes back is too.** What Ekwo sells in the middle is holding
-the credentials, the certificate and the responsibility of sending on time —
-one of the optional services of [`cloud-services.md`](cloud-services.md), and
-the only one this cycle needs.
+everything that comes back is too.** Ekwo can also send for you, holding the
+credentials, the certificate and the responsibility of sending on time — one
+of the optional services of [`cloud-services.md`](cloud-services.md), and the
+only one this cycle needs.
 
 ---
 
@@ -34,9 +36,9 @@ others is **pack data** (`tax_report.json`); the function contains no country
 rule. A figure belongs to the period its tax fell due in — `tax_point_of()` —
 and not to the date of the entry, where a country says the two differ.
 
-Nothing is stored. Asked twice, it answers twice, and after an entry lands in
-the period it answers differently. That is right for preparing and wrong for
-having filed, which is the reason for step 2.
+The answer is live: asked twice, it answers twice, and after an entry lands in
+the period it answers with the new figures. That is what you want while you
+prepare; once you file, step 2 keeps the figures you sent.
 
 ### 2. Freeze
 
@@ -52,7 +54,7 @@ that has gone, it refuses and names what is needed instead: a corrective.
 rule, and `payment_deadline()` when its tax is paid, where the pack names a
 day apart from that one; `upcoming_filings()` lists what is due between two dates, each form
 with its official name and the short name the pack gives it, if any. A pack that
-declares no rule answers null rather than a date that would be wrong.
+declares no rule answers null, so every date you see comes from the pack.
 
 ### 3. Produce the file
 
@@ -64,17 +66,16 @@ never after the country. Bricks exist today for a periodic VAT return
 European Union (`intra-consignment`, `des`, `ecdf`, `vd`), fed by
 `ec_sales_list()`.
 
-Most forms have no brick, and that is not a blocker: **filing by hand on a
+Where a form has no brick yet, you file it all the same: **filing by hand on a
 portal is complete and free**, and `file_format` stays null until somebody
 writes one.
 
 ### 4. Send
 
-This is the only operated step, and it is operated for a reason that has
-nothing to do with features: sending needs credentials, often a certificate,
-usually a session on a portal, and a channel somebody keeps running. Operating
-the channel is not filing on anyone's behalf: the content of the return, its
-date and the decision to send it stay with the business and its accountant.
+This is the only operated step, because sending needs credentials, often a
+certificate, usually a session on a portal, and a channel somebody keeps
+running. The operator runs the channel; the content of the return, its date and
+the decision to send it stay with the business and its accountant.
 
 A company that files by itself downloads the file and uploads it — that path is
 complete, and the two steps around it record what happened either way.
@@ -90,7 +91,7 @@ back — `accepted`, `rejected` or `paid` — **on the send it answers**, with t
 administration's own words. A declaration sent three times keeps its three
 references and its refusals.
 
-A refused declaration was never received. It is **sent again**, not corrected:
+A refused declaration was never received, so you **send it again**:
 `file_filing()` accepts a rejected declaration, and each send is a new deposit.
 Where the refusal is about the figures themselves, `reopen_filing()` takes the
 declaration back to draft so they can be worked out again.
@@ -105,8 +106,8 @@ that was not sent, one a corrective replaced, and a file kept on anything but
 this declaration. Nothing else writes a deposit: `file_filing()`,
 `record_filing_outcome()` and `record_filing_files()` are the only way in, each
 asking `filings.write`, and the table is read under `filings.read`. They
-belong to the company: stopping a subscription takes away the sending, never the
-proof of having sent.
+belong to the company: if you stop a subscription, you keep every proof of
+having sent.
 
 They leave with it, too. A company that moves to another installation
 ([`company-archive.md`](company-archive.md)) arrives with its declarations in
@@ -137,9 +138,9 @@ stays on its account, for its own return or an entry the company writes; so
 does a tax due on collection that still waits on its transition account. A
 period in which nothing else moved has nothing to settle, and says so.
 
-A credit is not settled until the company says what happens to it: carried to
-the next declaration, or claimed back. Both are ordinary, and the choice is not
-the schema's.
+A credit is settled once the company says what happens to it: carried to the
+next declaration, or claimed back. Both are ordinary, and the choice is the
+company's.
 
 The debt is then an open item like any other, and it names the administration.
 The pack says who that is (`defaults.tax_payee`); `tax_payee(company)` finds
@@ -159,20 +160,18 @@ existed was recorded paid by `20261023160000`.
 
 ### 8. Correct
 
-Two different things, and calling them by the same name is how books go wrong:
+Two different things, each with its own name, so the books stay right:
 
 - **A refusal** — the administration never accepted it. Send again, or
   `reopen_filing()` and redo the figures.
 - **A corrective** — the administration accepted it and the books have moved
   since. `supersede_filing()` opens a new declaration pointing at the old one,
-  which becomes `superseded`. Nothing is overwritten: what was sent stays as it
-  was sent, and the corrective's settlement carries **the difference** and not
-  the period all over again.
+  which becomes `superseded`. What was sent stays as it was sent, and the
+  corrective's settlement carries **the difference** alone.
 
 `filings_touched_since()` is what makes step 8 start on time: it lists the
 declarations whose period the ledger moved after they were filed. A late entry
-is not refused — a supplier invoice arrives when it arrives — but it is never
-silent. A company that wants the period shut says so with `lock_filed_period()`,
+is accepted — a supplier invoice arrives when it arrives — and always flagged. A company that wants the period shut says so with `lock_filed_period()`,
 which moves the tax lock forward only, and refuses while there are still tax
 accounts to clear.
 
@@ -185,7 +184,7 @@ and most countries have more than one. A normal scheme files a periodic
 return every month or quarter. A simplified scheme files one return a year
 and pays part of the tax on account during it. A small business exemption
 charges no VAT and files no periodic return. The scheme is a fact about the
-company, and the core never chooses it.
+company, and the company records it.
 
 **What a pack says.** `packs/<cc>/vat_schemes.json` lists the schemes of the
 country ([`packs.md`](packs.md#vat-schemes-vat_schemesjson)): for each, the
@@ -196,7 +195,7 @@ pack without the file has no scheme, and its companies file as they always
 did.
 
 **What a company says.** A row of `company_vat_schemes`: this scheme, from the
-first day of this financial year. There is no default. A company that has
+first day of this financial year, chosen by the company. A company that has
 recorded nothing keeps exactly the behaviour it had before schemes existed:
 its periodic return, its cadences, no instalments.
 
@@ -221,7 +220,7 @@ its periodic return. An annual form does not get a second set of postings: it
 names the form whose postings it reads (`reads_postings_of`), and each of its
 boxes lists the boxes of that form it adds up. Line 5A of the French CA12 is
 what line 08 of the CA3 would have received over the year, and the two forms
-can never disagree about a posting.
+always agree about a posting.
 
 **Instalments.** A scheme that asks for payments on account declares them as a
 schedule: in which months, which percentage, of which box of the previous
@@ -245,8 +244,8 @@ period's return, and the base under which nothing is due.
 
 **A ceiling is an alert.** `vat_scheme_ceilings_crossed(company, from, to)`
 compares the turnover of the books with the ceilings of the scheme the company
-is on. Nothing changes a scheme by itself: leaving one is a decision the
-company records, from the first day of a financial year.
+is on. The company stays in charge of its scheme: leaving one is a decision
+it records, from the first day of a financial year.
 
 ---
 
@@ -262,7 +261,7 @@ that matter across all of them:
 | What moved after it went | `filings_touched_since(company, from, to)` | `portfolio_filings_touched_since(from, to)` |
 
 "Portfolio" is the word of the profession — a firm's client portfolio — and
-[`firms.md`](firms.md#what-portfolio-means-here) defines it. It is not a list anybody maintains: it is the companies on which the
+[`firms.md`](firms.md#what-portfolio-means-here) defines it. It keeps itself up to date: it is the companies on which the
 caller holds `filings.read`. An accountant of forty companies gets forty, the
 person who runs one of them gets that one, and the administrator of the
 instance — who creates companies and keeps no books — gets none.
@@ -270,9 +269,8 @@ instance — who creates companies and keeps no books — gets none.
 Two things differ from the per-company readings. **The window is on the day a
 return is due**, not on the period. And **every company is in the answer**: a
 row with no date carries a `reason` — `no_deadline_rule` where the pack names
-no day for the form, `nothing_due`, `no_form` — because a company missing from
-the list a firm plans its fortnight on is worse than a company listed without a
-date.
+no day for the form, `nothing_due`, `no_form` — so a firm plans its fortnight
+on a list that holds every client.
 
 ---
 
@@ -285,7 +283,7 @@ filing — BE-VAT-PERIODIC (31 boxes) · cadence: month · deadline: in the pack
          file: vat-consignment · settles to: 451900
 ```
 
-Every "no" is printed rather than left out: a return filed by hand on the
+Every answer is printed, the "no"s included: a return filed by hand on the
 portal, with no file written for it, is the ordinary state of most packs, and a
 deadline a pack has not declared is printed `not declared`. The same answers
 are asserted end to end, pack by pack, by the test suite: the golden year is

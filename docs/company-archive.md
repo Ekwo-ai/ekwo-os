@@ -1,10 +1,11 @@
 # The archive of one company
 
-A firm keeps the books of N companies in one installation, and each of them
-belongs to somebody. `export_company()` writes one company out, whole, in a
-format that needs nothing of Ekwo to be read; `import_company()` takes it into
+Your company can leave an installation whole, whenever you want, and arrive
+in another one ready to work. `export_company()` writes one company out, whole,
+in an open format that any tool can read; `import_company()` takes it into
 another installation, where it is a living company again — same identifiers,
-same numbers, same locks, same trail.
+same numbers, same locks, same trail. A firm that keeps the books of N
+companies in one installation gives each of them that same way out.
 
 This page is the format, and what the two ends check. The reasons are in
 [decision 0043](decisions/0043-a-company-leaves-with-its-books.md).
@@ -21,7 +22,7 @@ archive/
     └── budgets.lines.jsonl          a module's tables beside the socle's
 ```
 
-A directory, not a container: `tar` or `zip` it to move it. `ekwo company
+A plain directory: `tar` or `zip` it to move it. `ekwo company
 export` writes it; `export_company(company)` answers the same thing as one JSON
 document, `{"manifest": {…}, "tables": {"public.accounts": [ … ], …}}`, which is
 what `import_company()` takes.
@@ -37,9 +38,9 @@ empty file.
   `entry_lines.balance`, `documents.amount_residual` are there for a reader and
   ignored by an import, which lets the database compute them again.
 - **A decimal is a string**: `"debit": "1210.00"`, `"sale_price": "12.345678"`.
-  `1210.00` is a valid JSON number and most parsers hand it back as a float; an
-  archive of a ledger must not depend on which. Integers and booleans are JSON
-  numbers and booleans.
+  so every amount reads back exactly in any parser; a JSON number such as
+  `1210.00` comes back from most of them as a float. Integers and booleans are
+  JSON numbers and booleans.
 - **A date is `YYYY-MM-DD`; a timestamp is ISO 8601 in UTC**, whatever the time
   zone of the session that exported.
 - **An array column is a JSON array, a `jsonb` column is its value**, as
@@ -83,8 +84,8 @@ empty file.
 
 ## What the checksums answer
 
-**`sha256` is the file**, byte for byte, as the database wrote it.
-`shasum -a 256 data/*.jsonl` checks an archive on any machine, with no Ekwo and
+**`sha256` is the file**, byte for byte, as the database wrote it. You check
+an archive on any machine with `shasum -a 256 data/*.jsonl`, with no Ekwo and
 no database; `ekwo company export` and `ekwo company import` both verify it, so
 a file damaged in transit is caught by the command line before the database
 sees it.
@@ -127,23 +128,23 @@ Everything the database holds about the company:
 
 **The people stay; their trace travels.** `created_by`, `uploaded_by`,
 `filed_by`, `sent_by`, `enabled_by` and the `actor_id` of the audit trail hold
-the identifier of a user of the first installation. None of them is a foreign
-key. They arrive unchanged: they say that *somebody* did it and let two acts of
-the same person be recognised as such, and they name nobody in the new
-installation. The archive carries no name and no address for them — the firm's
-staff are not the client's data.
+the identifier of a user of the first installation, as plain values without a
+foreign key. They arrive unchanged: they say that *somebody* did it and let two
+acts of the same person be recognised as such, and they name nobody in the new
+installation. The archive carries no name and no address for them: the firm's
+staff keep their personal data to themselves.
 
 **The bytes of the attachments are not carried.** They live in a storage
-bucket, not in the database, and an export that runs under row level security
-inside Postgres cannot read them. `manifest.files.list` says which files to
+bucket outside the database, beyond the reach of an export that runs under row
+level security inside Postgres. `manifest.files.list` says which files to
 move — path, size, checksum as recorded — and the rows of `attachments` arrive
 pointing at the same paths. Until the files are copied under those paths, a
 piece opens to a missing file. This is the one thing a person still has to do
 by hand, and both commands say so when they end.
 
-**Reference data is not carried either**: currencies, territories, the packs'
-templates, the modules. The manifest says what is needed and the import refuses
-by name when it is not there.
+**Reference data stays with each installation**: currencies, territories, the
+packs' templates, the modules. The manifest says what is needed and the import
+refuses by name when it is missing.
 
 ## Leaving
 
@@ -163,9 +164,10 @@ member. Three conditions, all checked by the database:
    an owner by default).
 3. **The archive is whole.** Each table is counted as the caller and counted
    again by a definer function that answers a number and nothing else; a
-   difference is `export_incomplete`, by table. A member whose `bank.read` was
-   revoked does not leave with books that have no bank in them. A module turned
-   off with rows in it stops the export too, until it is turned back on.
+   difference is `export_incomplete`, by table. So every archive holds the
+   whole books: a member whose `bank.read` was revoked is stopped before
+   leaving with books that have no bank in them. A module turned off with rows
+   in it stops the export too, until it is turned back on.
 
 **One snapshot.** `export_company()` reads the manifest and every table in one
 statement. A tool that streams a large company table by table with
@@ -185,8 +187,9 @@ the manifest are the ones `export_company()` writes, byte for byte — see
 [decision 0094](decisions/0094-an-archive-is-read-in-pages.md).
 
 An export is recorded: `export_company()` and the CLI write `company_exported`
-on the audit trail of the company, with who did it. It is a record and not a
-control — the export reads nothing its caller could not read table by table.
+on the audit trail of the company, with who did it. The record keeps the
+trail complete; the export itself reads only what its caller could read table
+by table.
 
 `company_archive_unclassified()` has to be empty. A table that belongs to a
 company and is neither exported nor excluded stops every export, by name — see
@@ -231,9 +234,9 @@ And checked afterwards, which is what the triggers would have guaranteed:
 | `counter_behind` | A journal has not counted up to a number it already used, or the matching to a letter; the next one would collide. |
 | `overlapping_years` | Two financial years of the company overlap. |
 
-Not checked, and believed as an opening balance is: the totals of a document
-against its lines, the computed balance of a statement, the figures a
-declaration was frozen with. None of them lets a row reach another company.
+Taken as the archive gives them, the way an opening balance is: the totals of
+a document against its lines, the computed balance of a statement, the figures
+a declaration was frozen with. Each of them stays inside its own company.
 
 What arrives with the company: its lock dates and its closed years, so what was
 shut is shut; its counters, so the next number is the next number; its

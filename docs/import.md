@@ -1,9 +1,9 @@
 # Taking over books kept elsewhere
 
-Somebody who wants to try Ekwo on their own books arrives with them. They
-come from another package, or from nowhere in particular — a spreadsheet —
-and what they hold is the same everywhere: a chart of accounts, parties,
-entries, the balances of a day. This page is how those get in.
+Bring your books with you and try Ekwo on your own figures. They may come
+from another package or from a spreadsheet; what they hold is the same
+everywhere: a chart of accounts, parties, entries, the balances of a day. This
+page shows how you bring them in.
 
 ## The three parts
 
@@ -16,19 +16,19 @@ file(s) ──reader──▶ books ──correspondence──▶ import_books()
    MIT and on its own. It reads a file and returns **books**: accounts,
    contacts, entries, an opening balance, and `violations` for what does not add
    up. Each declares the shape in its own `types.ts`; the shape is the same in
-   all of them, field for field, and it is not a shared abstraction — the same
+   all of them, field for field, and each reader stands alone — the same
    choice the three statement readers made.
 2. **The correspondence**, in `@ekwo-ai/core` (`importBooks()`,
    `proposeMapping()`): which account of the company's chart each account of
    the old books becomes, and which journal each old journal goes to. It is
-   proposed, saved by the caller and given back. It is the one part only the
-   user can settle.
+   proposed, saved by the caller and given back. It is the one part you
+   settle yourself.
 3. **`import_books()`**, in the schema: the books, already in the company's
    codes, written in one transaction through `post_entry()` and
    `opening_balance()`.
 
 The command line (`ekwo import`) and the MCP server (`import_books`) call the
-same `importBooks()`. Neither holds a rule.
+same `importBooks()`, which holds every rule.
 
 ## The readers
 
@@ -55,16 +55,16 @@ What they share, and why:
   position, and the separator is the one the header row uses. A column the
   reader needs and does not find is refused by name. An XML file is found by
   its namespace, and its elements by their names.
-- **Nothing is guessed.** The encoding is UTF-8 unless the caller says
+- **What the file says is what you get.** The encoding is UTF-8 unless the caller says
   otherwise — or, for an XML file, unless its declaration does, and bytes that are not UTF-8 are refused, because every sequence
   of bytes is valid Latin. A date written in digits in an order the file does
   not state is refused until the caller names the order. An amount that could
   be read two ways — a comma in a comma-separated file — is refused.
-- **Nothing is corrected.** An entry that does not balance comes back as the
-  file wrote it, with a violation. The import then refuses books with a
-  violation; it does not repair them.
-- **Amounts never pass through a float.** They are added as integers of
-  millionths and returned as decimal strings, never negative: the side is the
+- **The file comes back as written.** An entry that does not balance comes
+  back as the file wrote it, with a violation. The import then refuses books
+  with a violation, so you repair them at the source.
+- **Amounts stay exact.** They are added as integers of millionths, never as
+  floats, and returned as decimal strings, never negative: the side is the
   sign.
 
 ## The correspondence
@@ -94,8 +94,8 @@ different things. Each proposal is marked:
 - **`given`** — the caller's own answer, flagged `doubtful` where the files
   contradict it.
 
-**Nothing is posted while an account the books use is only suggested**
-(`import_unconfirmed_accounts`). The user confirms a suggestion by writing it
+**You confirm every account before anything is posted**: an account the books
+use that is only suggested stops the import (`import_unconfirmed_accounts`). The user confirms a suggestion by writing it
 under `accounts`, or accepts all of them after reading them
 (`--accept-suggestions`). A dry run prints what to read first.
 
@@ -182,8 +182,8 @@ each item names its contact by id, and the MCP tool `opening_balance`
 
 ## Invoices and their pieces
 
-The ledger is the minimum an import brings. When the former system also holds
-the invoices — a purchase with its supplier, lines and taxes, and the PDF
+An import brings the ledger, and it can bring the invoices too. When the
+former system also holds the invoices — a purchase with its supplier, lines and taxes, and the PDF
 behind it — bring them in as documents: the purchase or sale becomes a
 `documents` row, its entry is the one the document posts, and the PDF goes on
 the document (`attachments.entity_type = 'document'`; `attach_document_file`,
@@ -211,10 +211,10 @@ documents as they are, since a piece is not a change of the books.
   the tax of the base lines, and a document line on an account a tax lands on
   is refused (`tax_account_on_a_line`, decision 0083).
 - **No matching yet.** The readers keep the reconciliation mark of each line
-  (`matching`), and the import does not re-apply it: an open receivable is
-  matched against its payment in Ekwo, with `reconcile`.
-- **No chart.** An account the company's chart does not have is not created.
-  The correspondence points it at one that exists, or the user adds it first.
+  (`matching`); you match an open receivable against its payment in Ekwo, with
+  `reconcile`.
+- **No chart.** The import keeps the company's chart as it is. The
+  correspondence points each account at one that exists, or you add it first.
 - **No bank statement.** A statement is not books: it books nothing, and its
   lines wait for a payment. `ekwo import camt.053 | coda | cfonb120 | csv` hands it
   to `import_bank_statement()`, the MCP server's tool of the same name.
@@ -224,4 +224,4 @@ documents as they are, since a piece is not a change of the books.
 A reader in `packages/formats/`, returning the shape above from fixtures that
 hold no real data; one line in `BOOK_SOURCES` and in `readBooks()` of
 `packages/core/src/books/imports.ts`; its README, with the pages the format was
-read from. No second command, no second function in the schema.
+read from. The same command and the same function in the schema serve it.

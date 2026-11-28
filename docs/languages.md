@@ -1,14 +1,14 @@
 # Languages
 
-Accounting is done in a language. A Belgian company keeps its books in French,
-in Dutch or in German; its accountant reads the chart of accounts in one of
-them, and the National Bank expects the annual accounts in the one the company
-files in. Software that picks a language for the user, or that translates only
-half of what is on screen, is software that a firm cannot hand to a client.
+Each person reads your books in their own language. A Belgian company keeps
+its books in French, in Dutch or in German; its accountant reads the chart of
+accounts in one of them, and the National Bank expects the annual accounts in
+the one the company files in. Ekwo gives every reader the whole screen in the
+language they choose, so a firm can hand it to any client.
 
-Ekwo OS separates two things that are usually confused. **What a program
-identifies things by is English and never changes.** **What a person reads is
-data, and exists in as many languages as the country pack publishes.**
+Ekwo OS keeps two things apart. **What a program identifies things by is
+English and never changes.** **What a person reads is data, and exists in as
+many languages as the country pack publishes.**
 
 ## The rule in one line
 
@@ -20,8 +20,8 @@ preference, then the company's, then the pack's.
 Table names, column names, enum values, function names and error codes are
 English `snake_case`, and they are part of the interface. `accounts`,
 `entry_lines`, `account_type`, `post_document()`, `period_locked`: a program
-tests those strings, a migration renames nothing, and a translation of them
-would be a second vocabulary that one day disagrees with the first.
+tests those strings, and a migration renames nothing, so one vocabulary
+serves every language.
 
 Error **codes** are stable English. Error **messages** are English too — one
 language for the people who read a log and file a bug report:
@@ -81,11 +81,11 @@ select label_for(name, name_i18n, preferred_languages(:company)) from accounts;
 3. **the pack's language** — `country_defaults.language_default`, what the
    country's own files are written in.
 
-Every one of the three may be null, and null means "ask the next one" rather
-than a default the software picked. `label_for` walks the list and returns the
+Every one of the three may be null, and null means "ask the next one".
+`label_for` walks the list and returns the
 first language that has a label, falling back to `name` when none of them does.
 
-That is the whole mechanism, and it is deliberately the only spelling of it.
+That is the whole mechanism, and the only one.
 
 ## The chain starts where the caller says
 
@@ -123,21 +123,21 @@ an update that moves it is refused by name:
 document_language_frozen: FAC-2026-0007 was sent in nl, so it stays in nl.
 ```
 
-The reason is the legal mentions. A customer who switches to another language
-switches what they are sent next, not what they were sent: an invoice reprinted
-in a language it was never written in is a different document on the one part
-of it a country actually legislates.
+This keeps the legal mentions exactly as they were sent. A customer who
+switches to another language changes what they are sent next; every invoice
+already sent reprints in the language it was written in, on the one part of it
+a country actually legislates.
 
 `document_legal_mentions` reads that column. Each row carries `language` — the
 one the document was written in — and `text` already in it, with `text_i18n`
 beside it for a renderer printing a second language. `document_header` carries
-`language` too, so the three reads a renderer makes agree by construction
-rather than by each of them re-deriving a chain.
+`language` too, so the three reads a renderer makes agree by construction,
+from one chain walked once.
 
 ## What a pack must provide
 
-A country pack declares the languages it publishes, and that declaration is a
-promise rather than a description:
+A country pack declares the languages it publishes, and promises each of them
+complete:
 
 ```json
 {
@@ -178,10 +178,9 @@ missing:
   i18n/nl.json journals: 6 of 6 missing: SAL, PUR, BNK, CSH, MISC, OPN
 ```
 
-The reason for the strictness is what a half-translated pack looks like in
-practice: a chart of accounts in Dutch under a VAT return in French, which is
-worse than French throughout, because nobody can tell whether the software is
-incomplete or the rule is different.
+So a reader gets every screen in one language: the chart of accounts and the
+VAT return in Dutch together, and a reader who can always tell a translation
+from a different rule.
 
 **A language file that is not declared may be partial.** A key it does not
 carry falls back to the pack's own label. That is how a language gets
@@ -189,7 +188,7 @@ contributed one section at a time: write what you are sure of, leave the rest
 absent, and add the code to `languages` on the day it is complete.
 
 A label under a code the pack does not carry is refused, in any file, declared
-or not — it is a label nobody would ever see.
+or not, because no reader would ever see it.
 
 ## Adding a language to a pack
 
@@ -205,8 +204,7 @@ Three rules hold while you write.
 **A translation is the same concept, never a different rule.** The code, the
 account type, the rate, the box and the formula are identical in every
 language; only the wording changes. If a label would only be correct under a
-different rule, the pack is wrong in the original too, and that is an issue
-rather than a translation.
+different rule, the pack is wrong in the original too: open an issue for it.
 
 **Use the official wording where a country publishes one.** Several do: the
 Belgian minimum chart of accounts exists in four languages, the Belgian VAT
@@ -215,22 +213,21 @@ in `packs/<cc>/i18n/README.md`. Where no administration publishes one — there
 is no official English plan comptable général — use the wording the profession
 uses, and say so.
 
-**Leave a key absent rather than guess.** An absent key falls back and is
-visibly untranslated; a guessed one is wrong and looks right.
+**Leave a key absent when you are unsure.** An absent key falls back and is
+visibly untranslated, so the next contributor sees what is left to write.
 
 ## What the language is *not*
 
-`companies.language` is the language of the books. It is not a locale, and it
-decides nothing else: how a date or a number is written is
+`companies.language` is the language of the books, and only that. How a date
+or a number is written is
 `user_preferences.date_display_format` and `number_display_format`, which
 belong to a person and not to a company, and the currency is
 `companies.currency_code`. A country that keeps its books in one language and
 writes its dates in three is an ordinary country, so the two questions are
 asked separately and stored separately.
 
-Translating an **application** — the buttons, the menus, the help — is not the
-core's job and never will be. The core hands a client the label a country gave
-an account and the language chain to choose it with; everything around it
-belongs to whoever built the interface. The managed edition at
+Translating an **application** — the buttons, the menus, the help — belongs to
+whoever built the interface. The core hands a client the label a country gave
+an account and the language chain to choose it with. The managed edition at
 [ekwo.ai](https://ekwo.ai) translates its own screens on top of exactly the
 data described here, with no private column and no second mechanism.

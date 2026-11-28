@@ -1,12 +1,13 @@
 # `docs/firms.md` — an accounting firm and its clients
 
-An accounting firm, a fiduciary, a bookkeeper with thirty customers, a group
-that keeps the books of its three subsidiaries: somebody who keeps **several
-companies that are not all theirs**. This page is what Ekwo gives them, where
-each piece lives, and what is still missing.
+You keep **several companies that are not all yours**: an accounting firm, a
+fiduciary, a bookkeeper with thirty customers, a group that keeps the books of
+its three subsidiaries. Ekwo serves you out of the box. This page shows what
+you get, where each piece lives, and what comes next.
 
-It is the normal case of this schema and not an edition of it. There is no
-"firm plan", no `tenant_id`, and no table called `firms`.
+A firm works with the same schema as every other installation: one
+installation, one row per client company, and rights per person. You need no
+special plan, no `tenant_id` and no `firms` table.
 
 ---
 
@@ -21,10 +22,10 @@ It is the normal case of this schema and not an edition of it. There is no
    clients in six countries is forty rows and six packs.
 3. **A person has a role per company**, in `company_members`. A collaborator of
    the firm is `accountant` on the companies they keep; the person who runs a
-   client company is `client` on that one, and does not know the others exist —
-   row level security answers them as if the installation held one company.
-4. **The firm is therefore nothing but the people who hold rights on several
-   companies.** Which is why the word needs a definition below.
+   client company is `client` on that one and sees only that one — row level
+   security answers them as if the installation held one company.
+4. **The firm is the people who hold rights on several companies.** The word
+   for what they keep is defined below.
 
 ## What "portfolio" means here
 
@@ -32,7 +33,7 @@ It is the normal case of this schema and not an edition of it. There is no
 > moment of the call. For a collaborator of an accounting firm it is the
 > clients they keep: the firm's *client portfolio*, in the sense the profession
 > uses the word (*portefeuille de clients*, *klantenportefeuille*,
-> *Mandantenstamm*). It has nothing to do with investments.
+> *Mandantenstamm*). The word is about clients, and only clients.
 
 The word appears in three functions, and means the same thing in all of them:
 
@@ -51,11 +52,10 @@ many parties are late on each side, in the company's currency — rows in
 different currencies are never added together. See [`filing.md`](filing.md#several-companies-at-once)
 for the columns.
 
-**Nobody maintains a portfolio.** It is not a list, a table or a setting: it is
-"the companies on which the caller holds the capability the reading needs",
-computed each time: `filings.read` for the declarations, `entries.read` for
-what is open in the ledger.
-So it follows the rights, and cannot drift from them:
+**Your portfolio keeps itself up to date.** It is "the companies on which the
+caller holds the capability the reading needs", computed at each call:
+`filings.read` for the declarations, `entries.read` for what is open in the
+ledger. So it always matches the rights:
 
 | Who calls | Their portfolio |
 |---|---|
@@ -71,9 +71,8 @@ they filter on, because a company's *row* is visible to people its
 
 **Every company of the portfolio is in every answer**, at least once. A company
 with nothing due is a row that says `nothing_due`; one whose pack names no
-deadline is listed without a date and says `no_deadline_rule`. A client missing
-from the list a firm plans its fortnight on is worse than a client listed
-without a date.
+deadline is listed without a date and says `no_deadline_rule`. You plan your
+fortnight on a list that holds every client, dated or not.
 
 ## The client is a guest with narrow rights
 
@@ -87,18 +86,18 @@ insert only), and they write nothing else. Inviting one is one call:
 select * from invite_member(:company, 'owner@client.example', 'client');
 ```
 
-The ledger is included on purpose: the books are the client's, and the firm is
+The client reads the ledger too: the books are the client's, and the firm is
 the guest who keeps them. A firm that wants to show less revokes a capability
 on that member; see *Who may do what* in the [README](../README.md).
 `set_member_role()` moves a member to another preset, `remove_member()` takes
 them off a company, and `company_members_list()` reads who is on it.
 
-A client is never counted, licensed or charged for in the open core.
+In the open core, your clients are free: never counted, licensed or charged for.
 
 ## The firm files in its own name, for all of them at once
 
-Where the format of a country allows it, a representative deposits the returns
-of all its clients in one file. The Belgian periodic VAT return does: the brick
+Where the format of a country allows it, you deposit the returns of all your
+clients in one file, as their representative. The Belgian periodic VAT return does: the brick
 [`@ekwo-ai/vat-consignment`](../packages/formats/vat-consignment/README.md)
 writes one `VATConsignment` holding as many declarations as it is given, under
 the `Representative` who files them — each taken from the figures that company
@@ -124,7 +123,7 @@ Both are meant to exist. **A** is what this schema serves today.
 
 ## The client leaves with the books
 
-Arrangement A is only honest if the way out exists, and it does. A company
+In arrangement A, your client can always leave with their books. A company
 leaves an installation as an archive — entries, documents, pieces, the bank,
 the declarations with the figures they were frozen with and the proof each one
 went, the trail — and arrives in another installation as a living company, with
@@ -134,8 +133,8 @@ underneath. The format and every check are in
 [`company-archive.md`](company-archive.md).
 
 **The client can do it themselves.** Leaving needs `company.export`, and the
-`client` preset holds it as the `owner` preset does: a right to leave that only
-the firm could exercise would be a courtesy of the firm. The firm's
+`client` preset holds it as the `owner` preset does, so the right to leave
+belongs to the client. The firm's
 collaborators (`accountant`) do not hold it. A firm with a reason to withhold
 it revokes it for that member, and the revocation is on the audit trail of the
 company.
@@ -159,5 +158,5 @@ listed in the manifest for somebody to copy.
 - **The portfolio across installations** (arrangement B), which is a control
   plane somebody operates ([`cloud-services.md`](cloud-services.md)).
 
-Billing a firm's clients and tracking its time are the firm's trade, not its
-accounting, and are not here.
+Billing a firm's clients and tracking its time belong to the firm's own trade
+and sit outside this page.

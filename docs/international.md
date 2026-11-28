@@ -8,15 +8,15 @@
 
 ## The premise
 
-A country is data, not code. A module of code per country breaks at every
-major version, and one product per market splits the users. Ekwo OS ships
-**one core and one versioned pack per country**, and a pack is something an
-accountant can read, a contributor can propose in a pull request, and a test
-can prove.
+Ekwo OS runs your company in any country, with every user on the same
+product. It ships **one core and one versioned pack per country**: a country is
+data, and a pack is something an accountant can read, a contributor can
+propose in a pull request, and a test can prove. The same core serves every
+country through every major version.
 
 **No function of the core holds a country code, and a test enforces it.** A
 company is attached to a pack when it is created — `ekwo company new "<name>"
---country <cc>` names it, and nothing assumes one — and everything that differs from one country to the next
+--country <cc>` names it, and you always choose it — and everything that differs from one country to the next
 is read from that pack at run time.
 
 ## What the core knows, and what a pack says
@@ -52,7 +52,7 @@ country: a format is used by whichever packs declare it.
 
 **More than a hundred countries ship as packs**, each seeded by `ekwo init` and listed with
 its version and status in the [table of packs](packs.md#the-packs-of-this-checkout),
-which is generated from the repository and is never a country behind. Among
+which is generated from the repository and always lists every pack. Among
 them, the States of the OHADA treaty share one chart of accounts, written once
 in [`packs/ohada/`](../packs/ohada/), and a country-less
 [`packs/generic/`](../packs/generic/) gives any chart a balance sheet that ties
@@ -74,8 +74,8 @@ A pack carries one of four statuses, which `ekwo init` and `ekwo status` print:
 | `proven` | As above, and it reproduced the statements a real company filed and the administration accepted, after its books were imported; the pack lists the scopes reproduced and the ones not tested |
 | `reviewed` | Read against the law by a named professional of the country, who signs it |
 
-There is no status meaning "certified by Ekwo": writing a pack is not reviewing
-it. How a professional reviews a pack is in
+Only a named professional of the country marks a pack `reviewed`; Ekwo writes
+packs and certifies none of them itself. How a professional reviews a pack is in
 [`packs.md`](packs.md#certification-and-who-may-say-what).
 
 ## What an international core needs and does not have
@@ -148,8 +148,8 @@ A currency has the decimals `currencies.decimal_places` gives it — two for the
 euro, none for the yen or the Icelandic krona, three for the Kuwaiti or the
 Tunisian dinar — and a country rounds by the method its pack declares. One
 function, `round_amount()`, applies the pair, and every amount the engine
-computes passes through it. A money column is a bare `numeric`: it holds what
-the currency has, and cuts nothing.
+computes passes through it. A money column is a bare `numeric`: it holds
+exactly what the currency has.
 
 An amount a person or a program writes as it is — a line keyed on a draft
 entry, a statement line, a payment, the amount to match, the tax a supplier's
@@ -157,8 +157,8 @@ invoice states, the share capital, and in the modules the cost of an asset, a
 budget line, the value of a contract or the amount of a deal — is held to its
 currency by `assert_amount_of_currency()`: one finer than the currency is
 refused, `amount_finer_than_currency`, with the amount, the currency and the
-decimals it has. It is never rounded behind the writer's back, because two
-lines of a balanced entry rounded each on its own can end a unit apart. An
+decimals it has. What you write is what is stored, because two lines of a
+balanced entry rounded each on its own can end a unit apart. An
 amount in another currency than the company's is held to its own; `12.30` is a
 euro amount and `1200.00` a yen amount, since trailing zeros are not decimals.
 A unit price, a quantity or a rate is not an amount and may be finer. A bank
@@ -207,8 +207,8 @@ Each pack's own README says what it leaves out, and its page on
 [ekwo.ai](https://ekwo.ai/countries/) prints it. Two things hold for every pack
 today: **no pack is `reviewed` yet**, and some packs declare bank statement
 formats no reader in this repository parses yet — `ekwo pack check` warns about
-each one. A silence a pack cannot fill from an official text is stated as such
-rather than guessed.
+each one. Where an official text is silent, the pack says so plainly, so you
+always know what comes from the law.
 
 ## From Zimbabwe
 
@@ -339,7 +339,8 @@ regulations the pack could not open.
 
 **A suspension by notice.** The charging of VAT on private medical services was
 suspended by a public notice of 30 July 2026; the Act itself still makes them
-taxable. The pack carries no code for them rather than invent a treatment.
+taxable. The pack leaves them without a code until a text settles their
+treatment.
 
 ## From Namibia
 

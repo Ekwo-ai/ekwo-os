@@ -1,8 +1,9 @@
 # `modules/` — one Postgres schema each, beside the socle
 
-The socle is `public`: companies, accounts, taxes, entries, documents, the
-reports. What is built beside it lives here, one folder and one schema per
-module.
+A module adds a whole function to your company — fixed assets, budgets, CRM,
+contracts, consolidation — in its own folder and its own Postgres schema. The
+socle is `public`: companies, accounts, taxes, entries, documents, the
+reports. Every module lives here, beside it.
 
 | Module code | Folder | Schema | Posts to the ledger | Country data |
 |---|---|---|---|---|
@@ -20,7 +21,8 @@ module.
 ## The rules, in one screen
 
 1. **One schema, and the socle is not it.** A module depends on `public` by
-   foreign key; the socle has no hook, no callback and no idea it exists.
+   foreign key, and the socle stays exactly as it is: it carries no hook and no
+   callback for a module.
 2. **The ledger only through `post_module_entry()`.** The words `entries` and
    `entry_lines` never appear in a write statement here, and a test over every
    file of this folder refuses one that does. Reading the ledger is allowed.
@@ -52,7 +54,7 @@ The full version, and how to write a module in a day, is
 
 ## Planned modules
 
-Three modules are decided and not written yet. They follow the rules above: a
+Three modules are decided and come next. They follow the rules above: a
 schema of their own, and the ledger reached only through `post_module_entry()`.
 No date is attached to them.
 
@@ -64,9 +66,9 @@ No date is attached to them.
   company is actually asked for (VSME, ESRS E1). Every tonne points at the
   entry and the document that justify it.
 - **`crypto` — digital assets.** Wallets and venues, acquisition lots, fair
-  value at the close, and realised gains by the method the country allows —
-  pack data, not a setting. The exports of platforms are read by format
-  libraries, so a new venue is a package and not a fork.
+  value at the close, and realised gains by the method the country allows,
+  written as pack data. The exports of platforms are read by format
+  libraries, so a new venue is one more package.
 - **`sign` — electronic signature, in the open.** A document, its signatories
   and where each stands, with the trail of proof written at the moment
   somebody signs. Which level of signature a deed requires is a rule of a
